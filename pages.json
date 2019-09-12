@@ -1,0 +1,499 @@
+{
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+			"path": "pages/index/index",
+			"style": {
+				"navigationBarTitleText": "能工小匠",//设置页面标题文字
+				"onReachBottomDistance":100
+			}
+		},
+		{
+			"path": "pages/needs/needs",
+			"style": {
+				"navigationBarTitleText": "需求",//设置页面标题文字
+				"onReachBottomDistance":100
+			}
+		},
+		{
+			"path": "pages/car/car",
+			"style": {
+				"navigationBarTitleText": "购物车",//设置页面标题文字
+				"onReachBottomDistance":100
+			}
+		},
+		{
+			"path": "pages/user/user",
+			"style": {
+				"navigationBarTitleText": "我的",//设置页面标题文字
+				"onReachBottomDistance":100
+				// "navigationStyle": "custom" 头部标题隐藏
+			}
+		},
+		{
+			"path": "pages/confirmOrder/confirmOrder",
+			"style": {
+				"navigationBarTitleText": "确认订单",//设置页面标题文字
+				"onReachBottomDistance":100
+			}
+		},
+		{
+			"path": "pages/pageDetail/pageDetail",
+			"style": {
+				"navigationBarTitleText": "详情页",
+				"onReachBottomDistance":100
+			}
+		},
+		{
+			"path": "pages/business_index/business_index",
+			"style": {
+				"navigationBarTitleText": "商家主页",
+				"onReachBottomDistance":100
+			}
+		},
+		{
+			"path": "pages/indexDesign/indexDesign",
+			"style": {
+				"navigationBarTitleText": "设计",
+				"onReachBottomDistance":100
+			}
+		},
+		{
+			"path": "pages/indexDesignDetail/indexDesignDetail",
+			"style": {
+				"navigationBarTitleText": "详情页",
+				"onReachBottomDistance":100
+			}
+		},
+		{
+			"path": "pages/yuyue/yuyue",
+			"style": {
+				"navigationBarTitleText": "预约",
+				"onReachBottomDistance":100
+			}
+		},
+		{
+			"path": "pages/registMsg/registMsg",
+			"style": {
+				"navigationBarTitleText": "注册信息",
+				"onReachBottomDistance":100
+			}
+		},
+		{
+			"path": "pages/seachWorker/seachWorker",
+			"style": {
+				"navigationBarTitleText": "搜索",
+				"onReachBottomDistance":100
+			}
+		},
+		{
+			"path": "pages/indexWorker/indexWorker",
+			"style": {
+				"navigationBarTitleText": "工人",
+				"onReachBottomDistance":100
+			}
+		},
+		{
+			"path": "pages/indexWorkerDetail/indexWorkerDetail",
+			"style": {
+				"navigationBarTitleText": "详情页",
+				"onReachBottomDistance":100
+			}
+		},
+		{
+			"path": "pages/indexWorker_index/indexWorker_index",
+			"style": {
+				"navigationBarTitleText": "工人主页",
+				"onReachBottomDistance":100
+			}
+		},
+		{
+			"path": "pages/indexWorkerDetailTwo/indexWorkerDetailTwo",
+			"style": {
+				"navigationBarTitleText": "详情页",
+				"onReachBottomDistance":100
+			}
+		},
+		{
+			"path": "pages/classify/classify",
+			"style": {
+				"navigationBarTitleText": "建筑工",
+				"onReachBottomDistance":100
+			}
+		},
+		{
+			"path": "pages/indexDesign_classify/indexDesign_classify",
+			"style": {
+				"navigationBarTitleText": "个人设计师",
+				"onReachBottomDistance":100
+			}
+		},
+		{
+			"path": "pages/indexDesign_index/indexDesign_index",
+			"style": {
+				"navigationBarTitleText": "设计师主页",
+				"onReachBottomDistance":100
+			}
+		},
+		{
+			"path": "pages/indexDesign_classify_sketch/indexDesign_classify_sketch",
+			"style": {
+				"navigationBarTitleText": "效果图",
+				"onReachBottomDistance":100
+			}
+		},
+		{
+			"path": "pages/indexDesign_classify_sketchDetail/indexDesign_classify_sketchDetail",
+			"style": {
+				"navigationBarTitleText": "详情页",
+				"onReachBottomDistance":100
+			}
+		},
+		{
+			"path": "pages/indexDesign_classify_VR/indexDesign_classify_VR",
+			"style": {
+				"navigationBarTitleText": "VR视频",
+				"onReachBottomDistance":100
+			}
+		},
+		{
+			"path": "pages/indexDesign_classify_VRDetail/indexDesign_classify_VRDetail",
+			"style": {
+				"navigationBarTitleText": "视频详情",
+				"onReachBottomDistance":100
+			}
+		},
+		{
+			"path": "pages/material/material",
+			"style": {
+				"navigationBarTitleText": "材料",
+				"onReachBottomDistance":100
+			}
+		},
+		{
+			"path": "pages/material_classify/material_classify",
+			"style": {
+				"navigationBarTitleText": "定制",
+				"onReachBottomDistance":100
+			}
+		},
+		{
+			"path": "pages/houseShow/houseShow",
+			"style": {
+				"navigationBarTitleText": "房源展示",
+				"onReachBottomDistance":100
+			}
+		},
+		{
+			"path": "pages/houseShowDetail/houseShowDetail",
+			"style": {
+				"navigationBarTitleText": "详情页",
+				"onReachBottomDistance":100
+			}
+		},
+		{
+			"path": "pages/interactive/interactive",
+			"style": {
+				"navigationBarTitleText": "互动",
+				"onReachBottomDistance":100
+			}
+		},
+		{
+			"path": "pages/interactiveDetail/interactiveDetail",
+			"style": {
+				"navigationBarTitleText": "互动详情",
+				"onReachBottomDistance":100
+			}
+		},
+		{
+			"path": "pages/interactive_release/interactive_release",
+			"style": {
+				"navigationBarTitleText": "发布",
+				"onReachBottomDistance":100
+			}
+		},
+		{
+			"path": "pages/supervision/supervision",
+			"style": {
+				"navigationBarTitleText": "监理",
+				"onReachBottomDistance":100
+			}
+		},
+		{
+			"path": "pages/supervision_add/supervision_add",
+			"style": {
+				"navigationBarTitleText": "申请监理",
+				"onReachBottomDistance":100
+			}
+		},
+		{
+			"path": "pages/supervisionDetail/supervisionDetail",
+			"style": {
+				"navigationBarTitleText": "详情",
+				"onReachBottomDistance":100
+			}
+		},
+		{
+			"path": "pages/college/college",
+			"style": {
+				"navigationBarTitleText": "学院",
+				"onReachBottomDistance":100
+			}
+		},
+		{
+			"path": "pages/addStudent/addStudent",
+			"style": {
+				"navigationBarTitleText": "成为学员",
+				"onReachBottomDistance":100
+			}
+		},
+		{
+			"path": "pages/collegeDetail/collegeDetail",
+			"style": {
+				"navigationBarTitleText": "详情",
+				"onReachBottomDistance":100
+			}
+		},
+		{
+			"path": "pages/myOderList/myOderList",
+			"style": {
+				"navigationBarTitleText": "我的订单",
+				"onReachBottomDistance":100
+			}
+		},
+		{
+			"path": "pages/myAddress/myAddress",
+			"style": {
+				"navigationBarTitleText": "收货地址",
+				"onReachBottomDistance":100
+			}
+		},
+		{
+			"path": "pages/myAddressAdd/myAddressAdd",
+			"style": {
+				"navigationBarTitleText": "添加地址",
+				"onReachBottomDistance":100
+			}
+		},
+		{
+			"path": "pages/myToolingOrder/myToolingOrder",
+			"style": {
+				"navigationBarTitleText": "工装订单",
+				"onReachBottomDistance":100
+			}
+		},
+		{
+			"path": "pages/myToolingOrderDetail/myToolingOrderDetail",
+			"style": {
+				"navigationBarTitleText": "订单详情",
+				"onReachBottomDistance":100
+			}
+		},
+		{
+			"path": "pages/myToolingOrderDetailTwo/myToolingOrderDetailTwo",
+			"style": {
+				"navigationBarTitleText": "订单详情",
+				"onReachBottomDistance":100
+			}
+		},
+		{
+			"path": "pages/myTooling_madeDetail/myTooling_madeDetail",
+			"style": {
+				"navigationBarTitleText": "订单详情",
+				"onReachBottomDistance":100
+			}
+		},
+		{
+			"path": "pages/myToolingOrder_contract/myToolingOrder_contract",
+			"style": {
+				"navigationBarTitleText": "合同",
+				"onReachBottomDistance":100
+			}
+		},
+		{
+			"path": "pages/myWorkbench/myWorkbench",
+			"style": {
+				"navigationBarTitleText": "工作台",
+				"onReachBottomDistance":100
+			}
+		},
+		{
+			"path": "pages/myWorkbench_addContract/myWorkbench_addContract",
+			"style": {
+				"navigationBarTitleText": "补充合同",
+				"onReachBottomDistance":100
+			}
+		},
+		{
+			"path": "pages/myWorkbench_dispute/myWorkbench_dispute",
+			"style": {
+				"navigationBarTitleText": "维权争议",
+				"onReachBottomDistance":100
+			}
+		},
+		{
+			"path": "pages/myWorkbench_disputeOk/myWorkbench_disputeOk",
+			"style": {
+				"navigationBarTitleText": "维权争议",
+				"onReachBottomDistance":100
+			}
+		},
+		{
+			"path": "pages/myWorkbench_inspect/myWorkbench_inspect",
+			"style": {
+				"navigationBarTitleText": "验收申请",
+				"onReachBottomDistance":100
+			}
+		},
+		{
+			"path": "pages/myWorkbench_addBudget/myWorkbench_addBudget",
+			"style": {
+				"navigationBarTitleText": "追加预算",
+				"onReachBottomDistance":100
+			}
+		},
+		{
+			"path": "pages/myWorkbench_daka/myWorkbench_daka",
+			"style": {
+				"navigationBarTitleText": "打卡",
+				"onReachBottomDistance":100
+			}
+		},
+		{
+			"path": "pages/myWorkbench_database/myWorkbench_database",
+			"style": {
+				"navigationBarTitleText": "资料库",
+				"onReachBottomDistance":100
+			}
+		},
+		{
+			"path": "pages/myWorkbench_database_upmsg/myWorkbench_database_upmsg",
+			"style": {
+				"navigationBarTitleText": "上传资料",
+				"onReachBottomDistance":100
+			}
+		},
+		{
+			"path": "pages/myNeeds/myNeeds",
+			"style": {
+				"navigationBarTitleText": "我的需求",
+				"onReachBottomDistance":100
+			}
+		},
+		{
+			"path": "pages/myNeedsDetail/myNeedsDetail",
+			"style": {
+				"navigationBarTitleText": "需求",
+				"onReachBottomDistance":100
+			}
+		},
+		{
+			"path": "pages/myCollection/myCollection",
+			"style": {
+				"navigationBarTitleText": "我的收藏",
+				"onReachBottomDistance":100
+			}
+		},
+		{
+			"path": "pages/myFootprint/myFootprint",
+			"style": {
+				"navigationBarTitleText": "浏览足迹",
+				"onReachBottomDistance":100
+			}
+		},
+		{
+			"path": "pages/myEvaluate/myEvaluate",
+			"style": {
+				"navigationBarTitleText": "我的评价",
+				"onReachBottomDistance":100
+			}
+		},
+		{
+			"path": "pages/myExtend/myExtend",
+			"style": {
+				"navigationBarTitleText": "我的推广",
+				"onReachBottomDistance":100
+			}
+		},
+		{
+			"path": "pages/myExtend_starEdeem/myExtend_starEdeem",
+			"style": {
+				"navigationBarTitleText": "星级兑换",
+				"onReachBottomDistance":100
+			}
+		},
+		{
+			"path": "pages/myBusinessRegister/myBusinessRegister",
+			"style": {
+				"navigationBarTitleText": "商家注册",
+				"onReachBottomDistance":100
+			}
+		},
+		{
+			"path": "pages/myCashOut/myCashOut",
+			"style": {
+				"navigationBarTitleText": "提现",
+				"onReachBottomDistance":100
+			}
+		},
+		{
+			"path": "pages/myBankList/myBankList",
+			"style": {
+				"navigationBarTitleText": "银行卡管理",
+				"onReachBottomDistance":100
+			}
+		},
+		{
+			"path": "pages/myBankListMsg/myBankListMsg",
+			"style": {
+				"navigationBarTitleText": "银行卡绑定",
+				"onReachBottomDistance":100
+			}
+		}
+    ],
+	"globalStyle": {
+		//"navigationStyle":"custom",
+		"navigationBarTextStyle": "white",//导航栏文字蓝色
+		"navigationBarTitleText": "能工小匠",
+		"navigationBarBackgroundColor": "#292929"
+	},
+	"condition": { //模式配置，仅开发期间生效
+		"current": 0, //当前激活的模式(list 的索引项)
+		"list": [{
+			"name": "", //模式名称
+			"path": "", //启动页面，必选
+			"query": "" //启动参数，在页面的onLoad函数里面得到
+		}]
+	},
+	"tabBar":{
+		"color":"#a8a8a8",
+		"selectedColor":"#222222",
+		"backgroundColor": "#ffffff",
+		"list": [
+			{
+			   "pagePath": "pages/index/index",
+			   "text": "首页",
+			   "iconPath": "static/images/nabar1.png",
+			   "selectedIconPath": "static/images/nabar1-a.png"
+			},
+			{
+			  "pagePath": "pages/needs/needs",
+			  "text": "需求",
+			  "iconPath": "static/images/nabar2.png",
+			  "selectedIconPath": "static/images/nabar2-a.png"
+			},
+			{
+			  "pagePath": "pages/car/car",
+			  "text": "购物车",
+			  "iconPath": "static/images/nabar3.png",
+			  "selectedIconPath": "static/images/nabar3-a.png"
+			},
+			{
+			  "pagePath": "pages/user/user",
+			  "text": "我的",
+			  "iconPath": "static/images/nabar4.png",
+			  "selectedIconPath": "static/images/nabar4-a.png"
+			}
+			
+		]
+	}
+}
