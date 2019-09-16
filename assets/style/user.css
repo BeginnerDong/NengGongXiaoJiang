@@ -1,4 +1,4 @@
-.userBox2{ margin: 0 4%; background: #fff; border-radius: 10rpx; margin: -90rpx 4% 40rpx 4% ;;}
+	.userBox2{ margin: 0 4%; background: #fff; border-radius: 10rpx; margin: -90rpx 4% 10rpx 4% ;;}
 	.userBox2 .tit{ font-size: 28rpx; height: 88rpx;padding: 0 20rpx; border-bottom: 2rpx solid #e7e7e7;}
 	.userBox2 .more{ color: #999; font-size: 22rpx;}
 	.userBox2 .menu .child{
@@ -83,7 +83,7 @@
 		line-height: 50rpx;
 	}
 	.caseSbmit .eidt-line .ll{ width: 25%;box-sizing: border-box;padding-right: 20rpx;}
-	.caseSbmit .eidt-line .rr{ width: 75%;}
+	.caseSbmit .eidt-line .rr{ width: 75%; box-sizing: border-box;}
 	.caseSbmit .eidt-line .rr input{
 		width: 100%;
 		padding: 0 10rpx;
@@ -106,6 +106,7 @@
 		display: block;
 		font-size: 28rpx;
 	}
+	.caseSbmit .eidt-line .rr .arrow{width: 12rpx; height: 24rpx; position: absolute;right: 0; top:50%; transform: translateY(-50%); display: block;}
 	.caseSbmit .textt{ font-size: 24rpx; color: #666;padding: 100rpx 10% 50rpx 10%; text-align: center; line-height: 44rpx;}
 	
 /* 点击弹框 */
@@ -137,7 +138,7 @@
 .prolis .cont .price{ position: absolute; bottom: 0;left: 0; font-size: 26rpx; color: rgba(255,59,59);}
 .prolis .cont .price:before{content: "￥";}
 .bBtn{padding-top: 40rpx; display: flex; justify-content: flex-end; align-items: center;}
-.bBtn .btn{ padding: 0 40rpx; line-height: 50rpx; height: 50rpx; border-radius: 10rpx; color: #666; border:2rpx solid #ccc;font-size: 24rpx; margin-left: 20rpx;}
+.bBtn .btn{ padding: 0 20rpx; line-height: 50rpx; height: 50rpx; border-radius: 10rpx; color: #666; border:2rpx solid #ccc;font-size: 24rpx; margin-left: 20rpx;}
 .btn.gopay{ border-color: #FFCB1E; color: #FFCB1E;}
 
 /* 工装订单 */
@@ -164,7 +165,7 @@
 .tooling_detail	.okBtn{width: 200rpx; height: 60rpx;line-height: 60rpx;text-align: center; background: #FFCB1E; color: #222;margin: 0  20rpx; border-radius: 10rpx;}
 
 /* 我的需求 */
-.myNeed_ind .item{padding: 30rpx 20rpx; margin-top: 30rpx;background: #fff;position: relative;border-radius: 10rpx;}
+.myNeed_ind .item{padding: 30rpx 20rpx; margin-top: 30rpx;background: #fff;position: relative;border-radius: 10rpx; font-size: 28rpx;}
 .myNeed_ind .item .cont{width: 90%;}
 .myNeed_ind .item .cont .lis{margin-bottom: 20rpx;}
 .myNeed_ind .item .cont .lis:last-child{margin-bottom: 0;}
@@ -196,5 +197,22 @@
 .postersbox .textB{position: absolute; bottom: 20rpx; text-align: center;left:0; width: 100%;font-size: 22rpx;box-sizing: border-box;}
 .postersbox .infor{position: absolute;top: 240rpx; width: 300rpx;left: 50%;transform: translateX(-50%);}
 .postersbox .copyBtn{ width: 100rpx; height: 40rpx;line-height: 40rpx; border-radius: 6rpx; background: #181818; color: #fff;margin: 10rpx auto;box-sizing: border-box;}
+
+
+/* 登录注册 */
+.lgoin-topBj{width: 100%;height: 448rpx; display: block;}
+.login-box{width: 90%;margin: 30rpx auto;}
+.login-box .item{padding: 20rpx 0; display: flex; justify-content: flex-start;}
+.login-box .item .icon{width: 10%;}
+.login-box .item .icon image{width: 36rpx; height: 36rpx; display: block;}
+.login-box .item .rr{width: 90%;border-bottom: 2rpx solid #e7e7e7;padding-bottom: 20rpx;font-size: 24rpx; margin-top: 6rpx;}
+.login-box .item .rr input{width: 100%; display: block; line-height: 46rpx; font-size: 24rpx;}
+.login-box .item .rr .yzmBtn{bottom:2rpx;top: auto;transform: translate(0,0);}
+
+.login-box .item .rr .arrow{ width: 12rpx; height: 24rpx; display: block;}
+.login-box .item .rr .arrow image{width: 100%; height: 100%; display: block;}
+
+
+
 
 

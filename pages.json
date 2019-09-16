@@ -448,7 +448,164 @@
 				"navigationBarTitleText": "银行卡绑定",
 				"onReachBottomDistance":100
 			}
+		},
+		{
+			"path": "pages/designer_login/designer_login",
+			"style": {
+				"navigationBarTitleText": "登录",
+				"onReachBottomDistance":100,
+				"navigationBarBackgroundColor":"#121010"
+			}
+		},
+		{
+			"path": "pages/designer_register/designer_register",
+			"style": {
+				"navigationBarTitleText": "注册",
+				"onReachBottomDistance":100,
+				"navigationBarBackgroundColor":"#121010"
+			}
+		},
+		{
+			"path": "pages/designer_user/designer_user",
+			"style": {
+				"navigationBarTitleText": "设计师",
+				"onReachBottomDistance":100
+			}
+		},
+		{
+			"path": "pages/teamInfor/teamInfor",
+			"style": {
+				"navigationBarTitleText": "团队信息",
+				"onReachBottomDistance":100
+			}
+		},
+		{
+			"path": "pages/teamInfor_enterprise/teamInfor_enterprise",
+			"style": {
+				"navigationBarTitleText": "企业信息",
+				"onReachBottomDistance":100
+			}
+		},
+		{
+			"path": "pages/teamInfor_personal/teamInfor_personal",
+			"style": {
+				"navigationBarTitleText": "个人信息",
+				"onReachBottomDistance":100
+			}
+		},
+		{
+			"path": "pages/designer_certificate/designer_certificate",
+			"style": {
+				"navigationBarTitleText": "资质证书",
+				"onReachBottomDistance":100
+			}
+		},
+		{
+			"path": "pages/designer_certificateDetail/designer_certificateDetail",
+			"style": {
+				"navigationBarTitleText": "资质证书",
+				"onReachBottomDistance":100
+			}
+		},
+		{
+			"path": "pages/designer_closingShop/designer_closingShop",
+			"style": {
+				"navigationBarTitleText": "关闭店铺",
+				"onReachBottomDistance":100
+			}
+		},
+		{
+			"path": "pages/designerOrder/designerOrder",
+			"style": {
+				"navigationBarTitleText": "我的订单",
+				"onReachBottomDistance":100
+			}
+		},
+		{
+			"path": "pages/myToolingOrderDetail_startReceipt/myToolingOrderDetail_startReceipt",
+			"style": {
+				"navigationBarTitleText": "开始接单",
+				"onReachBottomDistance":100
+			}
+		},
+		{
+			"path": "pages/designer_skill/designer_skill",
+			"style": {
+				"navigationBarTitleText": "技能管理",
+				"onReachBottomDistance":100
+			}
+		},
+		{
+			"path": "pages/designer_skill_add/designer_skill_add",
+			"style": {
+				"navigationBarTitleText": "添加技能",
+				"onReachBottomDistance":100
+			}
+		},
+		{
+			"path": "pages/designer_case/designer_case",
+			"style": {
+				"navigationBarTitleText": "案例管理",
+				"onReachBottomDistance":100
+			}
+		},
+		{
+			"path": "pages/designer_caseDetail/designer_caseDetail",
+			"style": {
+				"navigationBarTitleText": "案例详情",
+				"onReachBottomDistance":100
+			}
+		},
+		{
+			"path": "pages/designer_case_add/designer_case_add",
+			"style": {
+				"navigationBarTitleText": "添加案例",
+				"onReachBottomDistance":100
+			}
+		},
+		{
+			"path": "pages/designer_finance/designer_finance",
+			"style": {
+				"navigationBarTitleText": "财务管理",
+				"onReachBottomDistance":100
+			}
+		},
+		{
+			"path": "pages/worker_user/worker_user",
+			"style": {
+				"navigationBarTitleText": "工人",
+				"onReachBottomDistance":100
+			}
+		},
+		{
+			"path": "pages/worker_insurance/worker_insurance",
+			"style": {
+				"navigationBarTitleText": "购买保险",
+				"onReachBottomDistance":100
+			}
+		},
+		{
+			"path": "pages/supervisor_user/supervisor_user",
+			"style": {
+				"navigationBarTitleText": "监理",
+				"onReachBottomDistance":100
+			}
+		},
+		{
+			"path": "pages/supervisor_signOut/supervisor_signOut",
+			"style": {
+				"navigationBarTitleText": "退出监理",
+				"onReachBottomDistance":100
+			}
+		},
+		{
+			"path": "pages/supervisor_help/supervisor_help",
+			"style": {
+				"navigationBarTitleText": "帮助中心",
+				"onReachBottomDistance":100
+			}
 		}
+		
     ],
 	"globalStyle": {
 		//"navigationStyle":"custom",

@@ -2,15 +2,13 @@
 	<view>
 		
 		<view class="infor-title flexRowBetween">
-			<view class="xian"></view>
-			<view class="tt">合同内容</view>
+			<view class="tt">标题</view>
 		</view>
 		<view class="pdlr4">
 			<textarea value="" placeholder="这一刻你的想法···" />
 		</view>
 		
 		<view class="infor-title flexRowBetween">
-			<view class="xian"></view>
 			<view class="tt">添加附件</view>
 		</view>
 		<view class="pdlr4">

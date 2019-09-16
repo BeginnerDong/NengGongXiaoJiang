@@ -34,6 +34,17 @@
 			<view class="xian"></view>
 			<view class="tt">订单状态</view>
 		</view>
+		
+		<!-- 无数据时显示 -->
+		<view class="noDataBox">
+			<image src="../../static/images/img.png" mode=""></image>
+			<view class="submitbtn" style="margin-top: 80rpx;">
+				<button type="button"  @click="webSelf.$Router.navigateTo({route:{path:'/pages/myToolingOrderDetail_startReceipt/myToolingOrderDetail_startReceipt'}})">开始接单</button>
+			</view>
+		</view>
+		
+		<!-- 无数据时显示 end -->
+		
 		<view class="tooling_detail mglr4">
 			<view class="infor">
 				<image class="dian" src="../../static/images/about-order-details-icon2.png" mode=""></image>

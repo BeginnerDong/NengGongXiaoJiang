@@ -79,21 +79,21 @@
 				<image class="arrow" src="../../static/images/arrow-icon1.png" ></image>
 			</view>
 			<view class="f5H10"></view>
-			<view class="info">
+			<view class="info" @click="webSelf.$Router.navigateTo({route:{path:'/pages/designer_login/designer_login'}})">
 				<view class="ilblock listimg">
 					<image src="../../static/images/about-icon12.png"></image>
 				</view>
 				<view class="ilblock">设计师</view>
 				<image class="arrow" src="../../static/images/arrow-icon1.png" ></image>
 			</view>
-			<view class="info">
+			<view class="info" @click="webSelf.$Router.navigateTo({route:{path:'/pages/worker_user/worker_user'}})">
 				<view class="ilblock listimg">
 					<image src="../../static/images/about-icon13.png"></image>
 				</view>
 				<view class="ilblock">工人</view>
 				<image class="arrow" src="../../static/images/arrow-icon1.png" ></image>
 			</view>
-			<view class="info">
+			<view class="info" @click="webSelf.$Router.navigateTo({route:{path:'/pages/supervisor_user/supervisor_user'}})">
 				<view class="ilblock listimg">
 					<image src="../../static/images/about-icon14.png"></image>
 				</view>

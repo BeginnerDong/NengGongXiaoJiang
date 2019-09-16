@@ -17,10 +17,16 @@
 				<image src="../../static/images/about-workbench-icon4.png" alt=""/>
 				<view class="tit">预算申请</view>
 			</view>
+			<view class="item" @click="webSelf.$Router.navigateTo({route:{path:'/pages/myWorkbench_addBudget/myWorkbench_addBudget'}})">
+				<image src="../../static/images/about-workbench-icon5.png" alt=""/>
+				<view class="tit">申请追加预算</view>
+			</view>
 			<view class="item" @click="webSelf.$Router.navigateTo({route:{path:'/pages/myWorkbench_daka/myWorkbench_daka'}})">
 				<image src="../../static/images/about-workbench-icon5.png" alt=""/>
 				<view class="tit">工人打卡记录</view>
 			</view>
+			
+			
 			<view class="item" @click="webSelf.$Router.navigateTo({route:{path:'/pages/myWorkbench_database/myWorkbench_database'}})">
 				<image src="../../static/images/about-workbench-icon6.png" alt=""/>
 				<view class="tit">资料库</view>

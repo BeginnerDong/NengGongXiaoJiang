@@ -181,6 +181,10 @@ input,textarea {outline: none; -webkit-box-shadow: none; box-shadow: none;-webki
 	width:100%;
 }
 
+.noDataBox{margin: 80rpx auto;}
+.noDataBox image{width: 275rpx; height: 282rpx; display: block;margin: 0 auto;}
+
+
 /* 选择 */
 .r-selt{ display: flex;}
 .r-selt .selt{width:150rpx; display: flex; justify-content: flex-start; align-items: center;}
