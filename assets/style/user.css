@@ -149,10 +149,10 @@
 .tooling_indNav .list .item.on{background: #FFCB1E;}
 .tooling_indNav .list .item:last-child{border-right: 0;}
 
-.tooling_detail{padding-left: 30rpx;border-left: 2rpx solid #FFCB1E;padding-bottom: 160rpx;}
+.tooling_detail{padding-left: 30rpx;border-left: 2rpx solid #FFCB1E;padding-bottom: 60rpx;}
 .tooling_detail .infor{position: relative;}
 .tooling_detail .infor .dian{width: 32rpx;height: 32rpx; display: block;position: absolute;top: -6px;left: -46rpx;}
-.tooling_detail .data{}
+.tooling_detail .data{ font-size: 26rpx; color: #999;}
 .tooling_detail .title{padding: 26rpx 0 30rpx 0;font-size: 26rpx;}
 .tooling_detail .list{display: flex;justify-content: flex-start;width: 100%;box-sizing: border-box;font-size: 26rpx; align-items: normal; padding-bottom: 26rpx;}
 .tooling_detail .list .yy{margin-bottom: 30rpx;}

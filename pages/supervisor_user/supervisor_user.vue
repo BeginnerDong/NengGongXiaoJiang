@@ -31,7 +31,7 @@
 		</view>
 		
 		<view class="XlineNav">
-			<view class="info" @click="webSelf.$Router.navigateTo({route:{path:'/pages/designerOrder/designerOrder'}})">
+			<view class="info" @click="webSelf.$Router.navigateTo({route:{path:'/pages/supervisorOrder/supervisorOrder'}})">
 				<view class="ilblock listimg">
 					<image src="../../static/images/workers-icon5.png"></image>
 				</view>

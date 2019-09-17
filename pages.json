@@ -225,6 +225,7 @@
 				"onReachBottomDistance":100
 			}
 		},
+		
 		{
 			"path": "pages/supervisionDetail/supervisionDetail",
 			"style": {
@@ -602,6 +603,34 @@
 			"path": "pages/supervisor_help/supervisor_help",
 			"style": {
 				"navigationBarTitleText": "帮助中心",
+				"onReachBottomDistance":100
+			}
+		},
+		{
+			"path": "pages/supervisorOrder/supervisorOrder",
+			"style": {
+				"navigationBarTitleText": "我的订单",
+				"onReachBottomDistance":100
+			}
+		},
+		{
+			"path": "pages/supervisorOrderDetail/supervisorOrderDetail",
+			"style": {
+				"navigationBarTitleText": "订单详情",
+				"onReachBottomDistance":100
+			}
+		},
+		{
+			"path": "pages/supervisorOrderDetail_unit/supervisorOrderDetail_unit",
+			"style": {
+				"navigationBarTitleText": "面积及辅料",
+				"onReachBottomDistance":100
+			}
+		},
+		{
+			"path": "pages/myWorkbench_daka_goOff/myWorkbench_daka_goOff",
+			"style": {
+				"navigationBarTitleText": "下班打卡",
 				"onReachBottomDistance":100
 			}
 		}

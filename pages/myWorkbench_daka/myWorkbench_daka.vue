@@ -22,6 +22,27 @@
 			</view>
 		</view>
 		
+		<view class="fabubtn" style="top: 28%;"  @click="refundAlert">
+			<view class="icon">
+				<image src="../../static/images/daka-icon1.png" mode=""></image>
+			</view>
+			<view class="tit">上班</view>
+		</view>
+		
+		<view class="fabubtn"  style="top: 45%;" @click="webSelf.$Router.navigateTo({route:{path:'/pages/myWorkbench_daka_goOff/myWorkbench_daka_goOff'}})">
+			<view class="icon">
+				<image src="../../static/images/daka-icon2.png" mode=""></image>
+			</view>
+			<view class="tit" >下班</view>
+		</view>
+		
+		<!-- 打卡弹框 -->
+		<view class="dakaAlert center" v-if="is_show">
+			<view class="colseBtn"  @click="refundAlert">×</view>
+			<view class="tit">打卡成功</view>
+			<view class="time">09:00:00</view>
+		</view>
+		
 	</view>
 </template>
 
@@ -33,6 +54,7 @@
 				showView: false,
 				score:'',
 				wx_info:{},
+				is_show:false,
 				dakaDate:[
 					{},{},{}
 				]
@@ -43,6 +65,10 @@
 			//self.$Utils.loadAll(['getMainData'], self);
 		},
 		methods: {
+			refundAlert(){
+				const self = this;
+				self.is_show = !self.is_show
+			},
 			getMainData() {
 				const self = this;
 				console.log('852369')
@@ -74,6 +100,11 @@
 	.dakaJilu .line .tt{width: 180rpx;}
 	.dakaJilu .line .pic{width: 350rpx;}
 	.dakaJilu .line .pic image{width: 150rpx; height: 150rpx;display: block;margin-right: 20rpx;}
+	
+	.dakaAlert{ position: fixed; top: 50%;left: 50%; transform: translate(-50%,-50%); width: 80%;padding: 80rpx 3%;background: rgba(0,0,0,0.5); color: #fff;box-sizing: border-box; z-index: 66;border-radius: 12rpx;}
+	.dakaAlert .colseBtn{ border: 2rpx solid #ffff; color: #fff;background: none; left: auto; right: 20rpx; top: 20rpx; transform: initial;}
+	.dakaAlert .tit{font-size: 32rpx;margin-bottom: 40rpx;}
+	.dakaAlert .time{font-size: 60rpx;}
 	
 	
 </style>

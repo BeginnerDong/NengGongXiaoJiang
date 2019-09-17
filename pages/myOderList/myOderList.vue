@@ -42,7 +42,7 @@
 					</view>
 				</view>
 				<view class="bBtn">
-					<view class="btn">退款</view>
+					<view class="btn" @click="refundAlert">退款</view>
 				</view>
 			</view>
 			
@@ -61,7 +61,7 @@
 					</view>
 				</view>
 				<view class="bBtn">
-					<view class="btn">退款</view>
+					<view class="btn" @click="refundAlert">退款</view>
 					<view class="btn">确认收货</view>
 				</view>
 			</view>
@@ -83,6 +83,17 @@
 			</view>
 		</view>
 
+		<view class="refundAlert" v-if="is_show">
+			<view class="refundExplain">
+				<view>
+					<textarea class="textMsg" value="" placeholder="请填写退款原因" placeholder-style="color:#999" />
+				</view>
+				<view class="submitbtn">
+					<button type="button" style="width: 100%; margin:80rpx 0 20rpx 0;">提交</button>
+				</view>
+				<view class="colseBtn"  @click="refundAlert" style="top: auto;bottom: -120rpx;">×</view>
+			</view>
+		</view>
 
 	</view>
 
@@ -96,7 +107,8 @@
 				showView: false,
 				score: '',
 				wx_info: {},
-				current:1
+				current:1,
+				is_show:false
 			}
 		},
 
@@ -116,7 +128,10 @@
 					self.current = current
 				}
 			},
-
+			refundAlert(){
+				const self = this;
+				self.is_show = !self.is_show
+			},
 			getMainData() {
 				const self = this;
 				self.$apis.userGet(postData, callback);
@@ -128,4 +143,5 @@
 <style>
 	@import "../../assets/style/user.css";
 	page{background: #f5f5f5; padding-bottom: 80rpx;}
+
 </style>
