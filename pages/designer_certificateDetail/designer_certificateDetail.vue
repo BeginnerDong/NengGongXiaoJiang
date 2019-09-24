@@ -19,7 +19,7 @@
 			
 		</view>
 		<view class="submitbtn" style="margin: 200rpx auto">
-			<button type="submit" @click="webSelf.$Router.navigateTo({route:{path:'/pages/designer_certificate/designer_certificate'}})">保存</button>
+			<button type="submit" @click=" Router.navigateTo({route:{path:'/pages/designer_certificate/designer_certificate'}})">保存</button>
 		</view>
 		
 	</view>
@@ -29,7 +29,7 @@
 	export default {
 		data() {
 			return {
-				webSelf: this,
+				Router:this.$Router,
 				showView: false,
 				score:'',
 				wx_info:{},

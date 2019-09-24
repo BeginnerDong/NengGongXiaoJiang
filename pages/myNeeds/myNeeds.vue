@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<view class="myNeed_ind pdlr4">
-			<view class="item boxShaow flexRowBetween" @click="webSelf.$Router.navigateTo({route:{path:'/pages/myNeedsDetail/myNeedsDetail'}})">
+			<view class="item boxShaow flexRowBetween" @click=" Router.navigateTo({route:{path:'/pages/myNeedsDetail/myNeedsDetail'}})">
 				<view class="cont">
 					<view class="lis flex">
 						<image class="icon" src="../../static/images/home-housing-icon1.png" mode=""></image>
@@ -16,7 +16,7 @@
 				</view>
 				<view class="arrow"><image src="../../static/images/arrow-icon1.png" mode=""></image></view>
 			</view>
-			<view class="item boxShaow flexRowBetween"  @click="webSelf.$Router.navigateTo({route:{path:'/pages/myNeedsDetail/myNeedsDetail'}})">
+			<view class="item boxShaow flexRowBetween"  @click=" Router.navigateTo({route:{path:'/pages/myNeedsDetail/myNeedsDetail'}})">
 				<view class="cont">
 					<view class="lis flex">
 						<image class="icon" src="../../static/images/home-housing-icon1.png" mode=""></image>
@@ -41,7 +41,7 @@
 	export default {
 		data() {
 			return {
-				webSelf: this,
+				Router:this.$Router,
 				showView: false,
 				score: '',
 				wx_info: {},

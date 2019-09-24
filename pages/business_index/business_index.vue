@@ -37,7 +37,7 @@
 			<view class="tt">发布商品</view>
 		</view>
 		<view class="designIndex pdlr4">
-			<view class="items flexRowBetween" v-for="(item,index) in businessDate" :key="index" @click="webSelf.$Router.navigateTo({route:{path:'/pages/pageDetail/pageDetail'}})">
+			<view class="items flexRowBetween" v-for="(item,index) in businessDate" :key="index" @click=" Router.navigateTo({route:{path:'/pages/pageDetail/pageDetail'}})">
 				<view class="pic">
 					<image src="../../static/images/home-img3.png" alt="" />
 				</view>
@@ -62,7 +62,7 @@
 	export default {
 		data() {
 			return {
-				webSelf: this,
+				Router:this.$Router,
 				showView: false,
 				score:'',
 				wx_info:{},

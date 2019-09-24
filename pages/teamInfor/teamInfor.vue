@@ -1,11 +1,11 @@
 <template>
 	<view>
 		<view class="work_indLis pdlr4 flexRowAround">
-			<view class="item" @click="webSelf.$Router.navigateTo({route:{path:'/pages/teamInfor_enterprise/teamInfor_enterprise'}})">
+			<view class="item" @click=" Router.navigateTo({route:{path:'/pages/teamInfor_enterprise/teamInfor_enterprise'}})">
 				<image src="../../static/images/about-workbench-icon1.png" alt=""/>
 				<view class="tit">企业</view>
 			</view>
-			<view class="item" @click="webSelf.$Router.navigateTo({route:{path:'/pages/teamInfor_personal/teamInfor_personal'}})">
+			<view class="item" @click=" Router.navigateTo({route:{path:'/pages/teamInfor_personal/teamInfor_personal'}})">
 				<image src="../../static/images/about-workbench-icon2.png" alt=""/>
 				<view class="tit">个人</view>
 			</view>
@@ -21,7 +21,7 @@
 	export default {
 		data() {
 			return {
-				webSelf: this,
+				Router:this.$Router,
 				showView: false,
 				score:'',
 				wx_info:{},

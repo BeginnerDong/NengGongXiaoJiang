@@ -7,7 +7,7 @@
 		
 		<view class="f5H10" style="margin-top: 20rpx;"></view>
 		
-		<view class="fabubtn" @click="webSelf.$Router.navigateTo({route:{path:'/pages/addStudent/addStudent'}})">
+		<view class="fabubtn" @click=" Router.navigateTo({route:{path:'/pages/addStudent/addStudent'}})">
 			<view class="icon">
 				<image src="../../static/images/home-interactive-icon1.png" mode=""></image>
 			</view>
@@ -15,7 +15,7 @@
 		</view>
 		
 		<view class="college_idexLis pdlr4 flexRowBetween">
-			<view class="child"  v-for="(item,index) in collegeDate" :key="index"  @click="webSelf.$Router.navigateTo({route:{path:'/pages/collegeDetail/collegeDetail'}})">
+			<view class="child"  v-for="(item,index) in collegeDate" :key="index"  @click=" Router.navigateTo({route:{path:'/pages/collegeDetail/collegeDetail'}})">
 				<image class="pic" src="../../static/images/home-college-img.png" mode=""></image>
 				<view class="tit avoidOverflow">标题标题标题标题标题标题标题标题</view>
 			</view>
@@ -37,7 +37,7 @@
 		},
 		data() {
 			return {
-				webSelf: this,
+				
 				showView: false,
 				score:'',
 				Router:this.$Router,

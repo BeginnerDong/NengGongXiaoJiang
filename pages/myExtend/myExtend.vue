@@ -3,7 +3,7 @@
 		<view class="myExtendTop">
 			<view class="money">5600</view>
 			<view class="yuan">推广奖励</view>
-			<view class="txBtn" @click="webSelf.$Router.navigateTo({route:{path:'/pages/myCashOut/myCashOut'}})">提现</view>
+			<view class="txBtn" @click=" Router.navigateTo({route:{path:'/pages/myCashOut/myCashOut'}})">提现</view>
 			<!-- myCashOut -->
 		</view>
 		
@@ -21,7 +21,7 @@
 			</view>
 		</view>
 		<view class="myExtendBox2" v-if="num==2">
-			<view class="postersbox pr" @click="webSelf.$Router.navigateTo({route:{path:'/pages/myExtend_starEdeem/myExtend_starEdeem'}})">
+			<view class="postersbox pr" @click=" Router.navigateTo({route:{path:'/pages/myExtend_starEdeem/myExtend_starEdeem'}})">
 				<image class="pic" src="../../static/images/about-posters-img.png" mode=""></image>
 				<view class="infor">
 					<view class="red font11">23561J</view>
@@ -39,7 +39,7 @@
 	export default {
 		data() {
 			return {
-				webSelf: this,
+				Router:this.$Router,
 				showView: false,
 				score:'',
 				wx_info:{},

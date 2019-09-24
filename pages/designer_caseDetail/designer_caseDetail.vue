@@ -46,7 +46,7 @@
 			</form>
 		</view>
 		<view class="submitbtn" style="margin: 100rpx auto">
-			<button type="submit" @click="webSelf.$Router.navigateTo({route:{path:'/pages/designer_case/designer_case'}})">确定</button>
+			<button type="submit" @click=" Router.navigateTo({route:{path:'/pages/designer_case/designer_case'}})">确定</button>
 		</view>
 	</view>
 </template>
@@ -55,7 +55,7 @@
 	export default {
 		data() {
 			return {
-				webSelf: this,
+				Router:this.$Router,
 				showView: false,
 				score:'',
 				wx_info:{},

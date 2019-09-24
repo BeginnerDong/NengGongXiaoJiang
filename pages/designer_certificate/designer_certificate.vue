@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<view class="fabubtn" @click="webSelf.$Router.navigateTo({route:{path:'/pages/designer_certificateDetail/designer_certificateDetail'}})">
+		<view class="fabubtn" @click=" Router.navigateTo({route:{path:'/pages/designer_certificateDetail/designer_certificateDetail'}})">
 			<view class="icon">
 				<image src="../../static/images/certificate-icon1.png" mode=""></image>
 			</view>
@@ -13,7 +13,7 @@
 						<image class="deltIcon" src="../../static/images/certificate-icon2.png" mode=""></image>删除
 					</view>
 				</view>
-				<view class="item flexRowBetween" @click="webSelf.$Router.navigateTo({route:{path:'/pages/designer_certificateDetail/designer_certificateDetail'}})">
+				<view class="item flexRowBetween" @click=" Router.navigateTo({route:{path:'/pages/designer_certificateDetail/designer_certificateDetail'}})">
 					<view class="cont">
 						<view class="lis flex">
 							<image class="icon" src="../../static/images/certificate-icon3.png" mode=""></image>
@@ -39,7 +39,7 @@
 	export default {
 		data() {
 			return {
-				webSelf: this,
+				Router:this.$Router,
 				showView: false,
 				score: '',
 				wx_info: {},

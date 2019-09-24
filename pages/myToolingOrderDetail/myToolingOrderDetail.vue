@@ -39,7 +39,7 @@
 		<view class="noDataBox">
 			<image src="../../static/images/img.png" mode=""></image>
 			<view class="submitbtn" style="margin-top: 80rpx;">
-				<button type="button"  @click="webSelf.$Router.navigateTo({route:{path:'/pages/myToolingOrderDetail_startReceipt/myToolingOrderDetail_startReceipt'}})">开始接单</button>
+				<button type="button"  @click=" Router.navigateTo({route:{path:'/pages/myToolingOrderDetail_startReceipt/myToolingOrderDetail_startReceipt'}})">开始接单</button>
 			</view>
 		</view>
 		
@@ -142,10 +142,10 @@
 				总价：<text class="price">2000</text><view class="btn">确认</view>
 			</view>
 			<view class="">
-				<view class="okBtn" @click="webSelf.$Router.navigateTo({route:{path:'/pages/myToolingOrder_contract/myToolingOrder_contract'}})">确认合同</view>
+				<view class="okBtn" @click=" Router.navigateTo({route:{path:'/pages/myToolingOrder_contract/myToolingOrder_contract'}})">确认合同</view>
 			</view>
 			<view>
-				<view class="WorkbenchBtn" @click="webSelf.$Router.navigateTo({route:{path:'/pages/myWorkbench/myWorkbench'}})">工作台</view>
+				<view class="WorkbenchBtn" @click=" Router.navigateTo({route:{path:'/pages/myWorkbench/myWorkbench'}})">工作台</view>
 			</view>
 		</view>
 		
@@ -157,7 +157,7 @@
 	export default {
 		data() {
 			return {
-				webSelf: this,
+				Router:this.$Router,
 				showView: false,
 				score: '',
 				wx_info: {},

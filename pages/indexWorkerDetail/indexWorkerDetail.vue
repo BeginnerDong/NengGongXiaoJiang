@@ -6,7 +6,7 @@
 		
 		<view class="designXq_name pdlr4" style="margin-top: 0;padding: 30rpx 4%;">
 			<view class="lis1">
-				<view class="photo" @click="webSelf.$Router.navigateTo({route:{path:'/pages/indexWorker_index/indexWorker_index'}})">
+				<view class="photo" @click=" Router.navigateTo({route:{path:'/pages/indexWorker_index/indexWorker_index'}})">
 					<image src="../../static/images/gerenzhuye-img2.png" mode=""></image>
 				</view>
 				<view class="cont">
@@ -63,7 +63,7 @@
 		</view>
 		
 		<view class="proLis flexRowBetween xqProlis">
-			<view class="item-lis" v-for="(item,index) in produtList" :key="index" @click="webSelf.$Router.navigateTo({route:{path:'/pages/indexWorkerDetailTwo/indexWorkerDetailTwo'}})">
+			<view class="item-lis" v-for="(item,index) in produtList" :key="index" @click=" Router.navigateTo({route:{path:'/pages/indexWorkerDetailTwo/indexWorkerDetailTwo'}})">
 				<image class="img" src="../../static/images/home-img3.png" alt="" />
 				<view class="tit avoidOverflow2">名称名称名称名称名称名称名称名名称名称名称名称名称名称</view>
 			</view>
@@ -73,7 +73,7 @@
 		<!-- 底部菜单按钮 -->
 		<view class="xqbotomBar">
 			<view class="left">
-				<view class="ite" @click="webSelf.$Router.switchTab({route:{path:'/pages/index/index'}})">
+				<view class="ite" @click=" Router.switchTab({route:{path:'/pages/index/index'}})">
 					<image src="../../static/images/details-icon2.png" mode=""></image>
 					<view>返回首页</view>
 				</view>
@@ -86,7 +86,7 @@
 					<view>客服</view>
 				</view>
 			</view>
-			<view class="payBtn" @click="webSelf.$Router.navigateTo({route:{path:'/pages/yuyue/yuyue'}})">立即预约</view>
+			<view class="payBtn" @click=" Router.navigateTo({route:{path:'/pages/yuyue/yuyue'}})">立即预约</view>
 		</view>
 	</view>
 
@@ -97,7 +97,7 @@
 	export default {
 		data() {
 			return {
-				webSelf: this,
+				Router:this.$Router,
 				showView: false,
 				score:'',
 				wx_info:{},

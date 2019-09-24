@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<view class="designIndex pdlr4" style="padding-top: 10rpx;">
-			<view class="items flexRowBetween" v-for="(item,index) in produtList" :key="index"  @click="webSelf.$Router.navigateTo({route:{path:'/pages/indexDesignDetail/indexDesignDetail'}})">
+			<view class="items flexRowBetween" v-for="(item,index) in produtList" :key="index"  @click=" Router.navigateTo({route:{path:'/pages/indexDesignDetail/indexDesignDetail'}})">
 				<view class="pic">
 					<image src="../../static/images/home-img3.png" alt="" />
 				</view>
@@ -26,7 +26,7 @@
 	export default {
 		data() {
 			return {
-				webSelf: this,
+				Router:this.$Router,
 				showView: false,
 				score: '',
 				wx_info: {},

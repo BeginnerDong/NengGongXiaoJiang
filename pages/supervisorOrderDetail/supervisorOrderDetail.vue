@@ -143,9 +143,9 @@
 		</view>
 		
 		<view class="threeBtn flexRowBetween">
-			<view class="itm" @click="webSelf.$Router.navigateTo({route:{path:'/pages/supervisorOrderDetail_unit/supervisorOrderDetail_unit'}})">面积及辅料</view>
-			<view class="itm" @click="webSelf.$Router.navigateTo({route:{path:'/pages/myWorkbench_daka/myWorkbench_daka'}})">打卡</view>
-			<view class="itm" @click="webSelf.$Router.navigateTo({route:{path:'/pages/myWorkbench_database/myWorkbench_database'}})">资料库</view>
+			<view class="itm" @click=" Router.navigateTo({route:{path:'/pages/supervisorOrderDetail_unit/supervisorOrderDetail_unit'}})">面积及辅料</view>
+			<view class="itm" @click=" Router.navigateTo({route:{path:'/pages/myWorkbench_daka/myWorkbench_daka'}})">打卡</view>
+			<view class="itm" @click=" Router.navigateTo({route:{path:'/pages/myWorkbench_database/myWorkbench_database'}})">资料库</view>
 		</view>
 		
 	</view>
@@ -156,7 +156,7 @@
 	export default {
 		data() {
 			return {
-				webSelf: this,
+				Router:this.$Router,
 				showView: false,
 				score: '',
 				wx_info: {},

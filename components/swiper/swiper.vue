@@ -1,7 +1,7 @@
 <template>
 	<view class="banner-box pdlr4">
 		<view class="banner">
-			<swiper class="swiper-box" indicator-dots="indicatorDots" autoplay="autoplay" interval="interval" duration="duration" indicator-active-color="#FFCB1E">
+			<swiper class="swiper-box" indicator-dots="true" autoplay="true" interval="3000" duration="1000" indicator-active-color="#FFCB1E">
 				<block v-for="(item,index) in labelData" :key="index">
 					<swiper-item class="swiper-item">
 						<image :src="item" class="slide-image" />
@@ -20,7 +20,7 @@
 		data() {
 			return {
 				currIndex: 0,
-				webSelf:this,
+				
 				labelData: [
 					"../../static/images/home-banenr.png",
 					"../../static/images/details-img1.png",

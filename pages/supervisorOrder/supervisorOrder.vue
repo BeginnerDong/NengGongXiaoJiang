@@ -28,7 +28,7 @@
 					</view>
 				</view>
 				<view class="bBtn">
-					<view class="btn"  @click="webSelf.$Router.navigateTo({route:{path:'/pages/supervisorOrderDetail/supervisorOrderDetail'}})">查看详情</view>
+					<view class="btn"  @click=" Router.navigateTo({route:{path:'/pages/supervisorOrderDetail/supervisorOrderDetail'}})">查看详情</view>
 				</view>
 			</view>
 		</view>
@@ -40,7 +40,7 @@
 	export default {
 		data() {
 			return {
-				webSelf: this,
+				Router:this.$Router,
 				showView: false,
 				score: '',
 				wx_info: {}

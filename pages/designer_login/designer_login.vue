@@ -20,9 +20,9 @@
 			</view>
 		</view>
 		<view class="submitbtn" style="margin: 200rpx auto">
-			<button type="submit" style="margin-bottom: 20rpx;" @click="webSelf.$Router.navigateTo({route:{path:'/pages/designer_user/designer_user'}})">登录</button>
+			<button type="submit" style="margin-bottom: 20rpx;" @click=" Router.navigateTo({route:{path:'/pages/designer_user/designer_user'}})">登录</button>
 			<view class="agreeSel">
-				<view class="text color2" @click="webSelf.$Router.navigateTo({route:{path:'/pages/designer_register/designer_register'}})">没有账号，去注册</view>
+				<view class="text color2" @click=" Router.navigateTo({route:{path:'/pages/designer_register/designer_register'}})">没有账号，去注册</view>
 			</view>
 		</view>
 	</view>
@@ -32,7 +32,7 @@
 	export default {
 		data() {
 			return {
-				webSelf: this,
+				Router:this.$Router,
 				showView: false,
 				score:'',
 				wx_info:{}

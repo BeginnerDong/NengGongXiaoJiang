@@ -7,7 +7,7 @@
 		
 		<view class="f5H10" style="margin-top: 20rpx;"></view>
 		
-		<view class="fabubtn" @click="webSelf.$Router.navigateTo({route:{path:'/pages/interactive_release/interactive_release'}})">
+		<view class="fabubtn" @click=" Router.navigateTo({route:{path:'/pages/interactive_release/interactive_release'}})">
 			<view class="icon">
 				<image src="../../static/images/home-interactive-icon1.png" mode=""></image>
 			</view>
@@ -15,7 +15,7 @@
 		</view>
 		
 		<view class="interct_idexLis mglr4 boxShaow">
-			<view class="child" @click="webSelf.$Router.navigateTo({route:{path:'/pages/interactiveDetail/interactiveDetail'}})">
+			<view class="child" @click=" Router.navigateTo({route:{path:'/pages/interactiveDetail/interactiveDetail'}})">
 				<view class="flex">
 					<view class="photo"><image src="../../static/images/home-interactive-img.png" mode=""></image></view>
 					<view class="name">
@@ -51,7 +51,7 @@
 				</view>
 			</view>
 			
-			<view class="child"  @click="webSelf.$Router.navigateTo({route:{path:'/pages/interactiveDetail/interactiveDetail'}})">
+			<view class="child"  @click=" Router.navigateTo({route:{path:'/pages/interactiveDetail/interactiveDetail'}})">
 				<view class="flex">
 					<view class="photo"><image src="../../static/images/home-interactive-img.png" mode=""></image></view>
 					<view class="name">
@@ -84,7 +84,7 @@
 				</view>
 			</view>
 			
-			<view class="child"  @click="webSelf.$Router.navigateTo({route:{path:'/pages/interactiveDetail/interactiveDetail'}})">
+			<view class="child"  @click=" Router.navigateTo({route:{path:'/pages/interactiveDetail/interactiveDetail'}})">
 				<view class="flex">
 					<view class="photo"><image src="../../static/images/home-interactive-img.png" mode=""></image></view>
 					<view class="name">
@@ -132,7 +132,7 @@
 		},
 		data() {
 			return {
-				webSelf: this,
+				
 				showView: false,
 				score:'',
 				Router:this.$Router,

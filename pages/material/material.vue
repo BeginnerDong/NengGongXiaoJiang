@@ -6,7 +6,7 @@
 		
 		<view class="ind-cont4">
 			<scroll-view class="list" scroll-x>
-				<view class="item" v-for="(item,index) in classLis" :key="index"  @click="webSelf.$Router.navigateTo({route:{path:'/pages/material_classify/material_classify'}})">
+				<view class="item" v-for="(item,index) in classLis" :key="index"  @click=" Router.navigateTo({route:{path:'/pages/material_classify/material_classify'}})">
 					<image :src="item.iconUrl" mode=""></image>
 					<view>{{item.name}}</view>
 				</view>
@@ -16,7 +16,7 @@
 		<view class="f5H10"></view>
 		
 		<view class="proLis flexRowBetween">
-			<view class="item-lis" v-for="(item,index) in produtList" :key="index" @click="webSelf.$Router.navigateTo({route:{path:'/pages/pageDetail/pageDetail'}})">
+			<view class="item-lis" v-for="(item,index) in produtList" :key="index" @click=" Router.navigateTo({route:{path:'/pages/pageDetail/pageDetail'}})">
 				<image class="img" src="../../static/images/home-img3.png" alt="" />
 				<view class="tit avoidOverflow">名称名称名称名称名称</view>
 				<view class="price">56.00</view>
@@ -39,7 +39,7 @@
 		},
 		data() {
 			return {
-				webSelf: this,
+				
 				showView: false,
 				score:'',
 				Router:this.$Router,

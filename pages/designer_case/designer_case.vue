@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<view class="fabubtn" @click="webSelf.$Router.navigateTo({route:{path:'/pages/designer_case_add/designer_case_add'}})">
+		<view class="fabubtn" @click=" Router.navigateTo({route:{path:'/pages/designer_case_add/designer_case_add'}})">
 			<view class="icon">
 				<image src="../../static/images/certificate-icon1.png" mode=""></image>
 			</view>
@@ -23,7 +23,7 @@
 							<view class="deltBtn" @click="deltAlert">
 								<image class="deltIcon" src="../../static/images/certificate-icon2.png" mode=""></image>删除
 							</view>
-							<view class="deltBtn" @click="webSelf.$Router.navigateTo({route:{path:'/pages/designer_caseDetail/designer_caseDetail'}})">
+							<view class="deltBtn" @click=" Router.navigateTo({route:{path:'/pages/designer_caseDetail/designer_caseDetail'}})">
 								<image class="deltIcon" src="../../static/images/skills-icon3.png" style="width: 28rpx; height: 27rpx;" mode=""></image>编辑
 							</view>
 						</view>
@@ -73,7 +73,7 @@
 	export default {
 		data() {
 			return {
-				webSelf: this,
+				Router:this.$Router,
 				showView: false,
 				score: '',
 				wx_info: {},

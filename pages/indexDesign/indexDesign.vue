@@ -6,19 +6,19 @@
 		
 		<view class="ind-cont4 flexCenter">
 			<scroll-view class="list" scroll-x>
-				<view class="item"@click="webSelf.$Router.navigateTo({route:{path:'/pages/indexDesign_classify/indexDesign_classify'}})">
+				<view class="item"@click=" Router.navigateTo({route:{path:'/pages/indexDesign_classify/indexDesign_classify'}})">
 					<image src="../../static/images/home-design-icon1.png" mode=""></image>
 					<view>个人设计师</view>
 				</view>
-				<view class="item" @click="webSelf.$Router.navigateTo({route:{path:'/pages/indexDesign_classify/indexDesign_classify'}})">
+				<view class="item" @click=" Router.navigateTo({route:{path:'/pages/indexDesign_classify/indexDesign_classify'}})">
 					<image src="../../static/images/home-design-icon2.png" mode=""></image>
 					<view>团队设计</view>
 				</view>
-				<view class="item" @click="webSelf.$Router.navigateTo({route:{path:'/pages/indexDesign_classify_sketch/indexDesign_classify_sketch'}})">
+				<view class="item" @click=" Router.navigateTo({route:{path:'/pages/indexDesign_classify_sketch/indexDesign_classify_sketch'}})">
 					<image src="../../static/images/home-design-icon3.png" mode=""></image>
 					<view>效果图</view>
 				</view>
-				<view class="item" @click="webSelf.$Router.navigateTo({route:{path:'/pages/indexDesign_classify_VR/indexDesign_classify_VR'}})">
+				<view class="item" @click=" Router.navigateTo({route:{path:'/pages/indexDesign_classify_VR/indexDesign_classify_VR'}})">
 					<image src="../../static/images/home-design-icon4.png" mode=""></image>
 					<view>VR视频</view>
 				</view>
@@ -37,7 +37,7 @@
 			<view class="tt">推荐设计师</view>
 		</view>
 		<view class="designIndex pdlr4">
-			<view class="items flexRowBetween" v-for="(item,index) in produtList" :key="index" @click="webSelf.$Router.navigateTo({route:{path:'/pages/indexDesignDetail/indexDesignDetail'}})">
+			<view class="items flexRowBetween" v-for="(item,index) in produtList" :key="index" @click=" Router.navigateTo({route:{path:'/pages/indexDesignDetail/indexDesignDetail'}})">
 				<view class="pic">
 					<image src="../../static/images/home-img3.png" alt="" />
 				</view>
@@ -80,7 +80,7 @@
 		},
 		data() {
 			return {
-				webSelf: this,
+				
 				showView: false,
 				score:'',
 				Router:this.$Router,

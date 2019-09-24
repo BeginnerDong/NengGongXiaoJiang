@@ -48,7 +48,7 @@
 			</view>
 			<view class="rr">
 				合计：<view class="mny">0.00</view>
-				<span class="jsBtn" @click="webSelf.$Router.navigateTo({route:{path:'/pages/confirmOrder/confirmOrder'}})">结算</span>
+				<span class="jsBtn" @click=" Router.navigateTo({route:{path:'/pages/confirmOrder/confirmOrder'}})">结算</span>
 			</view>
 		</view>	
 		
@@ -60,7 +60,7 @@
 	export default {
 		data() {
 			return {
-				webSelf: this,
+				Router:this.$Router,
 				is_show:false,
 				score: '',
 				proNum:0,
@@ -72,10 +72,7 @@
 			uni.setStorageSync('canClick', true);
 		},
 
-		onShow() {
-			const self = this;
-			document.title = '购物车'
-		},
+	
 
 		methods: {
 			change() {

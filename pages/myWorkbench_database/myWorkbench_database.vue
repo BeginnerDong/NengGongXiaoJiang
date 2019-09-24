@@ -22,7 +22,7 @@
 				</view>
 			</view>
 			<view class="submitbtn" style="margin-top: 100rpx;">
-				<button type="button" @click="webSelf.$Router.navigateTo({route:{path:'/pages/myWorkbench_database_upmsg/myWorkbench_database_upmsg'}})">上传资料</button>
+				<button type="button" @click=" Router.navigateTo({route:{path:'/pages/myWorkbench_database_upmsg/myWorkbench_database_upmsg'}})">上传资料</button>
 			</view>
 			
 		</view>
@@ -45,7 +45,7 @@
 	export default {
 		data() {
 			return {
-				webSelf: this,
+				Router:this.$Router,
 				showView: false,
 				score:'',
 				wx_info:{},

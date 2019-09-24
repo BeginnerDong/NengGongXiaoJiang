@@ -33,7 +33,7 @@
 			</view>
 			
 			<view class="submitbtn" style="margin-top: 200rpx;">
-				<button type="button"  @click="webSelf.$Router.navigateTo({route:{path:'/pages/myBankListMsg/myBankListMsg'}})">添加银行卡</button>
+				<button type="button"  @click=" Router.navigateTo({route:{path:'/pages/myBankListMsg/myBankListMsg'}})">添加银行卡</button>
 			</view>
 			<view class="xieyiAlert" v-if="is_show">
 				<view class="infor center" style="padding: 120rpx 30px;height: auto;border-radius: 10rpx;">
@@ -52,7 +52,7 @@
 	export default {
 		data() {
 			return {
-				webSelf: this,
+				Router:this.$Router,
 				showView: false,
 				score: '',
 				wx_info: {},

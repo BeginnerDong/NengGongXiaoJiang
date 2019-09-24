@@ -7,7 +7,7 @@
 		</view>
 		
 		<view class="designIndex pdlr4" style="padding-top: 10rpx;" v-if="current==1">
-			<view class="items flexRowBetween" v-for="(item,index) in produtList" :key="index"  @click="webSelf.$Router.navigateTo({route:{path:'/pages/indexDesignDetail/indexDesignDetail'}})">
+			<view class="items flexRowBetween" v-for="(item,index) in produtList" :key="index"  @click=" Router.navigateTo({route:{path:'/pages/indexDesignDetail/indexDesignDetail'}})">
 				<view class="pic">
 					<image src="../../static/images/home-img3.png" alt="" />
 				</view>
@@ -24,7 +24,7 @@
 			</view>
 		</view>
 		<view class="designIndex pdlr4" style="padding-top: 10rpx;" v-if="current==2">
-			<view class="items flexRowBetween" v-for="(item,index) in produtList" :key="index"  @click="webSelf.$Router.navigateTo({route:{path:'/pages/indexWorkerDetail/indexWorkerDetail'}})">
+			<view class="items flexRowBetween" v-for="(item,index) in produtList" :key="index"  @click=" Router.navigateTo({route:{path:'/pages/indexWorkerDetail/indexWorkerDetail'}})">
 				<view class="pic">
 					<image src="../../static/images/home-img3.png" alt="" />
 				</view>
@@ -42,7 +42,7 @@
 		</view>
 		
 		<view class="proLis flexRowBetween" v-if="current==3">
-			<view class="item-lis" v-for="(item,index) in materialData" :key="index" @click="webSelf.$Router.navigateTo({route:{path:'/pages/pageDetail/pageDetail'}})">
+			<view class="item-lis" v-for="(item,index) in materialData" :key="index" @click=" Router.navigateTo({route:{path:'/pages/pageDetail/pageDetail'}})">
 				<image class="img" src="../../static/images/home-img3.png" alt="" />
 				<view class="tit avoidOverflow">名称名称名称名称名称</view>
 				<view class="price">56.00</view>
@@ -58,7 +58,7 @@
 	export default {
 		data() {
 			return {
-				webSelf: this,
+				Router:this.$Router,
 				showView: false,
 				score: '',
 				wx_info: {},

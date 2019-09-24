@@ -11,7 +11,7 @@
 				</view>
 			</view>
 			<view class="class_rightCont">
-				<view class="class_sketch"  @click="webSelf.$Router.navigateTo({route:{path:'/pages/indexDesign_classify_sketchDetail/indexDesign_classify_sketchDetail'}})">
+				<view class="class_sketch"  @click="Router.navigateTo({route:{path:'/pages/indexDesign_classify_sketchDetail/indexDesign_classify_sketchDetail'}})">
 					<view class="item boxShaow" v-for="(item,index) in sketchData" :key="index">
 						<view class="photo">
 							<image src="../../static/images/details-img1.png" mode=""></image>
@@ -34,7 +34,7 @@
 		data() {
 			return {
 				currIndex: 0,
-				webSelf:this,
+				Router:this.$Router,
 				num:1,
 				curr:1,
 				sketchData: [

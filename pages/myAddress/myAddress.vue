@@ -32,7 +32,7 @@
 			</view>
 			
 			<view class="submitbtn" style="margin-top: 200rpx;">
-				<button type="button"  @click="webSelf.$Router.navigateTo({route:{path:'/pages/myAddressAdd/myAddressAdd'}})">添加地址</button>
+				<button type="button"  @click=" Router.navigateTo({route:{path:'/pages/myAddressAdd/myAddressAdd'}})">添加地址</button>
 			</view>
 	</view>
 </template>
@@ -41,7 +41,7 @@
 	export default {
 		data() {
 			return {
-				webSelf: this,
+				Router:this.$Router,
 				showView: false,
 				score: '',
 				wx_info: {}

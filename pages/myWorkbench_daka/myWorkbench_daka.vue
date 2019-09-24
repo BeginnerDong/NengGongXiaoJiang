@@ -29,7 +29,7 @@
 			<view class="tit">上班</view>
 		</view>
 		
-		<view class="fabubtn"  style="top: 45%;" @click="webSelf.$Router.navigateTo({route:{path:'/pages/myWorkbench_daka_goOff/myWorkbench_daka_goOff'}})">
+		<view class="fabubtn"  style="top: 45%;" @click=" Router.navigateTo({route:{path:'/pages/myWorkbench_daka_goOff/myWorkbench_daka_goOff'}})">
 			<view class="icon">
 				<image src="../../static/images/daka-icon2.png" mode=""></image>
 			</view>
@@ -50,7 +50,7 @@
 	export default {
 		data() {
 			return {
-				webSelf: this,
+				Router:this.$Router,
 				showView: false,
 				score:'',
 				wx_info:{},

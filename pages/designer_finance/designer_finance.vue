@@ -3,7 +3,7 @@
 		<view class="myExtendTop">
 			<view class="money" style="color: #222;font-weight: normal;">5600</view>
 			<view class="yuan">账户余额</view>
-			<view class="txBtn" @click="webSelf.$Router.navigateTo({route:{path:'/pages/myCashOut/myCashOut'}})">提现</view>
+			<view class="txBtn" @click=" Router.navigateTo({route:{path:'/pages/myCashOut/myCashOut'}})">提现</view>
 			<!-- myCashOut -->
 		</view>
 		<view class="f5H5">
@@ -85,7 +85,7 @@
 	export default {
 		data() {
 			return {
-				webSelf: this,
+				Router:this.$Router,
 				showView: false,
 				score:'',
 				wx_info:{},

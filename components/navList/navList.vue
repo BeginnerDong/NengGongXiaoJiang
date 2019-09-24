@@ -2,14 +2,14 @@
 	<view>
 		<scroll-view class="navLisBox" scroll-x>
 			<!-- 点击导航选中当前项 -->
-			<view class="nav-item " :class="num==1?'active':''" @click="webSelf.$Router.switchTab({route:{path:'/pages/index/index'}})">热门</view>
-			<view class="nav-item" :class="num==2?'active':''" @click="webSelf.$Router.navigateTo({route:{path:'/pages/indexDesign/indexDesign'}})">设计</view>
-			<view class="nav-item" :class="num==3?'active':''" @click="webSelf.$Router.navigateTo({route:{path:'/pages/indexWorker/indexWorker'}})">工人</view>
-			<view class="nav-item" :class="num==4?'active':''"  @click="webSelf.$Router.navigateTo({route:{path:'/pages/material/material'}})">材料</view>
-			<view class="nav-item" :class="num==5?'active':''"  @click="webSelf.$Router.navigateTo({route:{path:'/pages/houseShow/houseShow'}})">房源展示</view>
-			<view class="nav-item" :class="num==6?'active':''"  @click="webSelf.$Router.navigateTo({route:{path:'/pages/interactive/interactive'}})">互动</view>
-			<view class="nav-item" :class="num==7?'active':''"  @click="webSelf.$Router.navigateTo({route:{path:'/pages/supervision/supervision'}})">监理</view>
-			<view class="nav-item" :class="num==8?'active':''"  @click="webSelf.$Router.navigateTo({route:{path:'/pages/college/college'}})">学院</view>
+			<view class="nav-item " :class="num==1?'active':''" @click="Router.switchTab({route:{path:'/pages/index/index'}})">热门</view>
+			<view class="nav-item" :class="num==2?'active':''" @click="Router.navigateTo({route:{path:'/pages/indexDesign/indexDesign'}})">设计</view>
+			<view class="nav-item" :class="num==3?'active':''" @click="Router.navigateTo({route:{path:'/pages/indexWorker/indexWorker'}})">工人</view>
+			<view class="nav-item" :class="num==4?'active':''"  @click="Router.navigateTo({route:{path:'/pages/material/material'}})">材料</view>
+			<view class="nav-item" :class="num==5?'active':''"  @click="Router.navigateTo({route:{path:'/pages/houseShow/houseShow'}})">房源展示</view>
+			<view class="nav-item" :class="num==6?'active':''"  @click="Router.navigateTo({route:{path:'/pages/interactive/interactive'}})">互动</view>
+			<view class="nav-item" :class="num==7?'active':''"  @click="Router.navigateTo({route:{path:'/pages/supervision/supervision'}})">监理</view>
+			<view class="nav-item" :class="num==8?'active':''"  @click="Router.navigateTo({route:{path:'/pages/college/college'}})">学院</view>
 		</scroll-view>
 	</view>
 </template>
@@ -22,7 +22,7 @@
 		data() {
 			return {
 				currIndex: 0,
-				webSelf:this,
+				Router:this.$Router,
 				num:1
 			};
 		},

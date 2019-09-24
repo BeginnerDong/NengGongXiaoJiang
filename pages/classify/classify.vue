@@ -36,7 +36,7 @@
 				</view>
 				<view class="class_infor">
 					<view class="designIndex">
-						<view class="items flexRowBetween" v-for="(item,index) in produtList" :key="index" @click="webSelf.$Router.navigateTo({route:{path:'/pages/indexWorkerDetail/indexWorkerDetail'}})">
+						<view class="items flexRowBetween" v-for="(item,index) in produtList" :key="index" @click=" Router.navigateTo({route:{path:'/pages/indexWorkerDetail/indexWorkerDetail'}})">
 							<view class="pic">
 								<image src="../../static/images/home-img3.png" alt="" />
 							</view>
@@ -68,7 +68,7 @@
 		data() {
 			return {
 				currIndex: 0,
-				webSelf:this,
+				Router:this.$Router,
 				num:1,
 				curr:1,
 				produtList: [

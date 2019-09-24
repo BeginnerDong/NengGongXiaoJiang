@@ -35,8 +35,7 @@
 	export default {
 		data() {
 			return {
-				webSelf: this,
-				showView: false,
+				Router:this.$Router,
 				score:'',
 				wx_info:{}
 			}

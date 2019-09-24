@@ -20,13 +20,13 @@
 			</view>
 			<view class="seachInput flex">
 				<input type="text" placeholder="请输入你需要的工种" placeholder-style="color:#999"/>
-				<button class="Btn" type="submint"  @click="webSelf.$Router.navigateTo({route:{path:'/pages/seachWorker/seachWorker'}})"></button>
+				<button class="Btn" type="submint"  @click="Router.navigateTo({route:{path:'/pages/seachWorker/seachWorker'}})"></button>
 			</view>
 		</view>
 		
 		<view class="ind-cont4">
 			<scroll-view class="list" scroll-x>
-				<view class="item" v-for="(item,index) in classLis" :key="index"  @click="webSelf.$Router.navigateTo({route:{path:'/pages/classify/classify'}})">
+				<view class="item" v-for="(item,index) in classLis" :key="index"  @click="Router.navigateTo({route:{path:'/pages/classify/classify'}})">
 					<image :src="item.iconUrl" mode=""></image>
 					<view>{{item.name}}</view>
 				</view>
@@ -37,11 +37,11 @@
 		
 		<view class="ind_cont5">
 			<view class="flexRowBetween">
-				<view class="item" @click="webSelf.$Router.navigateTo({route:{path:'/pages/indexDesign/indexDesign'}})">
+				<view class="item" @click="Router.navigateTo({route:{path:'/pages/indexDesign/indexDesign'}})">
 					<image src="../../static/images/home-img1.png" mode=""></image>
 					<view class="tit">优秀设计师</view>
 				</view>
-				<view class="item"  @click="webSelf.$Router.navigateTo({route:{path:'/pages/indexWorker/indexWorker'}})">
+				<view class="item"  @click="Router.navigateTo({route:{path:'/pages/indexWorker/indexWorker'}})">
 					<image src="../../static/images/home-img1.png" mode=""></image>
 					<view class="tit">优秀工人</view>
 				</view>
@@ -56,7 +56,7 @@
 			<view class="more">更多&gt;</view>
 		</view>
 		<view class="proLis flexRowBetween">
-			<view class="item-lis" v-for="(item,index) in produtList" :key="index" @click="webSelf.$Router.navigateTo({route:{path:'/pages/pageDetail/pageDetail'}})">
+			<view class="item-lis" v-for="(item,index) in produtList" :key="index" @click="Router.navigateTo({route:{path:'/pages/pageDetail/pageDetail'}})">
 				<image class="img" src="../../static/images/home-img3.png" alt="" />
 				<view class="tit avoidOverflow">名称名称名称名称名称</view>
 				<view class="price">56.00</view>
@@ -70,7 +70,7 @@
 		</view>
 		<view class="tejiaBox">
 			<scroll-view class="scrollX" scroll-x>
-				<view class="item-lis" v-for="(item,index) in produtList" :key="index" @click="webSelf.$Router.navigateTo({route:{path:'/pages/pageDetail/pageDetail'}})">
+				<view class="item-lis" v-for="(item,index) in produtList" :key="index" @click="Router.navigateTo({route:{path:'/pages/pageDetail/pageDetail'}})">
 					<image class="img" src="../../static/images/home-img4.png" alt="" />
 					<view class="tit avoidOverflow">名称名称名称名称名称名称名称名称名称名称名称名称名称名称名称名称名称名称名称名称名称</view>
 					<view class="price">56.00</view>
@@ -93,7 +93,7 @@
 		},
 		data() {
 			return {
-				webSelf: this,
+				
 				showView: false,
 				score:'',
 				Router:this.$Router,
@@ -121,7 +121,7 @@
 			// self.$Utils.loadAll(['getMainData'], self);
 		},
 		methods: {
-			activeNav:function(index){
+			activeNav(index){
 				const self = this;
 				
 			},

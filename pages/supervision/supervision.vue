@@ -8,7 +8,7 @@
 		<view class="f5H10" style="margin-top: 20rpx;"></view>
 		
 		<view class="fabubtn">
-			<view class="icon"  @click="webSelf.$Router.navigateTo({route:{path:'/pages/supervision_add/supervision_add'}})">
+			<view class="icon"  @click=" Router.navigateTo({route:{path:'/pages/supervision_add/supervision_add'}})">
 				<image src="../../static/images/home-supervision-icon4.png" mode=""></image>
 			</view>
 			<view class="tit">申请监理</view>
@@ -16,7 +16,7 @@
 		<view class="f5H10"></view>
 		
 		<view class="supervst_idexLis pdlr4 flexRowBetween">
-			<view class="child boxShaow" v-for="(item,index) in supervisionDate" :key="index"  @click="webSelf.$Router.navigateTo({route:{path:'/pages/supervisionDetail/supervisionDetail'}})">
+			<view class="child boxShaow" v-for="(item,index) in supervisionDate" :key="index"  @click=" Router.navigateTo({route:{path:'/pages/supervisionDetail/supervisionDetail'}})">
 				<view class="photo">
 					<image src="../../static/images/home-supervision-img1.png" mode=""></image>
 				</view>
@@ -50,7 +50,7 @@
 		},
 		data() {
 			return {
-				webSelf: this,
+				
 				showView: false,
 				score:'',
 				Router:this.$Router,

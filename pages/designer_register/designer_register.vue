@@ -69,7 +69,7 @@
 		</view>
 		
 		<view class="submitbtn" style="margin: 200rpx auto">
-			<button type="submit" style="margin-bottom: 20rpx;" @click="webSelf.$Router.navigateTo({route:{path:'/pages/designer_login/designer_login'}})">注册</button>
+			<button type="submit" style="margin-bottom: 20rpx;" @click=" Router.navigateTo({route:{path:'/pages/designer_login/designer_login'}})">注册</button>
 			<view class="agreeSel" @click="xieyiAlert">
 				<view class="selt" >
 					<image src="../../static/images/about-address-icon4.png" mode=""></image>
@@ -102,7 +102,7 @@
 	export default {
 		data() {
 			return {
-				webSelf: this,
+				Router:this.$Router,
 				showView: false,
 				score:'',
 				wx_info:{},

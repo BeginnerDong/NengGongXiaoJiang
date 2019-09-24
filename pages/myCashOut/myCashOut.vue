@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<!-- <view class="center addBtn"  @click="webSelf.$Router.navigateTo({route:{path:'/pages/addBankCard/addBankCard'}})">
+		<!-- <view class="center addBtn"  @click=" Router.navigateTo({route:{path:'/pages/addBankCard/addBankCard'}})">
 			<image src="../../static/images/withdrawal-icon.png" mode=""></image>
 			添加银行卡
 		</view> -->
@@ -12,7 +12,7 @@
 				中国银行
 				<view class="color2 num">(2356)</view>
 			</view>
-			<view @click="webSelf.$Router.navigateTo({route:{path:'/pages/myBankList/myBankList'}})">
+			<view @click=" Router.navigateTo({route:{path:'/pages/myBankList/myBankList'}})">
 				<image style="width: 14rpx; height: 28rpx;" src="../../static/images/about-icon1.png" mode=""></image>
 			</view>
 		</view>
@@ -40,7 +40,7 @@
 	export default {
 		data() {
 			return {
-				webSelf: this,
+				Router:this.$Router,
 				showView: false,
 				score:'',
 				wx_info:{},

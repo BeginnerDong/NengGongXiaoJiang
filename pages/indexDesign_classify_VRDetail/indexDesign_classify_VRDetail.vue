@@ -35,7 +35,7 @@
 		</view>
 		
 		<view class="VRXq_videoLis pdlr4 flexRowBetween">
-			<view class="item" v-for="(item,index) in VRvideoLis" :key="index"   @click="webSelf.$Router.navigateTo({route:{path:'/pages/indexDesign_classify_VRDetail/indexDesign_classify_VRDetail'}})">
+			<view class="item" v-for="(item,index) in VRvideoLis" :key="index"   @click=" Router.navigateTo({route:{path:'/pages/indexDesign_classify_VRDetail/indexDesign_classify_VRDetail'}})">
 				<image class="pic" src="../../static/images/VRvideo1.png" mode=""></image>
 				<view class="title avoidOverflow">标题标题标题标题标题标题标题标题标题标题</view>
 			</view>
@@ -52,7 +52,7 @@
 	export default {
 		data() {
 			return {
-				webSelf: this,
+				Router:this.$Router,
 				showView: false,
 				score:'',
 				wx_info:{},

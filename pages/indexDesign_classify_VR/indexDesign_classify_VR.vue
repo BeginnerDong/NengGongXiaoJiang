@@ -12,7 +12,7 @@
 			</view>
 			<view class="class_rightCont">
 				<view class="class_sketch">
-					<view class="item boxShaow"  v-for="(item,index) in VRData" :key="index"  @click="webSelf.$Router.navigateTo({route:{path:'/pages/indexDesign_classify_VRDetail/indexDesign_classify_VRDetail'}})">
+					<view class="item boxShaow"  v-for="(item,index) in VRData" :key="index"  @click=" Router.navigateTo({route:{path:'/pages/indexDesign_classify_VRDetail/indexDesign_classify_VRDetail'}})">
 						<view class="photo">
 							<image src="../../static/images/VRvideo1.png" mode=""></image>
 						</view>
@@ -31,7 +31,7 @@
 		data() {
 			return {
 				currIndex: 0,
-				webSelf:this,
+				Router:this.$Router,
 				num:1,
 				curr:1,
 				VRData: [

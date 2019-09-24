@@ -2,7 +2,7 @@
 	<view class="" >
 
 		<view>
-			<view class="flexRowBetween cfmSetAdrs"  @click="webSelf.$Router.navigateTo({route:{path:'/pages/myAddress/myAddress'}})">
+			<view class="flexRowBetween cfmSetAdrs"  @click=" Router.navigateTo({route:{path:'/pages/myAddress/myAddress'}})">
 				<view class="yy-title">收货地址</view>
 				<view class="yy-adrs flexRowBetween">
 					<view class="cont">
@@ -34,7 +34,7 @@
 		
 		<view class="underFix">
 			合计： <view class="price">56.00</view>
-			<view class="btn" @click="webSelf.$Utils.stopMultiClick(submit)">立即购买</view>
+			<view class="btn" @click=" Utils.stopMultiClick(submit)">立即购买</view>
 		</view>
 	</view>
 
@@ -44,7 +44,7 @@
 	export default {
 		data() {
 			return {
-				webSelf: this,
+				Router:this.$Router,
 				count:1,
 				proLisDate:[
 					{},
@@ -57,10 +57,7 @@
 			uni.setStorageSync('canClick', true);
 		},
 
-		onShow() {
-			const self = this;
-			document.title = ''
-		},
+		
 
 		methods: {
 			change(){

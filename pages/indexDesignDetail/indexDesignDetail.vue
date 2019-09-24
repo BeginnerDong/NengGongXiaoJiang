@@ -6,7 +6,7 @@
 		
 		<view class="designXq_name pdlr4" style="margin-top: -60rpx;">
 			<view class="lis1">
-				<view class="photo" @click="webSelf.$Router.navigateTo({route:{path:'/pages/indexDesign_index/indexDesign_index'}})">
+				<view class="photo" @click=" Router.navigateTo({route:{path:'/pages/indexDesign_index/indexDesign_index'}})">
 					<image src="../../static/images/details-img3.png" mode=""></image>
 				</view>
 				<view class="cont"  style=" margin-top: 70rpx;">
@@ -73,7 +73,7 @@
 		<!-- 底部菜单按钮 -->
 		<view class="xqbotomBar">
 			<view class="left">
-				<view class="ite" @click="webSelf.$Router.switchTab({route:{path:'/pages/index/index'}})">
+				<view class="ite" @click=" Router.switchTab({route:{path:'/pages/index/index'}})">
 					<image src="../../static/images/details-icon2.png" mode=""></image>
 					<view>返回首页</view>
 				</view>
@@ -86,7 +86,7 @@
 					<view>客服</view>
 				</view>
 			</view>
-			<view class="payBtn" @click="webSelf.$Router.navigateTo({route:{path:'/pages/yuyue/yuyue'}})">立即下单</view>
+			<view class="payBtn" @click=" Router.navigateTo({route:{path:'/pages/yuyue/yuyue'}})">立即下单</view>
 		</view>
 	</view>
 
@@ -97,7 +97,7 @@
 	export default {
 		data() {
 			return {
-				webSelf: this,
+				Router:this.$Router,
 				showView: false,
 				score:'',
 				wx_info:{},

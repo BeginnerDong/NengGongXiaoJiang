@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<view class="designIndex pdlr4">
-			<view class="items flexRowBetween boxShaow" v-for="(item,index) in produtList" :key="index"  @click="webSelf.$Router.navigateTo({route:{path:'/pages/indexWorkerDetail/indexWorkerDetail'}})">
+			<view class="items flexRowBetween boxShaow" v-for="(item,index) in produtList" :key="index"  @click=" Router.navigateTo({route:{path:'/pages/indexWorkerDetail/indexWorkerDetail'}})">
 				<view class="pic">
 					<image src="../../static/images/home-img3.png" alt="" />
 				</view>
@@ -28,7 +28,7 @@
 	export default {
 		data() {
 			return {
-				webSelf: this,
+				
 				showView: false,
 				score:'',
 				Router:this.$Router,

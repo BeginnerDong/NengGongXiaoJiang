@@ -20,7 +20,7 @@
 		data() {
 			return {
 				currIndex: 0,
-				webSelf:this,
+				Router:this.$Router,
 				labelData: [
 					"../../static/images/home-banenr.png",
 					"../../static/images/details-img1.png",

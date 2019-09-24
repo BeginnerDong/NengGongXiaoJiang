@@ -18,7 +18,7 @@
 		</view>
 		<view class="busnsName palr4 flexRowBetween">
 			<view class="flexRowAround">
-				<view class="leftImg" @click="webSelf.$Router.navigateTo({route:{path:'/pages/business_index/business_index'}})">
+				<view class="leftImg" @click=" Router.navigateTo({route:{path:'/pages/business_index/business_index'}})">
 					<image src="../../static/images/about-daka-img2.png"></image>
 				</view>
 				<view class="cont">
@@ -49,7 +49,7 @@
 		<!-- 底部菜单按钮 -->
 		<view class="xqbotomBar">
 			<view class="left">
-				<view class="ite" @click="webSelf.$Router.switchTab({route:{path:'/pages/index/index'}})">
+				<view class="ite" @click=" Router.switchTab({route:{path:'/pages/index/index'}})">
 					<image src="../../static/images/details-icon2.png" mode=""></image>
 					<view>返回首页</view>
 				</view>
@@ -66,7 +66,7 @@
 					<view>购物车</view>
 				</view>
 			</view>
-			<view class="payBtn" @click="webSelf.$Router.navigateTo({route:{path:'/pages/registMsg/registMsg'}})">立即下单</view>
+			<view class="payBtn" @click=" Router.navigateTo({route:{path:'/pages/registMsg/registMsg'}})">立即下单</view>
 		</view>
 	</view>
 
@@ -77,7 +77,7 @@
 	export default {
 		data() {
 			return {
-				webSelf: this,
+				Router:this.$Router,
 				showView: false,
 				score:'',
 				wx_info:{}

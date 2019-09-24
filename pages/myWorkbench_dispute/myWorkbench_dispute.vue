@@ -33,7 +33,7 @@
 		</view>
 		
 		<view class="submitbtn" style="margin-top: 100rpx;">
-			<button type="submit" @click="webSelf.$Router.navigateTo({route:{path:'/pages/myWorkbench_disputeOk/myWorkbench_disputeOk'}})">确认提交</button>
+			<button type="submit" @click=" Router.navigateTo({route:{path:'/pages/myWorkbench_disputeOk/myWorkbench_disputeOk'}})">确认提交</button>
 		</view>
 	</view>
 </template>
@@ -42,7 +42,7 @@
 	export default {
 		data() {
 			return {
-				webSelf: this,
+				Router:this.$Router,
 				showView: false,
 				score:'',
 				wx_info:{},

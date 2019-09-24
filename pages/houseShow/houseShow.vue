@@ -7,7 +7,7 @@
 		<view class="f5H10" style="margin-top: 20rpx;"></view>
 		
 		<view class="house_idexLis pdlr4">
-			<view class="item boxShaow" v-for="(item,index) in houseDate" :key="index" @click="webSelf.$Router.navigateTo({route:{path:'/pages/houseShowDetail/houseShowDetail'}})">
+			<view class="item boxShaow" v-for="(item,index) in houseDate" :key="index" @click=" Router.navigateTo({route:{path:'/pages/houseShowDetail/houseShowDetail'}})">
 				<view class="img">
 					<image src="../../static/images/home-design-img1.png" alt=""></image>
 				</view>
@@ -37,7 +37,7 @@
 		},
 		data() {
 			return {
-				webSelf: this,
+				
 				showView: false,
 				score:'',
 				Router:this.$Router,

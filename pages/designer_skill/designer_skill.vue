@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<view class="fabubtn" @click="webSelf.$Router.navigateTo({route:{path:'/pages/designer_skill_add/designer_skill_add'}})">
+		<view class="fabubtn" @click=" Router.navigateTo({route:{path:'/pages/designer_skill_add/designer_skill_add'}})">
 			<view class="icon">
 				<image src="../../static/images/certificate-icon1.png" mode=""></image>
 			</view>
@@ -8,7 +8,7 @@
 		</view>
 		<view class="myNeed_ind pdlr4">
 			<view class="zizhiline boxShaow" v-for="(item,index) in zizhiData" :key="index" >
-				<view class="item flexRowBetween" @click="webSelf.$Router.navigateTo({route:{path:'/pages/designer_skill_add/designer_skill_add'}})">
+				<view class="item flexRowBetween" @click=" Router.navigateTo({route:{path:'/pages/designer_skill_add/designer_skill_add'}})">
 					<view class="cont">
 						<view class="lis flex">
 							<image class="icon" src="../../static/images/skills-icon1.png" mode=""></image>
@@ -52,7 +52,7 @@
 	export default {
 		data() {
 			return {
-				webSelf: this,
+				Router:this.$Router,
 				showView: false,
 				score: '',
 				wx_info: {},

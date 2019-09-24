@@ -28,8 +28,8 @@
 					</view>
 				</view>
 				<view class="bBtn">
-					<view class="btn"  @click="webSelf.$Router.navigateTo({route:{path:'/pages/myToolingOrderDetail/myToolingOrderDetail'}})">查看详情</view>
-					<view class="btn yellow"  @click="webSelf.$Router.navigateTo({route:{path:'/pages/myToolingOrderDetail/myToolingOrderDetail'}})">确认接单</view>
+					<view class="btn"  @click=" Router.navigateTo({route:{path:'/pages/myToolingOrderDetail/myToolingOrderDetail'}})">查看详情</view>
+					<view class="btn yellow"  @click=" Router.navigateTo({route:{path:'/pages/myToolingOrderDetail/myToolingOrderDetail'}})">确认接单</view>
 				</view>
 			</view>
 		</view>
@@ -41,7 +41,7 @@
 	export default {
 		data() {
 			return {
-				webSelf: this,
+				Router:this.$Router,
 				showView: false,
 				score: '',
 				wx_info: {}

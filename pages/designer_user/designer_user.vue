@@ -15,19 +15,19 @@
 				<view>信息设置</view>
 			</view>
 			<view class="menu flexRowBetween">
-				<view class="child" @click="webSelf.$Router.navigateTo({route:{path:'/pages/teamInfor/teamInfor'}})">
+				<view class="child" @click=" Router.navigateTo({route:{path:'/pages/teamInfor/teamInfor'}})">
 					<image src="../../static/images/workers-icon3.1.png"></image>
 					<view>团队信息</view>
 				</view>
-				<view class="child" @click="webSelf.$Router.navigateTo({route:{path:'/pages/designer_certificate/designer_certificate'}})">
+				<view class="child" @click=" Router.navigateTo({route:{path:'/pages/designer_certificate/designer_certificate'}})">
 					<image src="../../static/images/workers-icon3.2.png"></image>
 					<view>资质证书</view>
 				</view>
-				<view class="child" @click="webSelf.$Router.navigateTo({route:{path:'/pages/designer_closingShop/designer_closingShop'}})">
+				<view class="child" @click=" Router.navigateTo({route:{path:'/pages/designer_closingShop/designer_closingShop'}})">
 					<image src="../../static/images/workers-icon3.png"></image>
 					<view>关闭店铺</view>
 				</view>
-				<view class="child" @click="webSelf.$Router.navigateTo({route:{path:'/pages/myBankList/myBankList'}})">
+				<view class="child" @click=" Router.navigateTo({route:{path:'/pages/myBankList/myBankList'}})">
 					<image src="../../static/images/workers-icon4.png"></image>
 					<view>银行卡绑定</view>
 				</view>
@@ -35,35 +35,35 @@
 		</view>
 		
 		<view class="XlineNav">
-			<view class="info" @click="webSelf.$Router.navigateTo({route:{path:'/pages/designerOrder/designerOrder'}})">
+			<view class="info" @click=" Router.navigateTo({route:{path:'/pages/designerOrder/designerOrder'}})">
 				<view class="ilblock listimg">
 					<image src="../../static/images/workers-icon5.png"></image>
 				</view>
 				<view class="ilblock">我的订单</view>
 				<image class="arrow" src="../../static/images/arrow-icon1.png" ></image>
 			</view>
-			<view class="info" @click="webSelf.$Router.navigateTo({route:{path:'/pages/designer_skill/designer_skill'}})">
+			<view class="info" @click=" Router.navigateTo({route:{path:'/pages/designer_skill/designer_skill'}})">
 				<view class="ilblock listimg">
 					<image src="../../static/images/workers-icon6.png"></image>
 				</view>
 				<view class="ilblock">技能管理</view>
 				<image class="arrow" src="../../static/images/arrow-icon1.png" ></image>
 			</view>
-			<view class="info" @click="webSelf.$Router.navigateTo({route:{path:'/pages/designer_case/designer_case'}})">
+			<view class="info" @click=" Router.navigateTo({route:{path:'/pages/designer_case/designer_case'}})">
 				<view class="ilblock listimg">
 					<image src="../../static/images/workers-icon7.png"></image>
 				</view>
 				<view class="ilblock">案例管理</view>
 				<image class="arrow" src="../../static/images/arrow-icon1.png" ></image>
 			</view>
-			<view class="info" @click="webSelf.$Router.navigateTo({route:{path:'/pages/designer_finance/designer_finance'}})">
+			<view class="info" @click=" Router.navigateTo({route:{path:'/pages/designer_finance/designer_finance'}})">
 				<view class="ilblock listimg">
 					<image src="../../static/images/workers-icon8.png"></image>
 				</view>
 				<view class="ilblock">财务管理</view>
 				<image class="arrow" src="../../static/images/arrow-icon1.png" ></image>
 			</view>
-			<view class="info"  @click="webSelf.$Router.navigateTo({route:{path:'/pages/myExtend_starEdeem/myExtend_starEdeem'}})">
+			<view class="info"  @click=" Router.navigateTo({route:{path:'/pages/myExtend_starEdeem/myExtend_starEdeem'}})">
 				<view class="ilblock listimg">
 					<image src="../../static/images/workers-icon9.png"></image>
 				</view>
@@ -80,7 +80,7 @@
 	export default {
 		data() {
 			return {
-				webSelf: this,
+				Router:this.$Router,
 				showView: false,
 				score:'',
 				wx_info:{}
