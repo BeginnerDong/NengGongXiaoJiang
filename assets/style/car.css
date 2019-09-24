@@ -3,14 +3,14 @@
 	.numBox view{ width: 40rpx; height: 40rpx; border-radius: 8rpx; border:2rpx solid #e7e7e7; color: #999; font-size:32rpx ; text-align: center; line-height: 40rpx; margin: 0 4rpx;}
 	.numBox view.num{ width: 70rpx; color: #333; font-size: 28rpx;}
 	
-	.allPrice{ height: 100rpx; padding: 0 4%; background: #fff; position: fixed; bottom: 112rpx;left: 0; width: 100%;box-sizing: border-box; z-index: 1000;box-shadow: 0 -2rpx 10rpx #ddd;}
+	.allPrice{ height: 100rpx; padding: 0 4%; background: #fff; position: fixed; bottom: 0rpx;left: 0; width: 100%;box-sizing: border-box; z-index: 1000;box-shadow: 0 -2rpx 10rpx #ddd;}
 	.allPrice .ll{ width: 30%; font-size: 28rpx; line-height: 40rpx; display: flex; justify-content: flex-start;}
 	.allPrice .ll image{width: 40rpx; height: 40rpx; margin-right: 20rpx; }
 	
 	.allPrice .rr{ width: 60%;display: flex; justify-content: flex-end; line-height: 60rpx;font-size: 26rpx;}
 	.allPrice .rr .mny{ color: rgba(198,17,43); font-size: 30rpx;}
 	.allPrice .rr .mny::before{content: "￥"; font-size: 28rpx;}
-	.allPrice .rr .jsBtn{ height: 60rpx; line-height: 60rpx;padding: 0 30rpx; margin-left: 30rpx; background: rgba(198,17,43); color: #fff; font-size: 28rpx; border-radius: 40rpx;}
+	.allPrice .rr .jsBtn{ height: 60rpx; line-height: 60rpx;padding: 0 30rpx; margin-left: 30rpx; background:#FFCB1E; font-size: 28rpx; border-radius: 40rpx;}
 	
 
 	.caiLis{ margin-top: 30rpx;background: #fff; border-radius: 10rpx;padding: 30rpx 20rpx;box-sizing: border-box;}

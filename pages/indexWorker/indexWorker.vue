@@ -7,7 +7,7 @@
 		
 		<view class="ind-cont4">
 			<scroll-view class="list" scroll-x>
-				<view class="item" v-for="(item,index) in classLis" :key="index"  @click=" Router.navigateTo({route:{path:'/pages/classify/classify'}})">
+				<view class="item" v-for="(item,index) in classLis" :key="index"  @click="Router.navigateTo({route:{path:'/pages/classify/classify'}})">
 					<image :src="item.iconUrl" mode=""></image>
 					<view>{{item.name}}</view>
 				</view>
@@ -21,7 +21,7 @@
 			<view class="tt">优秀建筑工</view>
 		</view>
 		<view class="designIndex pdlr4">
-			<view class="items flexRowBetween" v-for="(item,index) in produtList" :key="index" @click=" Router.navigateTo({route:{path:'/pages/indexWorkerDetail/indexWorkerDetail'}})">
+			<view class="items flexRowBetween" v-for="(item,index) in produtList" :key="index" @click="webSelf.$Router.navigateTo({route:{path:'/pages/indexWorkerDetail/indexWorkerDetail'}})">
 				<view class="pic">
 					<image src="../../static/images/home-img3.png" alt="" />
 				</view>
@@ -56,7 +56,7 @@
 			<view class="tt">优秀装修工</view>
 		</view>
 		<view class="designIndex pdlr4">
-			<view class="items flexRowBetween" v-for="(item,index) in produtList" :key="index"  @click=" Router.navigateTo({route:{path:'/pages/indexWorkerDetail/indexWorkerDetail'}})">
+			<view class="items flexRowBetween" v-for="(item,index) in produtList" :key="index"  @click="webSelf.$Router.navigateTo({route:{path:'/pages/indexWorkerDetail/indexWorkerDetail'}})">
 				<view class="pic">
 					<image src="../../static/images/home-img3.png" alt="" />
 				</view>
@@ -90,7 +90,7 @@
 			<view class="tt">优秀安装工</view>
 		</view>
 		<view class="designIndex pdlr4">
-			<view class="items flexRowBetween" v-for="(item,index) in produtList" :key="index"  @click=" Router.navigateTo({route:{path:'/pages/indexWorkerDetail/indexWorkerDetail'}})">
+			<view class="items flexRowBetween" v-for="(item,index) in produtList" :key="index"  @click="webSelf.$Router.navigateTo({route:{path:'/pages/indexWorkerDetail/indexWorkerDetail'}})">
 				<view class="pic">
 					<image src="../../static/images/home-img3.png" alt="" />
 				</view>
@@ -133,7 +133,7 @@
 		},
 		data() {
 			return {
-				
+			
 				showView: false,
 				score:'',
 				Router:this.$Router,
