@@ -2,25 +2,19 @@
 	<view class="classifyBox">
 		<view>
 			<scroll-view class="navLisBox" scroll-x>
-				<view class="nav-item " :class="num==1?'active':''" @click="change('1')">园林</view>
-				<view class="nav-item" :class="num==2?'active':''" @click="change('2')">家装</view>
-				<view class="nav-item" :class="num==3?'active':''" @click="change('3')">中式</view>
-				<view class="nav-item" :class="num==4?'active':''" @click="change('4')">简约</view>
-				<view class="nav-item" :class="num==5?'active':''" @click="change('5')">欧美</view>
-				<view class="nav-item" :class="num==6?'active':''" @click="change('6')">中式</view>
-				<view class="nav-item" :class="num==7?'active':''" @click="change('7')">简约</view>
-				<view class="nav-item" :class="num==8?'active':''" @click="change('8')">中式</view>
+				<view class="nav-item" v-for="(item,index) in mainData" :class="item.id==idTwo?'active':''"
+				@click="change(item.id,index)">
+					{{item.title}}
+				</view>
 			</scroll-view>
 		</view>
 		<view class="classifyCont">
 			<view class="class_leftNav">
 				<view class="cont">
-					<view class="child" :class="curr==1?'on':''" @click="changeTwo('1')">田园风</view>
-					<view class="child" :class="curr==2?'on':''" @click="changeTwo('2')">欧式风</view>
-					<view class="child" :class="curr==3?'on':''" @click="changeTwo('3')">简约风</view>
-					<view class="child" :class="curr==4?'on':''" @click="changeTwo('4')">北美风</view>
-					<view class="child" :class="curr==5?'on':''" @click="changeTwo('5')">欧式风</view>
-					<view class="child" :class="curr==6?'on':''" @click="changeTwo('6')">中式风</view>
+					<view class="child" v-for="item in mainData[indexTwo].child" :class="item.id==idThree?'on':''" 
+					@click="changeTwo(item.id)">
+						{{item.title}}
+					</view>
 				</view>
 			</view>
 			<view class="class_rightCont">
@@ -35,27 +29,25 @@
 					</view>
 				</view>
 				<view class="class_infor">
-					<view class="designIndex">
-						<view class="items flexRowBetween" v-for="(item,index) in produtList" :key="index" 
-						@click="Router.navigateTo({route:{path:'/pages/indexDesignDetail/indexDesignDetail'}})">
+					<view class="designIndex">					
+						<view class="items flexRowBetween" v-for="(item,index) in productData" :key="index" 
+						@click=" Router.navigateTo({route:{path:'/pages/indexDesignDetail/indexDesignDetail?id='+item.id}})">
 							<view class="pic">
-								<image src="../../static/images/home-img3.png" alt="" />
+								<image :src="item.userInfo[0].mainImg[0].url" alt="" />
 							</view>
 							<view class="infor">
 								<view class="title flex">
-									<view>张大嘴</view>
+									<view>{{item.userInfo[0].name}}</view>
 								</view>
-								<view class="text2 avoidOverflow2">擅长风格：欧式风、简约风、北美风、田园风</view>
+								<view class="text2 avoidOverflow2">{{item.userInfo[0].introduce}}</view>
 								<view class="flexRowBetween saleB">
-									<view class="priceM font14">6</view>
-									<view class="color3 font12">成交量：500</view>
+									<view class="priceM font14">{{item.price}}/{{item.label[item.category_id].description}}</view>
+									<view class="color3 font12">成交量：{{item.sale_count}}</view>
 								</view>
-							</view>
-							
+							</view>				
 						</view>
 					</view>
-				</view>
-				
+				</view>		
 			</view>
 		</view>
 		
@@ -74,43 +66,140 @@
 				curr:1,
 				produtList: [
 					{},{},{},{}
-				]
+				],
+				idTwo:'',
+				idThree:'',
+				indexTwo:'',
+				indexThree:'',
+				mainData:[],
+				productData:[]
 			}
 		},
-		onLoad() {
+		
+		onLoad(options) {
 			const self = this;
-			//self.$Utils.loadAll(['getMainData'], self);
+			wx.setNavigationBarTitle({
+				title: options.name,
+			});
+			self.paginate = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
+			
+			self.$Utils.loadAll(['getUserData','getMainData'], self);
 		},
+		
 		methods: {
-			change(num){
-				const self = this;
-				if(num!=self.num){
-					self.num = num
-				}
-			},
-			changeTwo(curr){
-				const self = this;
-				if(curr!=self.curr){
-					self.curr = curr
-				}
-			},
-			getMainData() {
+			
+			getUserData() {
 				const self = this;
 				console.log('852369')
 				const postData = {};
 				postData.tokenFuncName = 'getProjectToken';
-
+				const callback = (res) => {
+					if (res.solely_code == 100000 && res.info.data[0]) {
+						
+					} else {
+						
+					};
+					self.$Utils.finishFunc('getUserData');
+			
+				};
+				self.$apis.userGet(postData, callback);
+			},
+			
+			change(id,index){
+				const self = this;
+				self.productData=[];
+				if(id!=self.idTwo){
+					self.idTwo = id;
+					self.indexTwo = index;
+					if(self.mainData[index].child[0]){
+						self.idThree = self.mainData[index].child[0].id;
+						self.indexThree = 0;
+						self.productGet()
+					}
+					
+						
+				}
+			},
+			
+			changeTwo(id){
+				const self = this;
+				self.productData=[];
+				if(id!=self.idThree){
+					self.idThree = id;
+					self.productGet()		
+				}
+			},
+			
+			getMainData() {
+				const self = this;
+				console.log('852369')
+				const postData = {};
+				
+				postData.searchItem = {
+					
+					type:3
+				};
+				
+				postData.order={
+					create_time:'asc'
+				};
 				const callback = (res) => {
 					if (res.solely_code == 100000 && res.info.data[0]) {
 						self.mainData = res.info.data;
+						self.idTwo = self.mainData[0].id;
+						self.indexTwo = 0;
+						self.idThree = self.mainData[0].child[0].id;
+						self.indexThree = 0;
+						self.productGet()
 					} else {
 						self.$Utils.showToast(res.msg, 'none')
 					};
 					self.$Utils.finishFunc('getMainData');
 
 				};
-				self.$apis.orderGet(postData, callback);
-
+				self.$apis.labelGet(postData, callback);
+			},
+			
+			productGet(isNew) {
+				const self = this;
+				if (isNew) {
+					self.productData = [];
+					self.paginate = {
+						count: 0,
+						currentPage: 1,
+						is_page: true,
+						pagesize: 5
+					}
+				};
+				const postData = {};
+				postData.paginate = self.$Utils.cloneForm(self.paginate);
+				postData.searchItem = {
+					thirdapp_id:2,
+					type:2,
+					category_id:self.idThree
+				};
+				postData.getAfter = {
+					userInfo:{
+						token:uni.getStorageSync('user_token'),
+						tableName:'UserInfo',
+						middleKey:'user_no',
+						key:'user_no',
+						condition:'=',
+						searchItem:{
+							status:1
+						}
+					}
+				};
+				const callback = (res) => {
+					if (res.info.data.length > 0) {
+						self.productData.push.apply(self.productData, res.info.data);
+					} else {
+						self.$Utils.showToast('没有更多了', 'none');
+					};
+					console.log('self.productData',self.productData)
+					self.$Utils.finishFunc('productGet');
+				};
+				self.$apis.productGet(postData, callback);
 			},
 
 		},

@@ -6,7 +6,8 @@
 		
 		<view class="ind-cont4">
 			<scroll-view class="list" scroll-x>
-				<view class="item" v-for="(item,index) in classLis" :key="index"  @click=" Router.navigateTo({route:{path:'/pages/material_classify/material_classify'}})">
+				<view class="item" v-for="(item,index) in classLis" :key="index"  
+				@click=" Router.navigateTo({route:{path:'/pages/material_classify/material_classify?type='+item.type+'&name='+item.name}})">
 					<image :src="item.iconUrl" mode=""></image>
 					<view>{{item.name}}</view>
 				</view>
@@ -16,10 +17,11 @@
 		<view class="f5H10"></view>
 		
 		<view class="proLis flexRowBetween">
-			<view class="item-lis" v-for="(item,index) in produtList" :key="index" @click=" Router.navigateTo({route:{path:'/pages/pageDetail/pageDetail'}})">
-				<image class="img" src="../../static/images/home-img3.png" alt="" />
-				<view class="tit avoidOverflow">名称名称名称名称名称</view>
-				<view class="price">56.00</view>
+			<view class="item-lis" v-for="(item,index) in mainData" :key="index" 
+			@click=" Router.navigateTo({route:{path:'/pages/pageDetail/pageDetail?id='+item.id+'&type='+item.type}})">
+				<image class="img" :src="item.mainImg[0].url" alt="" />
+				<view class="tit avoidOverflow">{{item.title}}</view>
+				<view class="price">{{item.price}}</view>
 			</view>
 		</view>
 
@@ -39,55 +41,68 @@
 		},
 		data() {
 			return {
-				
-				showView: false,
-				score:'',
 				Router:this.$Router,
-				wx_info:{},
-				scrollTop: 100,
-				currt:0,
-				index: 0,
+				
 				classLis:[
-					{iconUrl:"../../static/images/home-material-icon1.png",name:"定制材料"},
-					{iconUrl:"../../static/images/home-material-icon2.png",name:"自营辅料"},
-					{iconUrl:"../../static/images/home-material-icon3.png",name:"建材市场"}
+					{iconUrl:"../../static/images/home-material-icon1.png",name:"定制材料",type:4},
+					{iconUrl:"../../static/images/home-material-icon2.png",name:"自营辅料",type:5},
+					{iconUrl:"../../static/images/home-material-icon3.png",name:"建材市场",type:6}
 				],
 				produtList: [
 					{},{},{},{},{},{},{},{}
-				]
+				],
+				mainData:[]
 			}
 		},
 		
 		onLoad() {
 			const self = this;
-			// self.$Utils.loadAll(['getMainData'], self);
+			self.paginate = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
+			self.$Utils.loadAll(['getMainData'], self);
 		},
+		
+		onReachBottom() {
+			console.log('onReachBottom')
+			const self = this;
+			if (!self.isLoadAll && uni.getStorageSync('loadAllArray')) {
+				self.paginate.currentPage++;
+				self.getMainData()
+			};
+		},
+		
 		methods: {
-			activeNav:function(index){
+			
+			
+			
+			getMainData(isNew) {
 				const self = this;
-				
-			},
-			bindPickerChange(e) {
-				// 搜索选择分类
-				console.log('picker发送选择改变，携带值为', e.target.value)
-				this.index = e.target.value
-			},
-			getMainData() {
-				const self = this;
-				console.log('852369')
-				const postData = {};
-				postData.tokenFuncName = 'getProjectToken';
-
-				const callback = (res) => {
-					if (res.solely_code == 100000 && res.info.data[0]) {
-						self.mainData = res.info.data;
-					} else {
-						self.$Utils.showToast(res.msg, 'none')
-					};
-					self.$Utils.finishFunc('getMainData');
-
+				if (isNew) {
+					self.mainData = [];
+					self.paginate = {
+						count: 0,
+						currentPage: 1,
+						is_page: true,
+						pagesize: 5
+					}
 				};
-				self.$apis.orderGet(postData, callback);
+				const postData = {};
+				postData.paginate = self.$Utils.cloneForm(self.paginate);
+				postData.searchItem = {
+					thirdapp_id:2,
+					type:['in',[3,4,5]],
+					category_id: ['not in', [46]]
+				};
+				
+				const callback = (res) => {
+					if (res.info.data.length > 0) {
+						self.mainData.push.apply(self.mainData, res.info.data);
+					} else {
+						self.$Utils.showToast('没有更多了', 'none');
+					};
+					console.log('self.mainData',self.mainData)
+					self.$Utils.finishFunc('getMainData');
+				};
+				self.$apis.productGet(postData, callback);
 			},
 		},
 	};

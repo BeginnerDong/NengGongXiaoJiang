@@ -1,54 +1,38 @@
 <template>
 	<view>
 		<view class="pdlr4">
-			<view class="caiLis flexRowBetween boxShaow">
+			<view class="caiLis flexRowBetween boxShaow" v-for="(item,index) in mainData" :key="index">
 				<view class="itemL">
-					<view><image src="../../static/images/about-address-icon4.png" mode=""></image></view>
+					<view><image src="../../static/images/about-address-icon1.png" v-if="item.isSelect" @click="choose(index)"></image>
+					<image src="../../static/images/about-address-icon4.png" v-if="!item.isSelect" @click="choose(index)"></image></view>
+					
 				</view>
 				<view class="twoCt flexRowBetween">
 					<view class="leftbox">
 						<image src="../../static/images/home-interactive-img1.png"></image>
 					</view>
 					<view class="cont">
-						<view class="title avoidOverflow2">标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题</view>
-						<view class="price">59.00</view>
+						<view class="title avoidOverflow2">{{item.title}}</view>
+						<view class="price">{{item.price}}</view>
 						<view class="numBox">
-							<view @click="plus">+</view>
-							<view class="num">{{proNum}}</view>
-							<view @click="reduce">-</view>
+							<view @click="counter(index,'-')">-</view>
+							<view class="num">{{item.count}}</view>
+							<view@click="counter(index,'+')">+</view>
 						</view>
 					</view>
 				</view>
 			</view>
-			<view class="caiLis flexRowBetween boxShaow">
-				<view class="itemL">
-					<view><image src="../../static/images/about-address-icon4.png" mode=""></image></view>
-				</view>
-				<view class="twoCt flexRowBetween">
-					<view class="leftbox">
-						<image src="../../static/images/shopping-img1.png"></image>
-					</view>
-					<view class="cont">
-						<view class="title avoidOverflow2">标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题</view>
-						<view class="price">59.00</view>
-						<view class="numBox">
-							<view>+</view>
-							<view class="num">{{proNum}}</view>
-							<view>-</view>
-						</view>
-					</view>
-				</view>
-			</view>
+			
 			</view>
 		<view class="allPrice flexRowBetween">
 			<view class="ll">
-				<image src="../../static/images/about-address-icon1.png" ></image>
-				<image src="../../static/images/about-address-icon4.png" ></image>
+				<image @click="chooseAll" v-show="isChooseAll" src="../../static/images/about-address-icon1.png" ></image>
+				<image @click="chooseAll" v-show="!isChooseAll" src="../../static/images/about-address-icon4.png" ></image>
 				全选
 			</view>
 			<view class="rr">
-				合计：<view class="mny">0.00</view>
-				<span class="jsBtn" @click=" Router.navigateTo({route:{path:'/pages/confirmOrder/confirmOrder'}})">结算</span>
+				合计：<view class="mny">{{totalPrice}}</view>
+				<span class="jsBtn" @click="pay">结算</span>
 			</view>
 		</view>	
 		
@@ -60,11 +44,11 @@
 	export default {
 		data() {
 			return {
-				Router:this.$Router,
-				is_show:false,
-				score: '',
-				proNum:0,
-				wx_info: {}
+				
+				
+				totalPrice:0,
+				mainData:[],
+				isChooseAll:false
 			}
 		},
 
@@ -72,21 +56,127 @@
 			uni.setStorageSync('canClick', true);
 		},
 
-	
+		onShow() {
+			const self = this;
+			self.mainData = self.$Utils.getStorageArray('cartData');
+			
+			console.log('self.mainData',self.mainData)
+			self.checkChooseAll();
+			self.countTotalPrice();
+		},
 
 		methods: {
-			change() {
+
+
+			checkChooseAll() {
 				const self = this;
+				var isChooseAll = true;
+				for (var i = 0; i < self.mainData.length; i++) {
+					if (!self.mainData[i].isSelect) {
+						isChooseAll = false;
+					};
+				};
+				self.isChooseAll = isChooseAll;
 			},
 
-			getMainData() {
+			chooseAll() {
 				const self = this;
-				self.$apis.userGet(postData, callback);
+				self.isChooseAll = !self.isChooseAll;
+				for (var i = 0; i < self.mainData.length; i++) {
+					self.mainData[i].isSelect = self.isChooseAll;
+					self.$Utils.setStorageArray('cartData', self.mainData[i], 'id', 999);
+				};
+				self.countTotalPrice();
 			},
-			plus(){
+
+		/* 	delete() {
 				const self = this;
-				self.proNum = proNum++
-			}
+				for (var i = 0; i < self.mainData.length; i++) {
+					if (self.mainData[i].isSelect) {
+						self.$Utils.delStorageArray('cartData', self.mainData[i], 'id');
+					}
+				};
+				self.mainData = self.$Utils.getStorageArray('cartData');
+				self.checkChooseAll();
+				self.setData({
+					web_mainData: self.mainData
+				});
+			}, */
+
+			choose(index) {
+				const self = this;
+				
+				if (self.mainData[index].isSelect) {
+					self.mainData[index].isSelect = false;
+				} else {
+					self.mainData[index].isSelect = true;
+				};
+				self.$Utils.setStorageArray('cartData', self.mainData[index], 'id', 999);
+				
+				self.checkChooseAll();
+				self.countTotalPrice();
+			},
+
+			countTotalPrice() {
+				const self = this;
+				self.totalPrice = 0;
+				
+				for (var i = 0; i < self.mainData.length; i++) {
+					if (self.mainData[i].isSelect) {
+						self.totalPrice += self.mainData[i].price * self.mainData[i].count;
+					};
+				};
+				console.log(self.totalPrice)
+			},
+
+			
+
+			pay(e) {
+				const self = this;
+				const orderList = [{
+						product: [],
+						type: 1
+					}
+
+				];
+				for (var i = 0; i < self.mainData.length; i++) {
+					if (self.mainData[i].isSelect) {
+						orderList[0].product.push({
+							id: self.mainData[i].id,
+							count: self.mainData[i].count,
+							product:self.mainData[i]
+						}, );
+					};
+				};
+				if (orderList[0].product.length == 0) {
+					self.$Utils.showToast('未选择商品', 'none', 1000);
+					return;
+				};
+				uni.setStorageSync('payPro', orderList);
+				self.$Router.navigateTo({route:{path:'/pages/confirmOrder/confirmOrder'}})
+				
+
+			},
+
+
+			counter(index,type) {
+				const self = this;
+				
+				if (type == '+') {
+					self.mainData[index].count++;
+				} else {
+					if (self.mainData[index].count > 1) {
+						self.mainData[index].count--;
+					}
+				};
+				self.$Utils.setStorageArray('cartData', self.mainData[index], 'id', 999);
+				
+				self.countTotalPrice();
+			},
+
+
+		
+		
 		}
 	}
 </script>

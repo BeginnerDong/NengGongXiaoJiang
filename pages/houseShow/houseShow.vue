@@ -7,15 +7,16 @@
 		<view class="f5H10" style="margin-top: 20rpx;"></view>
 		
 		<view class="house_idexLis pdlr4">
-			<view class="item boxShaow" v-for="(item,index) in houseDate" :key="index" @click=" Router.navigateTo({route:{path:'/pages/houseShowDetail/houseShowDetail'}})">
+			<view class="item boxShaow" v-for="(item,index) in mainData" :key="index" 
+			@click=" Router.navigateTo({route:{path:'/pages/houseShowDetail/houseShowDetail?id='+item.id}})">
 				<view class="img">
-					<image src="../../static/images/home-design-img1.png" alt=""></image>
+					<image :src="item.mainImg[0].url" alt=""></image>
 				</view>
 				<view class="infor">
-					<view class="tit avoidOverflow2">名称名称名称名称名称名称名称名称名称名称名称名称名称名称名称名称</view>
+					<view class="tit avoidOverflow2">{{item.title}}</view>
 					<view class="adrs pr avoidOverflow">
 						<image class="icon" src="../../static/images/home-housing-icon1.png" mode=""></image>
-						陕西省西安市长安区韦曲街道
+						{{item.address}}
 					</view>
 				</view>
 			</view>
@@ -47,40 +48,67 @@
 				index: 0,
 				houseDate:[
 					{},{},{},{},{},{}
-				]
+				],
+				mainData:[]
 			}
 		},
 		
 		onLoad() {
 			const self = this;
-			// self.$Utils.loadAll(['getMainData'], self);
+			self.paginate = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
+			self.$Utils.loadAll(['getMainData'], self);
 		},
+		
+		onReachBottom() {
+			console.log('onReachBottom')
+			const self = this;
+			if (!self.isLoadAll && uni.getStorageSync('loadAllArray')) {
+				self.paginate.currentPage++;
+				self.getMainData()
+			};
+		},
+		
 		methods: {
-			activeNav:function(index){
+			
+			
+			
+			getMainData(isNew) {
 				const self = this;
-				
-			},
-			bindPickerChange(e) {
-				// 搜索选择分类
-				console.log('picker发送选择改变，携带值为', e.target.value)
-				this.index = e.target.value
-			},
-			getMainData() {
-				const self = this;
-				console.log('852369')
-				const postData = {};
-				postData.tokenFuncName = 'getProjectToken';
-
-				const callback = (res) => {
-					if (res.solely_code == 100000 && res.info.data[0]) {
-						self.mainData = res.info.data;
-					} else {
-						self.$Utils.showToast(res.msg, 'none')
-					};
-					self.$Utils.finishFunc('getMainData');
-
+				if (isNew) {
+					self.mainData = [];
+					self.paginate = {
+						count: 0,
+						currentPage: 1,
+						is_page: true,
+						pagesize: 5
+					}
 				};
-				self.$apis.orderGet(postData, callback);
+				const postData = {};
+				postData.paginate = self.$Utils.cloneForm(self.paginate);
+				postData.searchItem = {
+					thirdapp_id:2,
+				};
+				postData.getBefore = {
+					caseData: {
+						tableName: 'Label',
+						searchItem: {
+							title: ['=', ['房源展示']],
+						},
+						middleKey: 'menu_id',
+						key: 'id',
+						condition: 'in',
+					},
+				};
+				const callback = (res) => {
+					if (res.info.data.length > 0) {
+						self.mainData.push.apply(self.mainData, res.info.data);
+					} else {
+						self.$Utils.showToast('没有更多了', 'none');
+					};
+					console.log('self.mainData',self.mainData)
+					self.$Utils.finishFunc('getMainData');
+				};
+				self.$apis.articleGet(postData, callback);
 			},
 		},
 	};

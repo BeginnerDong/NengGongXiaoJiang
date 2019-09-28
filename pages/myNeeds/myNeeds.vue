@@ -1,32 +1,18 @@
 <template>
 	<view>
 		<view class="myNeed_ind pdlr4">
-			<view class="item boxShaow flexRowBetween" @click=" Router.navigateTo({route:{path:'/pages/myNeedsDetail/myNeedsDetail'}})">
+			<view class="item boxShaow flexRowBetween" v-for="item in mainData"
+			@click=" Router.navigateTo({route:{path:'/pages/myNeedsDetail/myNeedsDetail?id='+item.id}})">
 				<view class="cont">
 					<view class="lis flex">
 						<image class="icon" src="../../static/images/home-housing-icon1.png" mode=""></image>
 						<view class="name">所在城市</view>
-						<view class="tex">西安市</view>
+						<view class="tex">{{item.passage1}}</view>
 					</view>
 					<view class="lis flex">
 						<image class="icon" src="../../static/images/home-housing-icon1.png" mode=""></image>
 						<view class="name">房屋面积</view>
-						<view class="tex">200㎡</view>
-					</view>
-				</view>
-				<view class="arrow"><image src="../../static/images/arrow-icon1.png" mode=""></image></view>
-			</view>
-			<view class="item boxShaow flexRowBetween"  @click=" Router.navigateTo({route:{path:'/pages/myNeedsDetail/myNeedsDetail'}})">
-				<view class="cont">
-					<view class="lis flex">
-						<image class="icon" src="../../static/images/home-housing-icon1.png" mode=""></image>
-						<view class="name">所在城市</view>
-						<view class="tex">西安市</view>
-					</view>
-					<view class="lis flex">
-						<image class="icon" src="../../static/images/home-housing-icon1.png" mode=""></image>
-						<view class="name">房屋面积</view>
-						<view class="tex">200㎡</view>
+						<view class="tex">{{item.keywords}}㎡</view>
 					</view>
 				</view>
 				<view class="arrow"><image src="../../static/images/arrow-icon1.png" mode=""></image></view>
@@ -41,35 +27,71 @@
 	export default {
 		data() {
 			return {
-				Router:this.$Router,
-				showView: false,
-				score: '',
-				wx_info: {},
-				current:1
+				Router: this.$Router,
+
+
+
+				mainData:[],
+				is_show: false,
+				num: 1,
+				zizhiData: [{}, {}]
 			}
 		},
 
-		onLoad(options) {
-			uni.setStorageSync('canClick', true);
+		onLoad() {
+			const self = this;
+			self.paginate = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
+			self.$Utils.loadAll(['getMainData'], self);
 		},
-
+		
 		onShow() {
 			const self = this;
-			document.title = ''
+			
+			
 		},
 
-		methods: {
-			change(current) {
-				const self = this;
-				if(current!=self.current){
-					self.current = current
-				}
-			},
+		onReachBottom() {
+			console.log('onReachBottom')
+			const self = this;
+			if (!self.isLoadAll && uni.getStorageSync('loadAllArray')) {
+				self.paginate.currentPage++;
+				self.getMainData()
+			};
+		},
 
-			getMainData() {
+
+
+		methods: {
+
+			getMainData(isNew) {
 				const self = this;
-				self.$apis.userGet(postData, callback);
-			}
+				if (isNew) {
+					self.mainData = [];
+					self.paginate = {
+						count: 0,
+						currentPage: 1,
+						is_page: true,
+						pagesize: 5
+					}
+				};
+				const postData = {};
+				postData.tokenFuncName = 'getProjectToken';
+				postData.paginate = self.$Utils.cloneForm(self.paginate);
+				postData.searchItem = {
+					thirdapp_id: 2,
+					type:2
+				};		
+				const callback = (res) => {
+					if (res.info.data.length > 0) {
+						self.mainData.push.apply(self.mainData, res.info.data);
+					} else {
+						self.$Utils.showToast('没有更多了', 'none');
+					};
+					console.log('self.mainData', self.mainData)
+					self.$Utils.finishFunc('getMainData');
+				};
+				self.$apis.messageGet(postData, callback);
+			},
 		}
 	}
 </script>

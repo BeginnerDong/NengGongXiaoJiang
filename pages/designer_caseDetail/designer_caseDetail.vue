@@ -6,7 +6,7 @@
 					<view class="ll">选择工种</view>
 					<view class="rr pr" style="padding-right: 20rpx;">
 						<picker :value="index" :range="array"  @change="bindPickerChange">
-							<view class="uni-input">{{array[index]}}</view>
+							<view class="uni-input">{{array[index]?array[index]:'请选择'}}</view>
 						</picker>
 						<image class="arrow" src="../../static/images/case-icon1.png" mode=""></image>
 					</view>
@@ -14,31 +14,32 @@
 				<view class="eidt-line">
 					<view class="ll">标题</view>
 					<view class="rr">
-						<input type="text" value="标题提标题提标题提" placeholder="请输入标题" />
+						<input type="text" value="标题提标题提标题提" placeholder="请输入标题" v-model="submitData.title"/>
 					</view>
 				</view>
 				
 				<view class="eidt-column">
 					<view class="ll">详情介绍</view>
 					<view class="">
-						<textarea value="详情内容详情内容详情内容详情内容详情内容详情内容详情内容详情内容详情内容" placeholder="请简单的介绍下案例详情" />
+						<textarea v-model="submitData.description" placeholder="请简单的介绍下案例详情" />
 					</view>
 				</view>
 				<view class="eidt-column">
 					<view class="ll">上传图片</view>
 					<view class="rr upBook">
-						<image class="bookPic" src="../../static/images/case-img.png" mode=""></image>
+						<image class="bookPic" v-for="item in submitData.mainImg" v-if="submitData.mainImg.length>0" :src="item.url" mode=""></image>
+						<image class="bookPic" @click="upLoadImg()" v-if="submitData.mainImg.length<6" src="../../static/images/case-img.png" mode=""></image>
 					</view>
 				</view>
 				<view class="eidt-line">
-					<view class="ll">标题</view>
+					<view class="ll">显示状态</view>
 					<view class="rr">
 						<view class="flexRowBetween r-selt" style="padding-bottom: 30rpx;">
 							<view class="selt"  @click="change('1')">
-								<image :src="curr==1?'../../static/images/case-icon2.png':'../../static/images/case-icon3.png'" mode=""></image>显示
+								<image :src="submitData.behavior==1?'../../static/images/case-icon2.png':'../../static/images/case-icon3.png'" mode=""></image>显示
 							</view>
-							<view class="selt"  @click="change('2')">
-								<image :src="curr==2?'../../static/images/case-icon2.png':'../../static/images/case-icon3.png'" mode=""></image>隐藏
+							<view class="selt"  @click="change('0')">
+								<image :src="submitData.behavior==0?'../../static/images/case-icon2.png':'../../static/images/case-icon3.png'" mode=""></image>隐藏
 							</view>
 						</view>
 					</view>
@@ -46,7 +47,7 @@
 			</form>
 		</view>
 		<view class="submitbtn" style="margin: 100rpx auto">
-			<button type="submit" @click=" Router.navigateTo({route:{path:'/pages/designer_case/designer_case'}})">确定</button>
+			<button type="submit" @click="Utils.stopMultiClick(submit)">确定</button>
 		</view>
 	</view>
 </template>
@@ -56,12 +57,17 @@
 		data() {
 			return {
 				Router:this.$Router,
-				showView: false,
-				score:'',
-				wx_info:{},
+				
 				curr:1,
-				index: 0,
-				array:['建筑工','装修工','维修工','园林工','市政工','安装工','其他']
+				index:'',
+				array:['建筑工','装修工','维修工','园林工','市政工','安装工','其他'],
+				submitData:{
+					class:'',
+					title:'',
+					description:'',
+					mainImg:'',
+					behavior:'',
+				}
 			}
 		},
 		onLoad() {
@@ -69,34 +75,92 @@
 			//self.$Utils.loadAll(['getMainData'], self);
 		},
 		methods: {
+			
 			bindPickerChange(e) {
-				// 搜索选择分类
+				const self=this;
 				console.log('picker发送选择改变，携带值为', e.target.value)
-				this.index = e.target.value
+				self.index = e.target.value;
+				self.submitData.class=self.array[self.index]
 			},
+			
 			change(curr){
 				const self=this
-				if(curr!=self.curr){
-					self.curr=curr
+				if(curr!=self.submitData.behavior){
+					self.submitData.behavior=curr
 				}
 			},
-			getMainData() {
-				const self = this;
-				console.log('852369')
-				const postData = {};
-				postData.tokenFuncName = 'getProjectToken';
-
+			
+			upLoadImg() {
+				const self = this;			
+				wx.showLoading({
+					mask: true,
+					title: '上传中',
+				});
 				const callback = (res) => {
-					if (res.solely_code == 100000 && res.info.data[0]) {
-						self.mainData = res.info.data;
+					console.log('res', res)
+					if (res.solely_code == 100000) {
+						
+						self.submitData.mainImg.push({
+							url:res.info.url,
+							type:'image'
+						})
+						console.log(self.submitData)
+						wx.hideLoading()
 					} else {
-						self.$Utils.showToast(res.msg, 'none')
-					};
-					self.$Utils.finishFunc('getMainData');
-
+						self.$Utils.showToast('网络故障', 'none')
+					}
+				};				
+				wx.chooseImage({
+					count: 1,
+					success: function(res) {
+						console.log(res);
+						var tempFilePaths = res.tempFilePaths[0];
+						console.log(callback)
+						self.$Utils.uploadFile(tempFilePaths, 'file', {
+							tokenFuncName: 'getProjectToken',
+							type:'image'
+						}, callback)
+					},
+					fail: function(err) {
+						wx.hideLoading();
+					},			
+				})			
+			},
+			
+			submit() {
+				const self = this;
+				uni.setStorageSync('canClick', false);	
+				const pass = self.$Utils.checkComplete(self.submitData);
+				console.log('pass', pass);
+				console.log('self.submitData',self.submitData)
+				if (pass) {			
+					self.messageAdd();	
+				} else {
+					uni.setStorageSync('canClick', true);
+					self.$Utils.showToast('请补全信息', 'none')
 				};
-				self.$apis.orderGet(postData, callback);
-
+			},
+			
+			messageAdd() {
+				const self = this;
+				const postData = {};
+				postData.tokenFuncName = 'getThreeToken';
+				postData.data = {};
+				postData.data = self.$Utils.cloneForm(self.submitData);
+				const callback = (data) => {				
+					if (data.solely_code == 100000) {					
+						self.$Utils.showToast('添加成功', 'none');
+						setTimeout(function() {
+							uni.navigateBack({
+								delta:1
+							})
+						}, 800)
+					} else {
+						uni.setStorageSync('canClick', true);
+						self.$Utils.showToast(data.msg, 'none', 1000)
+					}	
+				};
+				self.$apis.messageAdd(postData, callback);
 			},
 
 		},

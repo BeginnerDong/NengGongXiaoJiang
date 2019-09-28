@@ -1,18 +1,19 @@
 <template>
 	<view>
 		<view class="designIndex pdlr4" style="padding-top: 10rpx;">
-			<view class="items flexRowBetween" v-for="(item,index) in produtList" :key="index"  @click=" Router.navigateTo({route:{path:'/pages/indexDesignDetail/indexDesignDetail'}})">
+			<view class="items flexRowBetween" v-for="(item,index) in footData" :key="index"  
+			@click=" Router.navigateTo({route:{path:'/pages/indexDesignDetail/indexDesignDetail?id='+item.id}})">
 				<view class="pic">
-					<image src="../../static/images/home-img3.png" alt="" />
+					<image :src="item.userInfo[0].mainImg[0].url" alt="" />
 				</view>
 				<view class="infor">
 					<view class="title flex">
-						<view class="avoidOverflow">名称名称名称名称名称名称名称名称名称</view>
+						<view class="avoidOverflow">{{item.userInfo[0].name}}</view>
 					</view>
-					<view class="text2">擅长风格：欧式风、简约风、北美风、田园风</view>
+					<view class="text2">{{item.userInfo[0].introduce}}</view>
 					<view class="flexRowBetween saleB">
-						<view class="priceM font14">6</view>
-						<view class="color3 font12">成交量：500</view>
+						<view class="priceM font14">{{item.price}}</view>
+						<view class="color3 font12">成交量：{{item.sale_count}}</view>
 					</view>
 				</view>
 			</view>
@@ -27,24 +28,17 @@
 		data() {
 			return {
 				Router:this.$Router,
-				showView: false,
-				score: '',
-				wx_info: {},
-				current:1,
-				produtList:[
-					{},{}
-				]
+				footData:[]
 			}
 		},
 
 		onLoad(options) {
+			const self = this;
+			self.footData = self.$Utils.getStorageArray('footData');
 			uni.setStorageSync('canClick', true);
 		},
 
-		onShow() {
-			const self = this;
-			document.title = ''
-		},
+		
 
 		methods: {
 			change(current) {

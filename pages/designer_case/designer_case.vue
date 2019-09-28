@@ -8,50 +8,30 @@
 		</view>
 		
 		<view class="caceGl_ind">
-			<view class="item flexRowBetween">
+			<view class="item flexRowBetween" v-for="(item,index) in mainData">
 				<view class="ll">
-					<image src="../../static/images/about-daka-img1.png" mode=""></image>
+					<image :src="item.mainImg[0].url" mode=""></image>
 				</view>
 				<view class="rr">
-					<view class="title avoidOverflow2">标题必填标题必填标题必填标题必填标题必填标题必填标题必填标题必填</view>
+					<view class="title avoidOverflow2">{{item.title}}</view>
 					<view class="lable">
-						<view class="lis">维修工</view>
+						<view class="lis">{{item.passage1}}</view>
 					</view>
 					<view class="flexRowBetween underbTN">
-						<view class="left"><text class="show">显示</text></view>
+						<view class="left"><text :class="item.behavior==0?'hiden':'show'">{{item.behavior==0?'隐藏':'显示'}}</text></view>
 						<view class="item_delt pdlr4">
-							<view class="deltBtn" @click="deltAlert">
+							<view class="deltBtn" @click="deleteOne(index)">
 								<image class="deltIcon" src="../../static/images/certificate-icon2.png" mode=""></image>删除
 							</view>
-							<view class="deltBtn" @click=" Router.navigateTo({route:{path:'/pages/designer_caseDetail/designer_caseDetail'}})">
+							<view class="deltBtn" 
+							@click=" Router.navigateTo({route:{path:'/pages/designer_case_add/designer_case_add?id='+item.id}})">
 								<image class="deltIcon" src="../../static/images/skills-icon3.png" style="width: 28rpx; height: 27rpx;" mode=""></image>编辑
 							</view>
 						</view>
 					</view>
 				</view>
 			</view>
-			<view class="item flexRowBetween">
-				<view class="ll">
-					<image src="../../static/images/about-daka-img1.png" mode=""></image>
-				</view>
-				<view class="rr">
-					<view class="title avoidOverflow2">标题必填标题必填标题必填标题必填标题必填标题必填标题必填标题必填</view>
-					<view class="lable">
-						<view class="lis">维修工</view>
-					</view>
-					<view class="flexRowBetween underbTN">
-						<view class="left"><text class="hiden">隐藏</text></view>
-						<view class="item_delt pdlr4">
-							<view class="deltBtn" @click="deltAlert">
-								<image class="deltIcon" src="../../static/images/certificate-icon2.png" mode=""></image>删除
-							</view>
-							<view class="deltBtn">
-								<image class="deltIcon" src="../../static/images/skills-icon3.png" style="width: 28rpx; height: 27rpx;" mode=""></image>编辑
-							</view>
-						</view>
-					</view>
-				</view>
-			</view>
+			
 		</view>
 		
 		
@@ -73,41 +53,100 @@
 	export default {
 		data() {
 			return {
-				Router:this.$Router,
-				showView: false,
-				score: '',
-				wx_info: {},
-				current:1,
-				is_show:false,
-				num:1
+				Router: this.$Router,
+
+
+				
+				mainData:[],
 			}
 		},
 
-		onLoad(options) {
-			uni.setStorageSync('canClick', true);
+		onLoad() {
+			const self = this;
+			
+			self.paginate = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
+			//self.$Utils.loadAll(['getMainData'], self);
 		},
-		
+
+		onReachBottom() {
+			console.log('onReachBottom')
+			const self = this;
+			if (!self.isLoadAll && uni.getStorageSync('loadAllArray')) {
+				self.paginate.currentPage++;
+				self.getMainData()
+			};
+		},
 
 		onShow() {
 			const self = this;
-			document.title = ''
+			self.mainData = [];
+			self.$Utils.loadAll(['getMainData'], self);
 		},
 
 		methods: {
-			chage(num){
+			
+			deleteOne(index) {
 				const self = this;
-				if(num!=self.num){
-					self.num=num
-				}
+				uni.showModal({
+				    title: '提示',
+				    content: '确认是否删除这个案例',
+				    success: function (res) {
+				        if (res.confirm) {
+				            const postData = {};
+				            postData.searchItem = {};
+				            postData.searchItem.id = self.mainData[index].id;
+				            postData.tokenFuncName = 'getThreeToken';
+				            postData.data = {
+				            	status:-1
+				            };
+				            const callback = (res) => {
+				            	if (res.solely_code==100000) {
+				            		self.$Utils.showToast('删除成功', 'none');
+				            		setTimeout(function() {
+				            			self.getMainData(true);
+				            		}, 500);
+				            		
+				            	}else{
+				            		self.$Utils.showToast(res.msg, 'none');
+				            	}
+				            };
+				            self.$apis.messageUpdate(postData, callback)
+				        } else if (res.cancel) {
+				            console.log('用户点击取消');
+				        }
+				    }
+				});		
 			},
-			deltAlert(){
+
+			getMainData(isNew) {
 				const self = this;
-				self.is_show=!self.is_show;
+				if (isNew) {
+					self.mainData = [];
+					self.paginate = {
+						count: 0,
+						currentPage: 1,
+						is_page: true,
+						pagesize: 5
+					}
+				};
+				const postData = {};
+				postData.tokenFuncName = 'getThreeToken';
+				postData.paginate = self.$Utils.cloneForm(self.paginate);
+				postData.searchItem = {
+					thirdapp_id: 2,
+					type:5
+				};		
+				const callback = (res) => {
+					if (res.info.data.length > 0) {
+						self.mainData.push.apply(self.mainData, res.info.data);
+					} else {
+						self.$Utils.showToast('没有更多了', 'none');
+					};
+					console.log('self.mainData', self.mainData)
+					self.$Utils.finishFunc('getMainData');
+				};
+				self.$apis.messageGet(postData, callback);
 			},
-			getMainData() {
-				const self = this;
-				self.$apis.userGet(postData, callback);
-			}
 		}
 	}
 </script>

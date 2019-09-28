@@ -15,9 +15,10 @@
 		</view>
 		
 		<view class="college_idexLis pdlr4 flexRowBetween">
-			<view class="child"  v-for="(item,index) in collegeDate" :key="index"  @click=" Router.navigateTo({route:{path:'/pages/collegeDetail/collegeDetail'}})">
-				<image class="pic" src="../../static/images/home-college-img.png" mode=""></image>
-				<view class="tit avoidOverflow">标题标题标题标题标题标题标题标题</view>
+			<view class="child"  v-for="(item,index) in mainData" :key="index"  
+			@click=" Router.navigateTo({route:{path:'/pages/collegeDetail/collegeDetail?id='+item.id}})">
+				<image class="pic" :src="item.mainImg[0].url" mode=""></image>
+				<view class="tit avoidOverflow">{{item.title}}</view>
 			</view>
 		</view>
 
@@ -44,40 +45,67 @@
 				wx_info:{},
 				collegeDate:[
 					{},{},{},{},{},{}
-				]
+				],
+				mainData:[]
 			}
 		},
 		
 		onLoad() {
 			const self = this;
-			// self.$Utils.loadAll(['getMainData'], self);
+			self.paginate = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
+			self.$Utils.loadAll(['getMainData'], self);
 		},
+		
+		onReachBottom() {
+			console.log('onReachBottom')
+			const self = this;
+			if (!self.isLoadAll && uni.getStorageSync('loadAllArray')) {
+				self.paginate.currentPage++;
+				self.getMainData()
+			};
+		},
+		
 		methods: {
-			activeNav:function(index){
+			
+			
+			
+			getMainData(isNew) {
 				const self = this;
-				
-			},
-			bindPickerChange(e) {
-				// 搜索选择分类
-				console.log('picker发送选择改变，携带值为', e.target.value)
-				this.index = e.target.value
-			},
-			getMainData() {
-				const self = this;
-				console.log('852369')
-				const postData = {};
-				postData.tokenFuncName = 'getProjectToken';
-
-				const callback = (res) => {
-					if (res.solely_code == 100000 && res.info.data[0]) {
-						self.mainData = res.info.data;
-					} else {
-						self.$Utils.showToast(res.msg, 'none')
-					};
-					self.$Utils.finishFunc('getMainData');
-
+				if (isNew) {
+					self.mainData = [];
+					self.paginate = {
+						count: 0,
+						currentPage: 1,
+						is_page: true,
+						pagesize: 5
+					}
 				};
-				self.$apis.orderGet(postData, callback);
+				const postData = {};
+				postData.paginate = self.$Utils.cloneForm(self.paginate);
+				postData.searchItem = {
+					thirdapp_id:2,
+				};
+				postData.getBefore = {
+					caseData: {
+						tableName: 'Label',
+						searchItem: {
+							title: ['=', ['学院']],
+						},
+						middleKey: 'menu_id',
+						key: 'id',
+						condition: 'in',
+					},
+				};
+				const callback = (res) => {
+					if (res.info.data.length > 0) {
+						self.mainData.push.apply(self.mainData, res.info.data);
+					} else {
+						self.$Utils.showToast('没有更多了', 'none');
+					};
+					console.log('self.mainData',self.mainData)
+					self.$Utils.finishFunc('getMainData');
+				};
+				self.$apis.articleGet(postData, callback);
 			},
 		},
 	};

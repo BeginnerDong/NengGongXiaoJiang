@@ -1,7 +1,8 @@
 <template>
 	<view>
 
-		<view class="userHead">
+		<view class="userHead" style="position: relative;">
+			<image src="../../static/images/about-img1.png" style="position:absolute;height: 320rpx;width: 100%;z-index: -1;"></image>
 			<view class="infor">
 				<view class="left">
 					<image class="photo" src="../../static/images/about-daka-img2.png" mode=""></image>
@@ -79,21 +80,21 @@
 				<image class="arrow" src="../../static/images/arrow-icon1.png" ></image>
 			</view>
 			<view class="f5H10"></view>
-			<view class="info" @click=" Router.navigateTo({route:{path:'/pages/designer_login/designer_login'}})">
+			<view class="info" @click=" Router.navigateTo({route:{path:'/pages/designer_login/designer_login?type=designer'}})">
 				<view class="ilblock listimg">
 					<image src="../../static/images/about-icon12.png"></image>
 				</view>
 				<view class="ilblock">设计师</view>
 				<image class="arrow" src="../../static/images/arrow-icon1.png" ></image>
 			</view>
-			<view class="info" @click=" Router.navigateTo({route:{path:'/pages/worker_user/worker_user'}})">
+			<view class="info" @click=" Router.navigateTo({route:{path:'/pages/designer_login/designer_login?type=worker'}})">
 				<view class="ilblock listimg">
 					<image src="../../static/images/about-icon13.png"></image>
 				</view>
 				<view class="ilblock">工人</view>
 				<image class="arrow" src="../../static/images/arrow-icon1.png" ></image>
 			</view>
-			<view class="info" @click=" Router.navigateTo({route:{path:'/pages/supervisor_user/supervisor_user'}})">
+			<view class="info" @click=" Router.navigateTo({route:{path:'/pages/designer_login/designer_login?type=supervision'}})">
 				<view class="ilblock listimg">
 					<image src="../../static/images/about-icon14.png"></image>
 				</view>

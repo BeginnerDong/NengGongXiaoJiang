@@ -227,9 +227,9 @@ input,textarea {outline: none; -webkit-box-shadow: none; box-shadow: none;-webki
 .priceM::before{
 	content: "￥";
 }
-.priceM::after{
+/* .priceM::after{
 	content: "/㎡";
-}
+} */
 
 /* 小星星 */
 .starClass{font-size: 20rpx;color: #999;}

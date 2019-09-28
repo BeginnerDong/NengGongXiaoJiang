@@ -116,7 +116,7 @@
 		{
 			"path": "pages/classify/classify",
 			"style": {
-				"navigationBarTitleText": "建筑工",
+				"navigationBarTitleText": "",
 				"onReachBottomDistance":100
 			}
 		},

@@ -1,36 +1,22 @@
 <template>
 	<view class="pdlr4">
-			<view class="myaddress-lis">
-				<view class="adrs">中国银行 <text class="color3 font12">对公</text></view>
-				<view class="name">**** **** **** 2356</view>
+			<view class="myaddress-lis" v-for="(item,index) in mainData">
+				<view class="adrs" @click="choose(index)">{{item.label[0].title}} <text class="color3 font12">{{item.type==1?'对私':'对公'}}</text></view>
+				<view class="name" @click="choose(index)">**** **** **** {{item.number}}</view>
 				<view class="seltBox">
-					<view class="L">
-						<image class="icon" src="../../static/images/shopping-icon4.png" alt=""></image>
+					<view class="L" :data-id="item.id" @click="updateCard($event.currentTarget.dataset.id)">
+						<image class="icon" :src="item.isdefault==1?'../../static/images/about-address-icon1.png':'../../static/images/about-address-icon4.png'"
+						 alt=""></image>
 						默认银行卡
 					</view>
 					<view class="R">
-						<view class="child"><image src="../../static/images/about-address-icon2.png" mode=""></image>编辑</view>
-						<view class="child" @click="deltAlert"><image src="../../static/images/about-address-icon3.png" mode=""></image>删除</view>
+						<view class="child" :data-id="item.id" @click="Router.navigateTo({route:{path:'/pages/myBankListMsg/myBankListMsg?id='+$event.currentTarget.dataset.id}})"><image src="../../static/images/about-address-icon2.png" mode=""></image>编辑</view>
+						<view class="child" :data-id="item.id" @click="deleteCard($event.currentTarget.dataset.id)"><image src="../../static/images/about-address-icon3.png" mode=""></image>删除</view>
 					</view>
 					
 				</view>
 			</view>
-			<view class="myaddress-lis">
-				<view class="adrs">中国银行 <text class="color3 font12">对公</text></view>
-				<view class="name">**** **** **** 2356</view>
 			
-				<view class="seltBox">
-					<view class="L">
-						<image class="icon" src="../../static/images/shopping-icon1.png" alt=""></image>
-						默认银行卡
-					</view>
-					<view class="R">
-						<view class="child"><image src="../../static/images/about-address-icon2.png" mode=""></image>编辑</view>
-						<view class="child" @click="deltAlert"><image src="../../static/images/about-address-icon3.png" mode=""></image>删除</view>
-					</view>
-					
-				</view>
-			</view>
 			
 			<view class="submitbtn" style="margin-top: 200rpx;">
 				<button type="button"  @click=" Router.navigateTo({route:{path:'/pages/myBankListMsg/myBankListMsg'}})">添加银行卡</button>
@@ -50,42 +36,125 @@
 
 <script>
 	export default {
+
 		data() {
 			return {
+				mainData: [],
 				Router:this.$Router,
-				showView: false,
-				score: '',
-				wx_info: {},
-				is_show:false,
-				num:1
+				choosedIndex: -1
 			}
 		},
 
 		onLoad(options) {
-			uni.setStorageSync('canClick', true);
+			const self = this;	
+			self.$Utils.loadAll(['getMainData'], self)
+			
 		},
 
-		onShow() {
+		onReachBottom() {
+			console.log('onReachBottom')
 			const self = this;
-			document.title = ''
+			if (!self.isLoadAll && uni.getStorageSync('loadAllArray')) {
+				self.paginate.currentPage++;
+				self.getMainData()
+			};
 		},
 
 		methods: {
-			chage(num){
+
+			choose(index) {
 				const self = this;
-				if(num!=self.num){
-					self.num=num
-				}
-			},
-			deltAlert(){
-				const self = this;
-				self.is_show=!self.is_show;
+				self.choosedIndex = index;
+				uni.setStorageSync('choosedAddressData', self.mainData[index]);
+				console.log('choosedIndex', self.choosedIndex);
 			},
 
 			getMainData() {
 				const self = this;
-				self.$apis.userGet(postData, callback);
-			}
+
+				const postData = {};
+				postData.paginate = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
+				postData.tokenFuncName = 'getThreeToken';
+				postData.getAfter ={
+					label:{			
+						tableName:'Label',
+						middleKey:'bank',
+						key:'id',
+						condition:'=',
+						searchItem:{
+							status:1,
+						}
+					}
+				};
+				const callback = (res) => {
+					if (res.info.data.length > 0) {
+						self.mainData.push.apply(self.mainData, res.info.data);
+						for (var i = 0; i < self.mainData.length; i++) {
+							self.mainData[i].number = self.mainData[i].number.substr(self.mainData[i].number.length-4)
+						}
+					} else {
+						self.$Utils.showToast('没有更多了', 'none');
+					};
+					self.$Utils.finishFunc('getMainData');
+				};
+				self.$apis.cardGet(postData, callback);
+			},
+
+
+
+
+
+			deleteCard(id) {
+				const self = this;
+				uni.showModal({
+				    title: '提示',
+				    content: '确认是否删除这张银行卡',
+				    success: function (res) {
+				        if (res.confirm) {
+				            const postData = {};
+				            postData.searchItem = {};
+				            postData.searchItem.id = id;
+				            postData.tokenFuncName = 'getThreeToken';
+				            const callback = (res) => {
+				            	if (res) {
+				            		self.mainData = [];
+				            		self.getMainData();
+				            	}
+				            };
+				            self.$apis.cardDelete(postData, callback)
+				        } else if (res.cancel) {
+				            console.log('用户点击取消');
+				        }
+				    }
+				});				
+			},
+
+
+			updateCard(id) {
+				const self = this;
+				const postData = {};
+
+				postData.tokenFuncName = 'getThreeToken';
+
+				postData.searchItem = {};
+				postData.searchItem.id = id;
+				postData.data = {
+					isdefault: 1
+				}
+				const callback = (res) => {
+					if (res.solely_code==100000) {
+						self.mainData = [];
+						self.getMainData();
+					}else{
+						self.$Utils.showToast(res.msg, 'none');
+					}
+				};
+				self.$apis.cardUpdate(postData, callback);
+			},
+
+
+
+
 		}
 	}
 </script>

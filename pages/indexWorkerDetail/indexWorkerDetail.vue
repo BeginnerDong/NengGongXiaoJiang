@@ -6,12 +6,13 @@
 		
 		<view class="designXq_name pdlr4" style="margin-top: 0;padding: 30rpx 4%;">
 			<view class="lis1">
-				<view class="photo" @click=" Router.navigateTo({route:{path:'/pages/indexWorker_index/indexWorker_index'}})">
-					<image src="../../static/images/gerenzhuye-img2.png" mode=""></image>
+				<view class="photo" 
+				@click=" Router.navigateTo({route:{path:'/pages/indexWorker_index/indexWorker_index?user_no='+mainData.userInfo[0].user_no}})">
+					<image :src="mainData.userInfo[0].mainImg[0].url" mode=""></image>
 				</view>
 				<view class="cont">
 					<view class="flex namebox">
-						<view class="font13">张三</view>
+						<view class="font13">{{mainData.userInfo[0].name}}</view>
 						<view class="flexRowBetween starClass">
 							<view class="starBox">
 								<image src="../../static/images/home-supervision-icon1.png" mode=""></image>
@@ -23,10 +24,10 @@
 							<view>9.5分</view>
 						</view>
 					</view>
-					<view class="text2 avoidOverflow2 color3 font13">工艺内容:项目、内容项目、内容项目、内容项目、内容项目、内容</view>
+					<view class="text2 avoidOverflow2 color3 font13">{{mainData.userInfo[0].introduce}}</view>
 					<view class="flexRowBetween saleB">
-						<view class="priceM font14">6</view>
-						<view class="color3 font12">成交量：500</view>
+						<view class="priceM font14">{{mainData.price}}</view>
+						<view class="color3 font12">成交量：{{mainData.sale_count}}</view>
 					</view>
 				</view>
 			</view>
@@ -52,7 +53,7 @@
 		</view>
 		<view class="xqInfor">
 			<view class="cont">
-				<view>内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容</view>
+				<view>{{mainData.userInfo[0].introduce}}</view>
 			</view>
 		</view>
 		
@@ -63,9 +64,10 @@
 		</view>
 		
 		<view class="proLis flexRowBetween xqProlis">
-			<view class="item-lis" v-for="(item,index) in produtList" :key="index" @click=" Router.navigateTo({route:{path:'/pages/indexWorkerDetailTwo/indexWorkerDetailTwo'}})">
-				<image class="img" src="../../static/images/home-img3.png" alt="" />
-				<view class="tit avoidOverflow2">名称名称名称名称名称名称名称名名称名称名称名称名称名称</view>
+			<view class="item-lis" v-for="(item,index) in mainData.message" :key="index" 
+			@click=" Router.navigateTo({route:{path:'/pages/indexWorkerDetailTwo/indexWorkerDetailTwo?user_no='+item.user_no+'&id='+item.id}})">
+				<image class="img" :src="item.mainImg[0].url" alt="" />
+				<view class="tit avoidOverflow2">{{item.title}}</view>
 			</view>
 		</view>
 		
@@ -77,8 +79,8 @@
 					<image src="../../static/images/details-icon2.png" mode=""></image>
 					<view>返回首页</view>
 				</view>
-				<view class="ite">
-					<image src="../../static/images/details-icon3.png" mode=""></image>
+				<view class="ite" @click="collect()">
+					<image :src="isCollect?'../../static/images/details-icon6.png':'../../static/images/details-icon3.png'" mode=""></image>
 					<view>收藏</view>
 				</view>
 				<view class="ite">
@@ -98,37 +100,111 @@
 		data() {
 			return {
 				Router:this.$Router,
-				showView: false,
-				score:'',
-				wx_info:{},
-				is_show:false,
+			
 				produtList: [
 					{},{},{},{}
-				]
+				],
+				mainData:{},
+				isCollect:false
 			}
 		},
 
-		onLoad() {
+		onLoad(options) {
 			const self = this;
-			self.$Utils.loadAll(['getMainData'], self);
+			self.id = options.id;
+			var collectData = self.$Utils.getStorageArray('collectWorker');
+			console.log('5456',collectData)
+			for (var i = 0; i < collectData.length; i++) {
+				if(collectData[i].id==self.id){
+					self.isCollect = true
+				}
+			};
+			self.$Utils.loadAll(['getUserInfoData'], self);
 		},
 
 		methods: {
-			getMainData() {
+			
+			collect() {
+				const self = this;	
+				if (JSON.stringify(self.mainData) == '{}') {		
+					self.$Utils.showToast('信息错误', 'none');
+					return;
+				};
+				if(self.isCollect){
+					var res = self.$Utils.delStorageArray('collectWorker',self.mainData,'id');
+					if (res) {
+						self.isCollect = false;
+						self.$Utils.showToast('取消成功', 'none');
+					};
+				}else{
+					var res = self.$Utils.setStorageArray('collectWorker', self.mainData, 'id', 999);
+					if (res) {
+						self.isCollect = true;
+						self.$Utils.showToast('收藏成功', 'none');
+					};
+				}
+				
+			},
+			
+			getUserInfoData(){
 				const self = this;
 				const postData = {};
 				postData.tokenFuncName = 'getProjectToken';
-			
+				postData.searchItem = {
+					user_no:uni.getStorageSync('user_info').user_no
+				};
 				const callback = (res) => {
 					if (res.solely_code == 100000 && res.info.data[0]) {
-						self.mainData = res.info.data;
+						self.userInfoData = res.info.data[0];
 					} else {
 						self.$Utils.showToast(res.msg, 'none')
 					};
-					self.$Utils.finishFunc('getMainData');
+					self.getMainData();						
+				};
+				self.$apis.userInfoGet(postData, callback);
+			},
+			
+			
+			getMainData() {
+				const self = this;
+				const postData = {};
+				postData.searchItem = {
+					id:self.id,
+					user_type:1
+				};
+				postData.getAfter ={
+					userInfo:{
+						token:uni.getStorageSync('user_token'),
+						tableName:'UserInfo',
+						middleKey:'user_no',
+						key:'user_no',
+						condition:'=',
+						searchItem:{
+							status:1,
+						}
+					},
+					message:{
+						token:uni.getStorageSync('user_token'),
+						tableName:'Message',
+						middleKey:'user_no',
+						key:'user_no',
+						searchItem:{
+							status:1,
+							type:5
+						},
+						condition:'='
+					},
+				};
+				const callback = (res) => {
+					if (res.solely_code == 100000 && res.info.data[0]) {
+						self.mainData = res.info.data[0];
+					} else {
+						self.$Utils.showToast(res.msg, 'none')
+					};
+					self.$Utils.finishFunc('getUserInfoData');
 			
 				};
-				self.$apis.orderGet(postData, callback);
+				self.$apis.productGet(postData, callback);
 			
 			}
 		}

@@ -265,15 +265,15 @@ class Token {
         
     }
     
-    getMerchantToken(callback,postData) { 
-        if((postData&&postData.refreshToken)||!uni.getStorageSync('merchant_token')){
-            uni.removeStorageSync('merchant_token');
-            uni.removeStorageSync('merchant_info');
-            uni.redirectTo({
-              url: '/pages/login/login'
+    getThreeToken(callback,postData) { 
+        if((postData&&postData.refreshToken)||!uni.getStorageSync('threeToken')){
+            uni.removeStorageSync('threeToken');
+            uni.removeStorageSync('threeInfo');
+            uni.reLaunch({
+              url: '/pages/user/user'
             });
         }else{
-            return uni.getStorageSync('merchant_token');
+            return uni.getStorageSync('threeToken');
         }
     }
    

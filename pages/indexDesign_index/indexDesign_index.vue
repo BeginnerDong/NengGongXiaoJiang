@@ -4,11 +4,11 @@
 		<view class="designXq_name pdlr4" style="margin-top: 0;padding: 30rpx 4%;">
 			<view class="lis1">
 				<view class="photo">
-					<image src="../../static/images/gerenzhuye-img2.png" mode=""></image>
+					<image :src="mainData.mainImg[0].url" mode=""></image>
 				</view>
 				<view class="cont">
 					<view class="flex namebox">
-						<view class="font13">张三</view>
+						<view class="font13">{{mainData.name}}</view>
 						<view class="flexRowBetween starClass">
 							<view class="starBox">
 								<image src="../../static/images/home-supervision-icon1.png" mode=""></image>
@@ -20,10 +20,10 @@
 							<view>9.5分</view>
 						</view>
 					</view>
-					<view class="text2 avoidOverflow2 color3 font13">工艺内容:项目、内容项目、内容项目、内容项目、内容项目、内容</view>
+					<view class="text2 avoidOverflow2 color3 font13">{{mainData.introduce}}</view>
 					<view class="flexRowBetween saleB">
-						<view class="priceM font14">6</view>
-						<view class="color3 font12">成交量：500</view>
+						
+						<view class="color3 font12">成交量：{{mainData.volume}}</view>
 					</view>
 				</view>
 			</view>
@@ -37,7 +37,7 @@
 		</view>
 		<view class="xqInfor">
 			<view class="cont">
-				<view>内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容</view>
+				<view>{{mainData.introduce}}</view>
 			</view>
 		</view>
 		
@@ -61,8 +61,8 @@
 		
 		<view class="tejiaBox">
 			<scroll-view class="scrollX" scroll-x>
-				<view class="item-lis" v-for="(item,index) in CardImgDate" :key="index" >
-					<image class="img" src="../../static/images/gerenzhuye-img.png" alt="" />
+				<view class="item-lis" v-for="(item,index) in mainData.message" :key="index" >
+					<image class="img" :src="item.mainImg[0].url" alt="" />
 				</view>
 			</scroll-view>
 		</view>
@@ -73,14 +73,11 @@
 			<view class="tt">技能</view>
 		</view>
 		<view class="caseSbmit">
-			<view class="eidt-line">
-				<view class="ll">铺地砖：</view>
-				<view class="rr price" style="text-align: right;">200</view>
+			<view class="eidt-line" v-for="(item,index) in mainData.product" :key="index" >
+				<view class="ll">{{item.title}}：</view>
+				<view class="rr price" style="text-align: right;">{{item.price}}</view>
 			</view>
-			<view class="eidt-line">
-				<view class="ll">平正铺砖：</view>
-				<view class="rr price" style="text-align: right;">200</view>
-			</view>
+			
 		</view>
 		
 	</view>
@@ -93,37 +90,61 @@
 		data() {
 			return {
 				Router:this.$Router,
-				showView: false,
-				score:'',
-				wx_info:{},
-				is_show:false,
+				mainData:{},
 				CardImgDate: [
 					{},{},{},{},{},{}
 				]
 			}
 		},
 
-		onLoad() {
+		onLoad(options) {
 			const self = this;
+			self.user_no = options.user_no;
 			self.$Utils.loadAll(['getMainData'], self);
 		},
 
 		methods: {
+			
 			getMainData() {
 				const self = this;
 				const postData = {};
 				postData.tokenFuncName = 'getProjectToken';
-			
+				postData.searchItem = {
+					user_type:1,
+					user_no:self.user_no
+				};
+				postData.getAfter = {
+					message:{
+						tableName:'Message',
+						middleKey:'user_no',
+						key:'user_no',
+						searchItem:{
+							status:1,
+							type:6
+						},
+						condition:'='
+					},
+					product:{
+						tableName:'Product',
+						middleKey:'user_no',
+						key:'user_no',
+						searchItem:{
+							status:1,
+							type:1
+						},
+						condition:'='
+					},
+				};
 				const callback = (res) => {
 					if (res.solely_code == 100000 && res.info.data[0]) {
-						self.mainData = res.info.data;
+						self.mainData = res.info.data[0];
 					} else {
 						self.$Utils.showToast(res.msg, 'none')
 					};
 					self.$Utils.finishFunc('getMainData');
 			
 				};
-				self.$apis.orderGet(postData, callback);
+				self.$apis.userInfoGet(postData, callback);
 			
 			}
 		}

@@ -7,23 +7,24 @@
 			<view class="tit" >添加证书</view>
 		</view>
 		<view class="myNeed_ind pdlr4">
-			<view class="zizhiline boxShaow" v-for="(item,index) in zizhiData" :key="index" >
+			<view class="zizhiline boxShaow" v-for="(item,index) in mainData" :key="index" >
 				<view class="item_delt pdlr4">
-					<view class="deltBtn">
+					<view class="deltBtn" @click="deleteOne(index)">
 						<image class="deltIcon" src="../../static/images/certificate-icon2.png" mode=""></image>删除
 					</view>
 				</view>
-				<view class="item flexRowBetween" @click=" Router.navigateTo({route:{path:'/pages/designer_certificateDetail/designer_certificateDetail'}})">
+				<view class="item flexRowBetween" 
+				@click=" Router.navigateTo({route:{path:'/pages/designer_certificateDetail/designer_certificateDetail?id='+item.id}})">
 					<view class="cont">
 						<view class="lis flex">
 							<image class="icon" src="../../static/images/certificate-icon3.png" mode=""></image>
 							<view class="name">证书名称</view>
-							<view class="tex">证书名称名称名称名称</view>
+							<view class="tex">{{item.title}}</view>
 						</view>
 						<view class="lis flex">
 							<image class="icon" src="../../static/images/certificate-icon4.png" mode=""></image>
 							<view class="name">获奖时间</view>
-							<view class="tex">2019年内7月20日</view>
+							<view class="tex">{{item.keywords}}</view>
 						</view>
 					</view>
 					<view class="arrow"><image src="../../static/images/arrow-icon1.png" mode=""></image></view>
@@ -39,31 +40,90 @@
 	export default {
 		data() {
 			return {
-				Router:this.$Router,
-				showView: false,
-				score: '',
-				wx_info: {},
-				current:1,
-				zizhiData:[
-					{},{}
-				]
+				Router: this.$Router,
+
+
+
+				mainData:[],
 			}
 		},
 
-		onLoad(options) {
-			uni.setStorageSync('canClick', true);
+		onLoad() {
+			const self = this;
+			
+			self.paginate = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
+			//self.$Utils.loadAll(['getMainData'], self);
+		},
+
+		onReachBottom() {
+			console.log('onReachBottom')
+			const self = this;
+			if (!self.isLoadAll && uni.getStorageSync('loadAllArray')) {
+				self.paginate.currentPage++;
+				self.getMainData()
+			};
 		},
 
 		onShow() {
 			const self = this;
-			document.title = ''
+			self.mainData = [];
+			self.$Utils.loadAll(['getMainData'], self);
 		},
 
 		methods: {
-			getMainData() {
+			
+			deleteOne(index) {
 				const self = this;
-				self.$apis.userGet(postData, callback);
-			}
+				const postData = {};
+				postData.searchItem = {};
+				postData.searchItem.id = self.mainData[index].id;
+				postData.tokenFuncName = 'getThreeToken';
+				postData.data = {
+					status:-1
+				};
+				const callback = (res) => {
+					if (res.solely_code==100000) {
+						self.$Utils.showToast('删除成功', 'none');
+						setTimeout(function() {
+							self.getMainData(true);
+						}, 500);
+						
+					}else{
+						self.$Utils.showToast(res.msg, 'none');
+					}
+				};
+				self.$apis.messageUpdate(postData, callback)
+			},
+
+			getMainData(isNew) {
+				const self = this;
+				if (isNew) {
+					self.mainData = [];
+					self.paginate = {
+						count: 0,
+						currentPage: 1,
+						is_page: true,
+						pagesize: 5
+					}
+				};
+				const postData = {};
+				postData.tokenFuncName = 'getThreeToken';
+				postData.paginate = self.$Utils.cloneForm(self.paginate);
+				postData.searchItem = {
+					thirdapp_id: 2,
+					type:6
+				};		
+				const callback = (res) => {
+					if (res.info.data.length > 0) {
+						self.mainData.push.apply(self.mainData, res.info.data);
+					} else {
+						self.$Utils.showToast('没有更多了', 'none');
+					};
+					console.log('self.mainData', self.mainData)
+					self.$Utils.finishFunc('getMainData');
+				};
+				self.$apis.messageGet(postData, callback);
+			},
 		}
 	}
 </script>

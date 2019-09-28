@@ -4,127 +4,63 @@
 			<cNavList></cNavList>
 			<c-swiper></c-swiper>
 		</view>
-		
+
 		<view class="f5H10" style="margin-top: 20rpx;"></view>
-		
+
 		<view class="fabubtn" @click=" Router.navigateTo({route:{path:'/pages/interactive_release/interactive_release'}})">
 			<view class="icon">
 				<image src="../../static/images/home-interactive-icon1.png" mode=""></image>
 			</view>
 			<view class="tit">发布</view>
 		</view>
-		
+
 		<view class="interct_idexLis mglr4 boxShaow">
-			<view class="child" @click=" Router.navigateTo({route:{path:'/pages/interactiveDetail/interactiveDetail'}})">
+			<view class="child" v-for="item in mainData" 
+			@click="Router.navigateTo({route:{path:'/pages/interactiveDetail/interactiveDetail?id='+item.id}})">
 				<view class="flex">
-					<view class="photo"><image src="../../static/images/home-interactive-img.png" mode=""></image></view>
+					<view class="photo">
+						<image :src="item.mainImg&&item.mainImg[0]?item.mainImg[0]:''" mode=""></image>
+					</view>
 					<view class="name">
-						<view class="font13">快乐的猫</view>
-						<view class="time">2019年6月28日</view>
+						<view class="font13">{{item.title}}</view>
+						<view class="time">{{item.create_time}}</view>
 					</view>
 				</view>
-				<view class="text font13">互动内容互动内容互动内容互动内容互动内容互动内容互动内容互动内容</view>
+				<view class="text font13">{{item.content}}</view>
 				<view class="imgbox">
-					<view class="lisThree">
-						<image src="../../static/images/home-interactive-img1.png" mode=""></image>
+					<view v-for="c_item in item.bannerImg" :class="item.bannerImg.length==1?'lisOne':(item.bannerImg.length==2?'lisTwo':'lisThree')">
+						<image :src="c_item" mode=""></image>
 					</view>
-					<view class="lisThree">
-						<image src="../../static/images/home-interactive-img1.png" mode=""></image>
-					</view>
-					<view class="lisThree">
-						<image src="../../static/images/home-interactive-img1.png" mode=""></image>
-					</view>
+					<!--  -->
 				</view>
 				<view class="label">
 					<view class="lis">
 						<image src="../../static/images/home-interactive-icon3.png" mode=""></image>
-						<view>21165</view>
+						<view>{{item.view_count}}</view>
 					</view>
 					<view class="lis">
 						<image src="../../static/images/home-interactive-icon2.png" mode=""></image>
-						<view>565</view>
+						<view>{{item.reply.count}}</view>
 					</view>
 					<view class="lis">
 						<image src="../../static/images/home-interactive-icon4.png" mode=""></image>
-						<view>2015</view>
+						<view>{{item.like.count}}</view>
 					</view>
 				</view>
 			</view>
-			
-			<view class="child"  @click=" Router.navigateTo({route:{path:'/pages/interactiveDetail/interactiveDetail'}})">
-				<view class="flex">
-					<view class="photo"><image src="../../static/images/home-interactive-img.png" mode=""></image></view>
-					<view class="name">
-						<view class="font13">快乐的猫</view>
-						<view class="time">2019年6月28日</view>
-					</view>
-				</view>
-				<view class="text font13">互动内容互动内容互动内容互动内容互动内容互动内容互动内容互动内容</view>
-				<view class="imgbox">
-					<view class="lisTwo">
-						<image src="../../static/images/home-interactive-img1.png" mode=""></image>
-					</view>
-					<view class="lisTwo">
-						<image src="../../static/images/home-interactive-img1.png" mode=""></image>
-					</view>
-				</view>
-				<view class="label">
-					<view class="lis">
-						<image src="../../static/images/home-interactive-icon3.png" mode=""></image>
-						<view>21165</view>
-					</view>
-					<view class="lis">
-						<image src="../../static/images/home-interactive-icon2.png" mode=""></image>
-						<view>565</view>
-					</view>
-					<view class="lis">
-						<image src="../../static/images/home-interactive-icon4.png" mode=""></image>
-						<view>2015</view>
-					</view>
-				</view>
-			</view>
-			
-			<view class="child"  @click=" Router.navigateTo({route:{path:'/pages/interactiveDetail/interactiveDetail'}})">
-				<view class="flex">
-					<view class="photo"><image src="../../static/images/home-interactive-img.png" mode=""></image></view>
-					<view class="name">
-						<view class="font13">快乐的猫</view>
-						<view class="time">2019年6月28日</view>
-					</view>
-				</view>
-				<view class="text font13">互动内容互动内容互动内容互动内容互动内容互动内容互动内容互动内容</view>
-				<view class="imgbox">
-					<view class="lisOne">
-						<image src="../../static/images/home-interactive-img1.png" mode=""></image>
-					</view>
-				</view>
-				<view class="label">
-					<view class="lis">
-						<image src="../../static/images/home-interactive-icon3.png" mode=""></image>
-						<view>21165</view>
-					</view>
-					<view class="lis">
-						<image src="../../static/images/home-interactive-icon2.png" mode=""></image>
-						<view>565</view>
-					</view>
-					<view class="lis">
-						<image src="../../static/images/home-interactive-icon4.png" mode=""></image>
-						<view>2015</view>
-					</view>
-				</view>
-			</view>
-			
+
+
 		</view>
 
-		
+
 	</view>
-	
+
 </template>
 
 <script>
 	import cSwiper from "@/components/swiper/swiper.vue";
 	import cNavList from "@/components/navList/navList.vue"
-	
+
 	export default {
 		components: {
 			cSwiper,
@@ -132,47 +68,107 @@
 		},
 		data() {
 			return {
-				
-				showView: false,
-				score:'',
-				Router:this.$Router,
-				wx_info:{},
-				scrollTop: 100,
-				currt:0,
-				index: 0
+				mainData: [],
+
+				Router: this.$Router,
+
 			}
 		},
-		
+
 		onLoad() {
 			const self = this;
-			// self.$Utils.loadAll(['getMainData'], self);
+			self.paginate = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
+			
 		},
+		
+		onShow() {
+			const self = this;
+			self.getMainData(true)
+		},
+
+		onReachBottom() {
+			console.log('onReachBottom')
+			const self = this;
+			if (!self.isLoadAll && uni.getStorageSync('loadAllArray')) {
+				self.paginate.currentPage++;
+				self.getMainData()
+			};
+		},
+
 		methods: {
-			activeNav:function(index){
-				const self = this;
-				
-			},
-			bindPickerChange(e) {
-				// 搜索选择分类
-				console.log('picker发送选择改变，携带值为', e.target.value)
-				this.index = e.target.value
-			},
-			getMainData() {
-				const self = this;
-				console.log('852369')
-				const postData = {};
-				postData.tokenFuncName = 'getProjectToken';
 
-				const callback = (res) => {
-					if (res.solely_code == 100000 && res.info.data[0]) {
-						self.mainData = res.info.data;
-					} else {
-						self.$Utils.showToast(res.msg, 'none')
-					};
-					self.$Utils.finishFunc('getMainData');
-
+			getMainData(isNew) {
+				const self = this;
+				if (isNew) {
+					self.mainData = [];
+					self.paginate = {
+						count: 0,
+						currentPage: 1,
+						is_page: true,
+						pagesize: 5
+					}
 				};
-				self.$apis.orderGet(postData, callback);
+				const postData = {};
+				postData.paginate = self.$Utils.cloneForm(self.paginate);
+				postData.tokenFuncName = 'getProjectToken';
+				postData.searchItem = {
+					thirdapp_id: 2,
+					user_type:0,
+					type:3,
+					relation_id:0
+				};
+				postData.getAfter = {
+					like: {
+						tableName: 'Log',
+						searchItem: {
+							status:1,
+							type:1
+						},
+						middleKey: 'id',
+						key: 'relation_id',
+						condition: 'in',
+						compute:{
+						  
+						  count:[
+						    'count',
+						    'count',
+						    {
+						      status:1,
+						    }
+						  ]
+						},
+					},
+					reply: {
+						tableName: 'Message',
+						searchItem: {
+							status:1,
+							type:3
+						},
+						middleKey: 'id',
+						key: 'relation_id',
+						condition: 'in',
+						compute:{
+						  
+						  count:[
+						    'count',
+						    'count',
+						    {
+						      status:1,
+						    }
+						  ]
+						},
+					},
+				};
+				const callback = (res) => {
+					if (res.info.data.length > 0) {
+						self.mainData.push.apply(self.mainData, res.info.data);
+					} else {
+						self.$Utils.showToast('没有更多了', 'none');
+					};
+					console.log('self.mainData', self.mainData)
+					self.$Utils.finishFunc('getMainData');
+				};
+				self.$apis.messageGet(postData, callback);
 			},
 		},
 	};
@@ -185,7 +181,8 @@
 		padding-bottom: 60rpx;
 		background: #f5f5f5;
 	}
-	.ind-cont4 .item{width: 33.3%;}
-	
 
+	.ind-cont4 .item {
+		width: 33.3%;
+	}
 </style>

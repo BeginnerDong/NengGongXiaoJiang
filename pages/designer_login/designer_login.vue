@@ -1,28 +1,30 @@
 <template>
-	<view>
+	<view v-if="showPage">
 		
 		<image class="lgoin-topBj" src="../../static/images/regietered-img1.png" mode=""></image>
 		<view class="login-box">
 			<view class="item">
 				<view class="icon"><image src="../../static/images/regietered-icon7.png" mode=""></image></view>
 				<view class="rr">
-					<input type="number" placeholder="输入手机号码" maxlength="11">
+					<input type="number" placeholder="输入手机号码" maxlength="11" v-model="phone">
 				</view>
 			</view>
 			<view class="item">
 				<view class="icon"><image src="../../static/images/regietered-icon5.png" mode=""></image></view>
 				<view class="rr pr flexRowBetween">
 					<view style="width: 50%;">
-						<input type="number" placeholder="输入验证码">
+						<input type="number" placeholder="输入验证码" >
 					</view>
 					<view class="yzmBtn">获取验证码</view>
 				</view>
 			</view>
 		</view>
 		<view class="submitbtn" style="margin: 200rpx auto">
-			<button type="submit" style="margin-bottom: 20rpx;" @click=" Router.navigateTo({route:{path:'/pages/designer_user/designer_user'}})">登录</button>
+			<button type="submit" style="margin-bottom: 20rpx;" 
+			@click="login">登录</button>
 			<view class="agreeSel">
-				<view class="text color2" @click=" Router.navigateTo({route:{path:'/pages/designer_register/designer_register'}})">没有账号，去注册</view>
+				<view class="text color2" 
+				@click=" Router.navigateTo({route:{path:'/pages/designer_register/designer_register?type='+type}})">没有账号，去注册</view>
 			</view>
 		</view>
 	</view>
@@ -33,37 +35,66 @@
 		data() {
 			return {
 				Router:this.$Router,
-				showView: false,
-				score:'',
-				wx_info:{}
+				type:'',
+				phone:'',
+				showPage:false
 			}
 		},
-		onLoad() {
+		
+		onLoad(options) {
 			const self = this;
+			self.type=options.type
+			console.log('self.type',self.type)
 			//self.$Utils.loadAll(['getMainData'], self);
+			if(self.type=='worker'){
+				self.identity=1
+			}else if(self.type=='designer'){
+				self.identity=2
+			}
 		},
+		
+		
+		onShow() {
+			const self = this;
+			if(self.type=='worker'&&uni.getStorageSync('threeToken')&&uni.getStorageSync('threeInfo').identity==1){
+				self.Router.redirectTo({route:{path:'/pages/worker_user/worker_user'}})
+			}else if(self.type=='designer'&&uni.getStorageSync('threeToken')&&uni.getStorageSync('threeInfo').identity==2){
+				self.Router.redirectTo({route:{path:'/pages/designer_user/designer_user'}})
+			}else{
+				self.showPage = true
+			}
+		},
+		
 		methods: {
-			xieyiAlert(){
+			
+			
+			
+			login() {
 				const self = this;
-				self.is_show=!self.is_show;
-			},
-			getMainData() {
-				const self = this;
-				console.log('852369')
-				const postData = {};
-				postData.tokenFuncName = 'getProjectToken';
-
-				const callback = (res) => {
-					if (res.solely_code == 100000 && res.info.data[0]) {
-						self.mainData = res.info.data;
-					} else {
-						self.$Utils.showToast(res.msg, 'none')
-					};
-					self.$Utils.finishFunc('getMainData');
-
+				if(self.phone==''){
+					self.$Utils.showToast('请输入账号', 'none', 1000);
+					return
 				};
-				self.$apis.orderGet(postData, callback);
-
+				const postData = {
+					login_name:self.phone,
+					identity:self.identity
+				};				
+				const callback = (res) => {				
+					if (res.solely_code == 100000) {					
+						console.log(res)
+						uni.setStorageSync('threeInfo',res.info)
+						uni.setStorageSync('threeToken',res.token);
+						if(self.type=='worker'){
+							self.Router.redirectTo({route:{path:'/pages/worker_user/worker_user'}})
+						}else if(self.type=='designer'){
+							self.Router.redirectTo({route:{path:'/pages/designer_user/designer_user'}})
+						}
+					} else {
+						uni.setStorageSync('canClick', true);
+						self.$Utils.showToast(res.msg, 'none', 1000)
+					}	
+				};
+				self.$apis.login(postData, callback);
 			},
 
 		},

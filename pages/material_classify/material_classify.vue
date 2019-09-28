@@ -2,23 +2,19 @@
 	<view class="classifyBox">
 		<view>
 			<scroll-view class="navLisBox" scroll-x>
-				<view class="nav-item " :class="num==1?'active':''" @click="change('1')">柜子</view>
-				<view class="nav-item" :class="num==2?'active':''" @click="change('2')">椅子</view>
-				<view class="nav-item" :class="num==3?'active':''" @click="change('3')">木门</view>
-				<view class="nav-item" :class="num==4?'active':''" @click="change('4')">建筑材料</view>
-				<view class="nav-item" :class="num==5?'active':''" @click="change('5')">木门</view>
-				<view class="nav-item" :class="num==6?'active':''" @click="change('6')">建筑材料</view>
-				<view class="nav-item" :class="num==7?'active':''" @click="change('7')">椅子</view>
+				<view class="nav-item" v-for="(item,index) in mainData" :class="item.id==idTwo?'active':''"
+				@click="change(item.id,index)">
+					{{item.title}}
+				</view>
 			</scroll-view>
 		</view>
 		<view class="classifyCont">
 			<view class="class_leftNav">
 				<view class="cont">
-					<view class="child" :class="curr==1?'on':''" @click="changeTwo('1')">衣柜</view>
-					<view class="child" :class="curr==2?'on':''" @click="changeTwo('2')">鞋柜</view>
-					<view class="child" :class="curr==3?'on':''" @click="changeTwo('3')">书柜</view>
-					<view class="child" :class="curr==4?'on':''" @click="changeTwo('4')">床头柜</view>
-					<view class="child" :class="curr==5?'on':''" @click="changeTwo('5')">衣柜</view>
+					<view class="child" v-for="item in mainData[indexTwo].child" :class="item.id==idThree?'on':''" 
+					@click="changeTwo(item.id)">
+						{{item.title}}
+					</view>
 				</view>
 			</view>
 			<view class="class_rightCont">
@@ -34,16 +30,17 @@
 				</view>
 				<view class="class_infor">
 					<view class="designIndex">
-						<view class="items flexRowBetween" v-for="(item,index) in produtList" :key="index" @click=" Router.navigateTo({route:{path:'/pages/pageDetail/pageDetail'}})">
+						<view class="items flexRowBetween" v-for="(item,index) in productData" :key="index" 
+						@click=" Router.navigateTo({route:{path:'/pages/pageDetail/pageDetail?id='+item.id+'&type='+type}})">
 							<view class="pic">
-								<image src="../../static/images/home-img3.png" alt="" />
+								<image :src="item.mainImg[0].url" alt="" />
 							</view>
 							<view class="infor">
 								<view class="title flex">
-									<view class="avoidOverflow2">名城名称名城名称名城名称名城名称名城名称名城名称</view>
+									<view class="avoidOverflow2">{{item.title}}</view>
 								</view>
 								<view class="flexRowBetween saleB">
-									<view class="price font14">6.00</view>
+									<view class="price font14">{{item.price}}</view>
 								</view>
 							</view>
 							
@@ -67,50 +64,134 @@
 				Router:this.$Router,
 				num:1,
 				curr:1,
-				produtList: [
-					{},{},{},{}
-				]
+				
+				idTwo:'',
+				idThree:'',
+				indexTwo:'',
+				indexThree:'',
+				mainData:[],
+				productData:[]
 			}
 		},
-		onLoad() {
+		
+		onLoad(options) {
 			const self = this;
-			//self.$Utils.loadAll(['getMainData'], self);
+			wx.setNavigationBarTitle({
+				title: options.name,
+			});
+			self.paginate = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
+			self.type = parseInt(options.type);
+			self.$Utils.loadAll(['getMainData'], self);
 		},
+		
 		methods: {
-			change(num){
+			
+			
+			
+			change(id,index){
 				const self = this;
-				if(num!=self.num){
-					self.num = num
+				self.productData=[];
+				if(id!=self.idTwo){
+					self.idTwo = id;
+					self.indexTwo = index;
+					if(self.mainData[index].child[0]){
+						self.idThree = self.mainData[index].child[0].id;
+						self.indexThree = 0;
+						self.productGet()
+					}			
 				}
 			},
-			changeTwo(curr){
+			
+			changeTwo(id){
 				const self = this;
-				if(curr!=self.curr){
-					self.curr = curr
+				self.productData=[];
+				if(id!=self.idThree){
+					self.idThree = id;
+					self.productGet()		
 				}
 			},
+			
 			getMainData() {
 				const self = this;
 				console.log('852369')
 				const postData = {};
-				postData.tokenFuncName = 'getProjectToken';
-
+				
+				postData.searchItem = {
+					parentid:self.id,
+					type:self.type
+				};
+				if(self.type==5){
+					postData.searchItem.title = ['not in',['特价辅料']]
+				}
+				/* postData.getAfter ={
+					child:{
+						order:{
+							create_time:'asc'
+						},
+						tableName:'Label',
+						middleKey:'id',
+						key:'parentid',
+						condition:'=',
+						searchItem:{
+							status:1,
+							type:self.type
+						}
+					}
+				}; */
+				postData.order={
+					create_time:'asc'
+				};
 				const callback = (res) => {
 					if (res.solely_code == 100000 && res.info.data[0]) {
 						self.mainData = res.info.data;
+						self.idTwo = self.mainData[0].id;
+						self.indexTwo = 0;
+						self.idThree = self.mainData[0].child[0].id;
+						self.indexThree = 0;
+						self.productGet()
 					} else {
 						self.$Utils.showToast(res.msg, 'none')
 					};
 					self.$Utils.finishFunc('getMainData');
 
 				};
-				self.$apis.orderGet(postData, callback);
-
+				self.$apis.labelGet(postData, callback);
+			},
+			
+			productGet(isNew) {
+				const self = this;
+				if (isNew) {
+					self.productData = [];
+					self.paginate = {
+						count: 0,
+						currentPage: 1,
+						is_page: true,
+						pagesize: 5
+					}
+				};
+				const postData = {};
+				postData.paginate = self.$Utils.cloneForm(self.paginate);
+				postData.searchItem = {
+					thirdapp_id:2,
+					type:self.type-1,
+					category_id:self.idThree
+				};
+				const callback = (res) => {
+					if (res.info.data.length > 0) {
+						self.productData.push.apply(self.productData, res.info.data);
+					} else {
+						self.$Utils.showToast('没有更多了', 'none');
+					};
+					console.log('self.productData',self.productData)
+					self.$Utils.finishFunc('getMainData');
+				};
+				self.$apis.productGet(postData, callback);
 			},
 
 		},
 	};
 </script>
+
 <style>
 	@import "../../assets/style/index.css";
 	page{padding-bottom: 100rpx;background: #f5f5f5;}

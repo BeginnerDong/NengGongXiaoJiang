@@ -7,7 +7,8 @@
 		
 		<view class="ind-cont4">
 			<scroll-view class="list" scroll-x>
-				<view class="item" v-for="(item,index) in classLis" :key="index"  @click="Router.navigateTo({route:{path:'/pages/classify/classify'}})">
+				<view class="item" v-for="(item,index) in classLis" :key="index"  
+				@click="Router.navigateTo({route:{path:'/pages/classify/classify?id='+item.id+'&name='+item.name}})">
 					<image :src="item.iconUrl" mode=""></image>
 					<view>{{item.name}}</view>
 				</view>
@@ -16,18 +17,19 @@
 		
 		<view class="f5H10"></view>
 
-		<view class="infor-title flexRowBetween">
+		<view class="infor-title flexRowBetween" v-if="workerOneData.length>0">
 			<view class="xian"></view>
 			<view class="tt">优秀建筑工</view>
 		</view>
-		<view class="designIndex pdlr4">
-			<view class="items flexRowBetween" v-for="(item,index) in produtList" :key="index" @click="webSelf.$Router.navigateTo({route:{path:'/pages/indexWorkerDetail/indexWorkerDetail'}})">
+		<view class="designIndex pdlr4" v-if="workerOneData.length>0">
+			<view class="items flexRowBetween" v-for="(item,index) in workerOneData" :key="index" 
+			@click="Router.navigateTo({route:{path:'/pages/indexWorker_index/indexWorker_index?user_no='+item.user_no}})">
 				<view class="pic">
-					<image src="../../static/images/home-img3.png" alt="" />
+					<image :src="item.mainImg[0].url" alt="" />
 				</view>
 				<view class="infor">
 					<view class="title flex">
-						<view>张大嘴</view>
+						<view>{{item.name}}</view>
 						<view class="flexRowBetween starClass">
 							<view class="starBox">
 								<image src="../../static/images/home-supervision-icon1.png" mode=""></image>
@@ -39,10 +41,10 @@
 							<view>9.5分</view>
 						</view>
 					</view>
-					<view class="text2">擅长风格：欧式风、简约风、北美风、田园风</view>
+					<view class="text2">{{item.introduce}}</view>
 					<view class="flexRowBetween saleB">
-						<view class="priceM font14">6</view>
-						<view class="color3 font12">成交量：500</view>
+						
+						<view class="color3 font12">成交量：{{item.volume}}</view>
 					</view>
 				</view>
 				
@@ -51,18 +53,19 @@
 		
 		<view class="f5H10"></view>
 		
-		<view class="infor-title flexRowBetween">
+		<view class="infor-title flexRowBetween" v-if="workerTwoData.length>0">
 			<view class="xian"></view>
 			<view class="tt">优秀装修工</view>
 		</view>
-		<view class="designIndex pdlr4">
-			<view class="items flexRowBetween" v-for="(item,index) in produtList" :key="index"  @click="webSelf.$Router.navigateTo({route:{path:'/pages/indexWorkerDetail/indexWorkerDetail'}})">
+		<view class="designIndex pdlr4" v-if="workerTwoData.length>0">
+			<view class="items flexRowBetween" v-for="(item,index) in workerTwoData" :key="index" 
+			@click="Router.navigateTo({route:{path:'/pages/indexWorker_index/indexWorker_index?user_no='+item.user_no}})">
 				<view class="pic">
-					<image src="../../static/images/home-img3.png" alt="" />
+					<image :src="item.mainImg[0].url" alt="" />
 				</view>
 				<view class="infor">
 					<view class="title flex">
-						<view>张大嘴</view>
+						<view>{{item.name}}</view>
 						<view class="flexRowBetween starClass">
 							<view class="starBox">
 								<image src="../../static/images/home-supervision-icon1.png" mode=""></image>
@@ -74,29 +77,31 @@
 							<view>9.5分</view>
 						</view>
 					</view>
-					<view class="text2">擅长风格：欧式风、简约风、北美风、田园风</view>
+					<view class="text2">{{item.introduce}}</view>
 					<view class="flexRowBetween saleB">
-						<view class="priceM font14">6</view>
-						<view class="color3 font12">成交量：500</view>
+						
+						<view class="color3 font12">成交量：{{item.volume}}</view>
 					</view>
 				</view>
+				
 			</view>
 		</view>
 		
 		<view class="f5H10"></view>
 		
-		<view class="infor-title flexRowBetween">
+		<view class="infor-title flexRowBetween" v-if="workerThreeData.length>0">
 			<view class="xian"></view>
 			<view class="tt">优秀安装工</view>
 		</view>
-		<view class="designIndex pdlr4">
-			<view class="items flexRowBetween" v-for="(item,index) in produtList" :key="index"  @click="webSelf.$Router.navigateTo({route:{path:'/pages/indexWorkerDetail/indexWorkerDetail'}})">
+		<view class="designIndex pdlr4" v-if="workerThreeData.length>0">
+			<view class="items flexRowBetween" v-for="(item,index) in workerThreeData" :key="index" 
+			@click="Router.navigateTo({route:{path:'/pages/indexWorker_index/indexWorker_index?user_no='+item.user_no}})">
 				<view class="pic">
-					<image src="../../static/images/home-img3.png" alt="" />
+					<image :src="item.mainImg[0].url" alt="" />
 				</view>
 				<view class="infor">
 					<view class="title flex">
-						<view>张大嘴</view>
+						<view>{{item.name}}</view>
 						<view class="flexRowBetween starClass">
 							<view class="starBox">
 								<image src="../../static/images/home-supervision-icon1.png" mode=""></image>
@@ -108,12 +113,13 @@
 							<view>9.5分</view>
 						</view>
 					</view>
-					<view class="text2">擅长风格：欧式风、简约风、北美风、田园风</view>
+					<view class="text2 avoidOverflow2" >{{item.introduce}}</view>
 					<view class="flexRowBetween saleB">
-						<view class="priceM font14">6</view>
-						<view class="color3 font12">成交量：500</view>
+						
+						<view class="color3 font12">成交量：{{item.volume}}</view>
 					</view>
 				</view>
+				
 			</view>
 		</view>
 		
@@ -139,50 +145,124 @@
 				Router:this.$Router,
 				wx_info:{},
 				classLis:[
-					{iconUrl:"../../static/images/home-icon3.png",name:"建筑工"},
-					{iconUrl:"../../static/images/home-icon4.png",name:"装修工"},
-					{iconUrl:"../../static/images/home-icon5.png",name:"维修工"},
-					{iconUrl:"../../static/images/home-icon6.png",name:"园林工"},
-					{iconUrl:"../../static/images/home-icon7.png",name:"市政工"},
-					{iconUrl:"../../static/images/home-icon8.png",name:"安装工"},
-					{iconUrl:"../../static/images/home-icon9.png",name:"其他"}
+					{iconUrl:"../../static/images/home-icon3.png",name:"建筑工",id:4},
+					{iconUrl:"../../static/images/home-icon4.png",name:"装修工",id:5},
+					{iconUrl:"../../static/images/home-icon5.png",name:"维修工",id:6},
+					{iconUrl:"../../static/images/home-icon6.png",name:"园林工",id:8},
+					{iconUrl:"../../static/images/home-icon7.png",name:"市政工",id:9},
+					{iconUrl:"../../static/images/home-icon8.png",name:"安装工",id:10},
+					{iconUrl:"../../static/images/home-icon9.png",name:"其他",id:11}
 				],
 				produtList: [
 					{},{},{}
-				]
+				],
+				workerOneData:[],
+				workerTwoData:[],
+				workerThreeData:[]
 			}
 		},
 		
 		onLoad() {
 			const self = this;
-			// self.$Utils.loadAll(['getMainData'], self);
+			self.getBefore =  {
+				user: {
+					tableName: 'User',
+					searchItem: {
+						identity: ['in', [1]],
+					},
+					middleKey: 'user_no',
+					key: 'user_no',
+					condition: 'in',
+				},
+			};
+			self.$Utils.loadAll(['getWorkerOneData','getWorkerTwoData','getWorkerThreeData'], self);
 		},
 		methods: {
-			activeNav:function(index){
+			
+			getWorkerOneData() {
 				const self = this;
-				
-			},
-			bindPickerChange(e) {
-				// 搜索选择分类
-				console.log('picker发送选择改变，携带值为', e.target.value)
-				this.index = e.target.value
-			},
-			getMainData() {
-				const self = this;
-				console.log('852369')
 				const postData = {};
-				postData.tokenFuncName = 'getProjectToken';
-
-				const callback = (res) => {
-					if (res.solely_code == 100000 && res.info.data[0]) {
-						self.mainData = res.info.data;
-					} else {
-						self.$Utils.showToast(res.msg, 'none')
-					};
-					self.$Utils.finishFunc('getMainData');
-
+				postData.paginate = {
+					count: 0,
+					currentPage: 1,
+					is_page: true,
+					pagesize: 3
 				};
-				self.$apis.orderGet(postData, callback);
+				postData.getBefore = self.getBefore;
+				postData.tokenFuncName = 'getProjectToken';
+				postData.searchItem = {
+					thirdapp_id:2,
+					type:4,
+					user_type:1
+				};
+				postData.order = {
+					volume:'desc'
+				};
+				const callback = (res) => {
+					if (res.info.data.length > 0) {
+						self.workerOneData.push.apply(self.workerOneData, res.info.data);
+					}
+					console.log('self.workOneData',self.workerOneData)
+					self.$Utils.finishFunc('getWorkerOneData');
+				};
+				self.$apis.userInfoGet(postData, callback);
+			},
+			
+			getWorkerTwoData() {
+				const self = this;
+				const postData = {};
+				postData.paginate = {
+					count: 0,
+					currentPage: 1,
+					is_page: true,
+					pagesize: 3
+				};
+				postData.getBefore = self.getBefore;
+				postData.tokenFuncName = 'getProjectToken';
+				postData.searchItem = {
+					thirdapp_id:2,
+					type:5,
+					user_type:1
+				};
+				postData.order = {
+					volume:'desc'
+				};
+				const callback = (res) => {
+					if (res.info.data.length > 0) {
+						self.workerTwoData.push.apply(self.workerTwoData, res.info.data);
+					}
+					console.log('self.workTwoData',self.workerTwoData)
+					self.$Utils.finishFunc('getWorkerTwoData');
+				};
+				self.$apis.userInfoGet(postData, callback);
+			},
+			
+			getWorkerThreeData() {
+				const self = this;
+				const postData = {};
+				postData.paginate = {
+					count: 0,
+					currentPage: 1,
+					is_page: true,
+					pagesize: 3
+				};
+				postData.getBefore = self.getBefore;
+				postData.tokenFuncName = 'getProjectToken';
+				postData.searchItem = {
+					thirdapp_id:2,
+					type:10,
+					user_type:1
+				};
+				postData.order = {
+					volume:'desc'
+				};
+				const callback = (res) => {
+					if (res.info.data.length > 0) {
+						self.workerThreeData.push.apply(self.workerThreeData, res.info.data);
+					}
+					self.$Utils.finishFunc('getWorkerThreeData');
+				};
+				self.$apis.userInfoGet(postData, callback);
 			},
 		},
 	};
