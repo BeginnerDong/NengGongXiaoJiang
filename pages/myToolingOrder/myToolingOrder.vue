@@ -56,6 +56,7 @@
 					</view>
 				</view>
 				<view class="bBtn">
+					<view class="btn"  @click=" Router.navigateTo({route:{path:'/pages/myToolingOrderComment/myToolingOrderComment'}})">去评价</view>
 					<view class="btn"  @click=" Router.navigateTo({route:{path:'/pages/myToolingOrderDetail/myToolingOrderDetail'}})">查看详情</view>
 				</view>
 			</view>

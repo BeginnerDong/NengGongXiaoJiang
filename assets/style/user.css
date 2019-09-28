@@ -1,4 +1,4 @@
-	.userBox2{ margin: 0 4%; background: #fff; border-radius: 10rpx; margin: -90rpx 4% 10rpx 4% ;;}
+	.userBox2{ margin: 0 4%; background: #fff; border-radius: 10rpx; margin: -90rpx 4% 10rpx 4% ;position: relative; z-index: 1;}
 	.userBox2 .tit{ font-size: 28rpx; height: 88rpx;padding: 0 20rpx; border-bottom: 2rpx solid #e7e7e7;}
 	.userBox2 .more{ color: #999; font-size: 22rpx;}
 	.userBox2 .menu .child{
@@ -138,7 +138,7 @@
 .prolis .cont .price{ position: absolute; bottom: 0;left: 0; font-size: 26rpx; color: rgba(255,59,59);}
 .prolis .cont .price:before{content: "￥";}
 .bBtn{padding-top: 40rpx; display: flex; justify-content: flex-end; align-items: center;}
-.bBtn .btn{ padding: 0 20rpx; line-height: 50rpx; height: 50rpx; border-radius: 10rpx; color: #666; border:2rpx solid #ccc;font-size: 24rpx; margin-left: 20rpx;}
+.bBtn .btn{ padding: 0 6rpx; line-height: 50rpx; height: 50rpx; border-radius: 10rpx; color: #666; border:2rpx solid #ccc;font-size: 24rpx; margin-left: 20rpx; width: 130rpx; text-align: center;}
 .btn.gopay{ border-color: #FFCB1E; color: #FFCB1E;}
 
 /* 工装订单 */

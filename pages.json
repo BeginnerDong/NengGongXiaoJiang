@@ -633,6 +633,13 @@
 				"navigationBarTitleText": "下班打卡",
 				"onReachBottomDistance":100
 			}
+		},
+		{
+			"path": "pages/myToolingOrderComment/myToolingOrderComment",
+			"style": {
+				"navigationBarTitleText": "评价订单",
+				"onReachBottomDistance":100
+			}
 		}
 		
     ],
