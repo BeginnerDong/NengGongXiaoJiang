@@ -4,40 +4,36 @@
 			<view class="font14 receiptMsg boxShaow">
 				<view class="item flexRowBetween">
 					<view class="">姓名</view>
-					<view>张丹</view>
+					<view>{{mainData.name}}</view>
 				</view>
 				<view class="item flexRowBetween">
 					<view class="">电话</view>
-					<view>1893362203</view>
+					<view>{{mainData.phone}}</view>
 				</view>
 			</view>
 		</view>
 		<view class="pdlr4">工程信息</view>
 		<view class="ind_seach" style="border-bottom: 2rpx solid #f5f5f5;">
 			<view class="child">
-				<view class="sqr_name">
-					<view class="uni-list">
-						<view class="uni-list-cell">
-							<view class="uni-list-cell-db">
-								<picker @change="bindPickerChange" :value="index" :range="array">
-									<view class="uni-input">{{array[index]}}</view>
-								</picker>
-							</view>
-						</view>
-					</view>
-					<image class="arrow" src="../../static/images/home-icon1.png"></image>
+				<view class="editNum" style="width: 200rpx;margin-left:0 ;">
+					<input type="number" :value="mainData.products&&mainData.products[0]?mainData.products[0].snap_product.title:''"
+					 disabled="true">
 				</view>
 				<view class="editNum">
-					<input type="number" value="" placeholder="请输入数量">
+					<input type="number" value="" placeholder="请输入数量" v-model="count">
+				</view>
+				<view class="optBtn flexRowBetween" v-if="orderItem.length==0">
+
+					<view class="btn" @click="addProject">添加</view>
 				</view>
 			</view>
-			<view class="child">
+			<view class="child" v-for="(item,index) in orderItem">
 				<view class="sqr_name">
 					<view class="uni-list">
 						<view class="uni-list-cell">
 							<view class="uni-list-cell-db">
-								<picker @change="PickerChangeTwo" :value="indexTwo" :range="arrayTwo">
-									<view class="uni-input">{{arrayTwo[indexTwo]}}</view>
+								<picker @change="PickerChangeTwo" :data-index="index" :range="skillData" range-key="title">
+									<view class="uni-input">{{orderItem[index].title!=''?orderItem[index].title:'请选择'}}</view>
 								</picker>
 							</view>
 						</view>
@@ -45,23 +41,23 @@
 					<image class="arrow" src="../../static/images/home-icon1.png"></image>
 				</view>
 				<view class="editNum">
-					<input type="number" value="24" placeholder="请输入数量">
+					<input type="number" v-model="orderItem[index].count" placeholder="请输入数量">
 				</view>
 				<view class="optBtn flexRowBetween">
 					<view class="btn btn1">删除</view>
-					<view class="btn">添加</view>
+					<view class="btn" @click="addProject" v-if="orderItem.length==index+1">添加</view>
 				</view>
 			</view>
 		</view>
 		<view class="pdlr4">辅料</view>
 		<view class="ind_seach" style="border-bottom: 2rpx solid #f5f5f5;">
-			<view class="child">
+			<view class="child" v-for="(item,index) in orderItemTwo">
 				<view class="sqr_name">
 					<view class="uni-list">
 						<view class="uni-list-cell">
 							<view class="uni-list-cell-db">
-								<picker @change="PickerChangeThree" :value="indexThree" :range="arrayThree">
-									<view class="uni-input">{{arrayThree[indexThree]}}</view>
+								<picker @change="PickerChangeThree" :data-index="index" :range="materialData" range-key="title">
+									<view class="uni-input">{{orderItemTwo[index].title!=''?orderItemTwo[index].title:'请选择'}}</view>
 								</picker>
 							</view>
 						</view>
@@ -69,41 +65,20 @@
 					<image class="arrow" src="../../static/images/home-icon1.png"></image>
 				</view>
 				<view class="editNum">
-					<input type="number" value="" placeholder="请输入数量">
+					<input type="number" value="" placeholder="请输入数量" v-model="orderItemTwo[index].count">
 				</view>
 				<view class="optBtn flexRowBetween">
 					<view class="btn btn1">删除</view>
-					<view class="btn">添加</view>
-				</view>
-			</view>
-			<view class="child">
-				<view class="sqr_name">
-					<view class="uni-list">
-						<view class="uni-list-cell">
-							<view class="uni-list-cell-db">
-								<picker @change="PickerChangeFour" :value="indexFour" :range="arrayFour">
-									<view class="uni-input">{{arrayFour[indexFour]}}</view>
-								</picker>
-							</view>
-						</view>
-					</view>
-					<image class="arrow" src="../../static/images/home-icon1.png"></image>
-				</view>
-				<view class="editNum">
-					<input type="number" value="24" placeholder="请输入数量">
-				</view>
-				<view class="optBtn flexRowBetween">
-					<view class="btn btn1">删除</view>
-					<view class="btn">添加</view>
+					<view class="btn" @click="addMaterialData" v-if="orderItemTwo.length==index+1">添加</view>
 				</view>
 			</view>
 		</view>
-		
+
 		<view class="submitbtn" style="margin-top: 200rpx;">
-			<button type="button" @click=" Router.navigateTo({route:{path:'/pages/myToolingOrder_contract/myToolingOrder_contract'}})">确认</button>
+			<button type="button" @click="submit">确认</button>
 		</view>
-		
-		
+
+
 	</view>
 
 </template>
@@ -112,66 +87,266 @@
 	export default {
 		data() {
 			return {
-				Router:this.$Router,
-				showView: false,
-				score: '',
-				wx_info: {},
-				index: 0,
-				array:['请选择工程','建筑工','装修工','维修工','园林工','市政工','安装工','其他'],
-				indexTwo: 0,
-				arrayTwo:['水泥','沙子','钢筋','其他'],
-				indexThree: 0,
-				arrayThree:['请选择辅料','柜子','椅子','建筑材料','木门'],
-				indexFour: 0,
-				arrayFour:['衣柜','鞋柜','书柜','床头柜','其他']
+				Router: this.$Router,
+
+				count: '',
+				mainData: {},
+				orderItem: [],
+				skillData: [],
+				materialData: [],
+				orderItemTwo: [{
+					product_id: '',
+					count: '',
+					title: ''
+				}]
 			}
 		},
 
+		onLoad(options) {
+			const self = this;
+			self.id = options.id;
+
+			self.$Utils.loadAll(['getMainData', 'getSkillData', 'getMaterialData'], self)
+		},
+
 		methods: {
-			bindPickerChange(e) {
-				// 搜索选择分类
+
+			addProject() {
 				const self = this;
-				console.log('picker发送选择改变，携带值为', e.target.value)
-				self.index = e.target.value
+				self.orderItem.push({
+					product_id: '',
+					count: '',
+					title: ''
+				})
 			},
+
+			addMaterialData() {
+				const self = this;
+				self.orderItemTwo.push({
+					product_id: '',
+					count: '',
+					title: ''
+				})
+			},
+
+			submit() {
+				const self = this;
+				console.log('self.orderItem', self.orderItem)
+				console.log('self.orderItemTwo', self.orderItemTwo)
+
+				
+				if (self.count == '') {
+					self.$Utils.showToast('请输入工程数量（面积）', 'none');
+				} else {
+					self.postOrderItem = self.orderItem.concat(self.orderItemTwo)
+					self.orderUpdate()
+				}
+			},
+
+			orderUpdate() {
+				const self = this;
+				const postData = {};
+				postData.searchItem = {
+					order_no: self.mainData.order_no,
+					user_type: 0
+				};
+				postData.data = {
+					comfirm: 1
+				};
+				postData.tokenFuncName = 'getThreeToken';
+				postData.saveAfter = [{
+						tableName: 'OrderItem',
+						FuncName: 'update',
+						data: {
+							count: self.count
+						},
+						searchItem: {
+							id: self.mainData.products[0].id,
+							user_type: 0
+						}
+					},
+					{
+						tableName: 'Process',
+						FuncName: 'add',
+						data: {
+							type: 1,
+							order_no: self.mainData.order_no,
+							title:uni.getStorageSync('threeInfo').identity==1?'工人'+uni.getStorageSync('threeInfo').info.name+'上传':'设计师'+uni.getStorageSync('threeInfo').info.name+'上传'
+						}
+					}
+				];	
+				postData.saveFunction = [
+					{
+						FuncName: 'addItem',
+						data: {
+							order_no: self.mainData.order_no,
+							item: self.postOrderItem
+						}		
+					}
+				];
+				console.log('postData', postData)
+				
+				const callback = (res) => {
+					if (res.solely_code == 100000) {
+						self.$Utils.showToast(res.msg, 'none');
+						setTimeout(function() {
+							uni.navigateBack({
+								delta:1
+							})
+						}, 800);
+					} else {
+						self.$Utils.showToast(res.msg, 'none');
+					}
+				};
+				self.$apis.orderUpdate(postData, callback);
+			},
+
 			PickerChangeTwo(e) {
-				// 搜索选择分类
 				const self = this;
-				console.log('picker发送选择改变，携带值为', e.target.value)
-				self.indexTwo = e.target.value
+				var productData = self.skillData[e.detail.value];
+				console.log('productData', productData);
+				self.orderItem[e.target.dataset.index].product_id = productData.id;
+				self.orderItem[e.target.dataset.index].title = productData.title;
 			},
-			PickerChangeThree(e){
+
+			PickerChangeThree(e) {
 				const self = this;
-				console.log('picker发送选择改变，携带值为', e.target.value)
-				self.indexThree = e.target.value
+				var productData = self.materialData[e.detail.value];
+				console.log('productData', productData);
+				self.orderItemTwo[e.target.dataset.index].product_id = productData.id;
+				self.orderItemTwo[e.target.dataset.index].title = productData.title;
 			},
-			PickerChangeFour(e){
+
+			getSkillData() {
 				const self = this;
-				console.log('picker发送选择改变，携带值为', e.target.value)
-				self.indexFour = e.target.value
+				const postData = {};
+				postData.searchItem = {
+					type: 1,
+					user_no: uni.getStorageSync('threeInfo').user_no
+				};
+				postData.tokenFuncName = 'getThreeToken';
+				const callback = (res) => {
+					if (res.info.data.length > 0) {
+						self.skillData.push.apply(self.skillData, res.info.data)
+
+					}
+					self.$Utils.finishFunc('getSkillData');
+				};
+				self.$apis.productGet(postData, callback);
 			},
+
+			getMaterialData() {
+				const self = this;
+				const postData = {};
+				postData.searchItem = {
+					type: 4,
+					category_id: ['not in', [46]]
+				};
+				const callback = (res) => {
+					if (res.info.data.length > 0) {
+						self.materialData.push.apply(self.materialData, res.info.data)
+					}
+					self.$Utils.finishFunc('getMaterialData');
+				};
+				self.$apis.productGet(postData, callback);
+			},
+
 			getMainData() {
 				const self = this;
-				self.$apis.userGet(postData, callback);
-			}
+				const postData = {};
+
+				postData.searchItem = {
+					id: self.id,
+					user_type: 0
+				};
+				postData.tokenFuncName = 'getThreeToken';
+				const callback = (res) => {
+					if (res.info.data.length > 0) {
+						self.mainData = res.info.data[0];
+					} else {
+						self.$Utils.showToast(res.msg, 'none');
+					};
+					console.log(self.mainData)
+					self.$Utils.finishFunc('getMainData');
+				};
+				self.$apis.orderGet(postData, callback);
+			},
 		}
 	}
 </script>
 
 <style>
 	@import "../../assets/style/index.css";
-	page{padding-bottom: 80rpx;}
-	.receiptMsg{border-radius: 10rpx;margin: 40rpx auto;}
-	.receiptMsg .item{padding: 30rpx;border-bottom: 2rpx solid #f5f5f5;}
-	.ind_seach{margin-bottom: 30rpx;}
-	.ind_seach .child{ display: flex;justify-content: flex-start;padding-bottom: 30rpx;}
-	.ind_seach .child:last-child{padding-bottom: 0;}
-	.ind_seach .sqr_name{}
-	.ind_seach .sqr_name .uni-input{font-size: 26rpx; color: #666;}
-	.ind_seach .editNum{margin-left: 20rpx;width: 180rpx;}
-	.ind_seach .editNum input{ width: 100%; height: 60rpx; line-height: 60rpx;border-radius:8rpx;border: 2rpx solid #cecece; padding: 0 10rpx;box-sizing: border-box; font-size: 13rpx;text-align: center; display: block;}
-	.optBtn{ width: 280rpx; display: flex;justify-content: flex-end;}
-	.optBtn .btn{ width: 100rpx; height: 60rpx;background: #FFCB1E;text-align: center;line-height: 60rpx;border-radius: 8rpx; font-size: 24rpx;margin-left:10rpx;}
-	.optBtn .btn.btn1{background: #ffe89c;}
-	
+
+	page {
+		padding-bottom: 80rpx;
+	}
+
+	.receiptMsg {
+		border-radius: 10rpx;
+		margin: 40rpx auto;
+	}
+
+	.receiptMsg .item {
+		padding: 30rpx;
+		border-bottom: 2rpx solid #f5f5f5;
+	}
+
+	.ind_seach {
+		margin-bottom: 30rpx;
+	}
+
+	.ind_seach .child {
+		display: flex;
+		justify-content: flex-start;
+		padding-bottom: 30rpx;
+	}
+
+	.ind_seach .child:last-child {
+		padding-bottom: 0;
+	}
+
+	.ind_seach .sqr_name {}
+
+	.ind_seach .sqr_name .uni-input {
+		color: #666;
+	}
+
+	.ind_seach .editNum {
+		margin-left: 20rpx;
+		width: 180rpx;
+	}
+
+	.ind_seach .editNum input {
+		width: 100%;
+		height: 60rpx;
+		line-height: 60rpx;
+		border-radius: 8rpx;
+		border: 2rpx solid #cecece;
+		padding: 0 10rpx;
+		box-sizing: border-box;
+		text-align: center;
+		display: block;
+	}
+
+	.optBtn {
+		width: 280rpx;
+		display: flex;
+		justify-content: flex-end;
+	}
+
+	.optBtn .btn {
+		width: 100rpx;
+		height: 60rpx;
+		background: #FFCB1E;
+		text-align: center;
+		line-height: 60rpx;
+		border-radius: 8rpx;
+		font-size: 24rpx;
+		margin-left: 10rpx;
+	}
+
+	.optBtn .btn.btn1 {
+		background: #ffe89c;
+	}
 </style>

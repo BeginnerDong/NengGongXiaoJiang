@@ -3,13 +3,13 @@
 		<view class="item">
 			<view class="name">客户信息</view>
 			<view class="rr">
-				<input type="text" placeholder="请输入姓名"/>
+				<input type="text" placeholder="请输入姓名" v-model="submitData.name"/>
 			</view>
 		</view>
 		<view class="item">
 			<view class="name">电话</view>
 			<view class="rr">
-				<input type="number" maxlength="11" placeholder="请输入电话"/>
+				<input type="number" maxlength="11" placeholder="请输入电话" v-model="submitData.phone"/>
 			</view>
 		</view>
 		<view class="item">
@@ -21,7 +21,7 @@
 		</view>
 		
 		<view class="submitbtn" style="margin-top: 200rpx;">
-			<button type="submit">立即预约</button>
+			<button type="submit" open-type="getUserInfo"  @getuserinfo="Utils.stopMultiClick(submit)">立即预约</button>
 		</view>
 	</view>
 </template>
@@ -31,33 +31,69 @@
 		data() {
 			return {
 				Router:this.$Router,
-				showView: false,
-				score:'',
-				wx_info:{}
+				Utils:this.$Utils,
+				submitData:{
+					name:'',
+					phone:'',
+				},
+				mainData:{}
 			}
 		},
+		
 		onLoad() {
 			const self = this;
+			uni.setStorageSync('canClick',true);
+			self.mainData = uni.getStorageSync('order');
 			//self.$Utils.loadAll(['getMainData'], self);
+			console.log('self.mainData',self.mainData)
+			self.submitData.shop_no = self.mainData.product[0].product.user_no
 		},
+		
 		methods: {
-			getMainData() {
+			
+			submit() {
 				const self = this;
-				console.log('852369')
-				const postData = {};
-				postData.tokenFuncName = 'getProjectToken';
-
-				const callback = (res) => {
-					if (res.solely_code == 100000 && res.info.data[0]) {
-						self.mainData = res.info.data;
-					} else {
-						self.$Utils.showToast(res.msg, 'none')
-					};
-					self.$Utils.finishFunc('getMainData');
-
+				uni.setStorageSync('canClick', false);
+				var phone = self.submitData.phone;			
+				const pass = self.$Utils.checkComplete(self.submitData);
+				console.log('pass', pass);
+				console.log('self.submitData',self.submitData)
+				if (pass) {
+					if (phone.trim().length != 11 || !/^1[3|4|5|6|7|8|9]\d{9}$/.test(phone)) {
+						uni.setStorageSync('canClick', true);
+						self.$Utils.showToast('手机格式不正确', 'none')			
+					} else {					
+						const callback = (user, res) => {
+							self.addOrder();
+						};
+						self.$Utils.getAuthSetting(callback);
+						
+					}
+				} else {
+					uni.setStorageSync('canClick', true);
+					self.$Utils.showToast('请补全信息', 'none')
 				};
-				self.$apis.orderGet(postData, callback);
-
+			},
+			
+			addOrder() {
+				const self = this;					
+				const postData = self.$Utils.cloneForm(self.mainData)
+				postData.tokenFuncName = 'getProjectToken';
+				postData.snap_address = self.addressData;
+				postData.data = self.$Utils.cloneForm(self.submitData)
+				const callback = (res) => {
+					if (res && res.solely_code == 100000) {
+						self.orderId = res.info.id;
+					} else {		
+						uni.setStorageSync('canClick', true);
+						uni.showToast({
+							title: res.msg,
+							duration: 2000
+						});
+					};
+					
+				};
+				self.$apis.addOrder(postData, callback);
 			},
 
 		},

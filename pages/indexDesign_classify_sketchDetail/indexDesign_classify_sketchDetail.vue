@@ -1,13 +1,13 @@
 <template>
 	<view class="">
 		<view class="sketchXq">
-			<swiper class="swiper-box" indicator-dots="indicatorDots" autoplay="autoplay" interval="interval" duration="duration" indicator-active-color="#FFCB1E">
-				<block v-for="(item,index) in labelData" :key="index">
+			<swiper class="swiper-box" indicator-dots="false" autoplay="false" interval="3000" duration="1000" indicator-active-color="#FFCB1E">
+				<block v-for="(item,index) in mainData.bannerImg" :key="index">
 					<swiper-item class="swiper-item">
-						<image :src="item" class="slide-image"/>
-						<view class="labele">简约风</view>
-						<view class="font14 title">标题标题标题标题标题标题标题标题标题标题标题标题</view>
-						<view class="name">张三</view>
+						<image :src="item.url" class="slide-image"/>
+						<view class="labele">{{mainData.label[mainData.menu_id].title}}</view>
+						<view class="font14 title">{{mainData.title}}</view>
+						<view class="name">{{mainData.description}}</view>
 					</swiper-item>
 				</block>
 			</swiper>
@@ -24,31 +24,34 @@
 				labelData: [
 					"../../static/images/home-banenr.png",
 					"../../static/images/details-img1.png",
-				]
+				],
+				mainData:{}
 			}
 		},
-		onLoad() {
+		onLoad(options) {
 			const self = this;
-			//self.$Utils.loadAll(['getMainData'], self);
+			self.id = options.id;
+			self.$Utils.loadAll(['getMainData'], self);
 		},
 		methods: {
+			
 			getMainData() {
 				const self = this;
 				console.log('852369')
 				const postData = {};
-				postData.tokenFuncName = 'getProjectToken';
-
+				
+				postData.searchItem = {
+					id:self.id
+				};
 				const callback = (res) => {
 					if (res.solely_code == 100000 && res.info.data[0]) {
-						self.mainData = res.info.data;
+						self.mainData = res.info.data[0];
 					} else {
 						self.$Utils.showToast(res.msg, 'none')
 					};
 					self.$Utils.finishFunc('getMainData');
-
 				};
-				self.$apis.orderGet(postData, callback);
-
+				self.$apis.articleGet(postData, callback);
 			},
 
 		},

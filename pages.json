@@ -521,7 +521,7 @@
 				"navigationBarTitleText": "我的订单",
 				"onReachBottomDistance":100
 			}
-		},
+		},	
 		{
 			"path": "pages/myToolingOrderDetail_startReceipt/myToolingOrderDetail_startReceipt",
 			"style": {
@@ -638,6 +638,13 @@
 			"path": "pages/myToolingOrderComment/myToolingOrderComment",
 			"style": {
 				"navigationBarTitleText": "评价订单",
+				"onReachBottomDistance":100
+			}
+		},
+		{
+			"path": "pages/designerOrderDetail/designerOrderDetail",
+			"style": {
+				"navigationBarTitleText": "订单详情",
 				"onReachBottomDistance":100
 			}
 		}

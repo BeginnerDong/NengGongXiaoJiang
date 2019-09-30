@@ -9,26 +9,16 @@
 		</view>
 		<view class="guizebox pdlr4" v-if="num==1">
 			<view class="texbox">
-				<view class="tit">一、佣金抽取规则标题</view>
-				<view>1.内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容；</view>
-				<view>2.内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容；</view>
-				<view>3.内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内；</view>
-				<view>4.内容内容内容内容内容内容内容内容内容内容；</view>
-				<view>3.内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内内容内容内容内容内容内容内容内内容内容内容内容内容内容内容内内容内容内容内容内容内容内容内；</view>
-				<view class="tit">二、标题标题标题标题标题标题标题</view>
-				<view>1.内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容；</view>
-				<view>2.内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容；</view>
-				<view>3.内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内；</view>
+				<view class="tit">{{artData.title}}</view>
+				<view class="content ql-editor" v-html="artData.content">
+				</view>
 			</view>
 		</view>
 		<view class="guizebox pdlr4" v-if="num==2">
 			<view class="texbox">
-				<view class="tit">一、监理入驻规则标题标题</view>
-				<view>1.内容内容内容；</view>
-				<view>2.内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容</view>
-				<view>3.内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容容内容内容内容内容内容内容内容内容内容内容；</view>
-				<view>4.内容内容内容内容内容内容内容内容内容内容容内容内容容内容内容；</view>
-				<view>3.内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容容内容内容内容内容内容内容内容内内容内容内容内容内容内容内容内内容内容内容内容内容内容内容内内容内容内容内容内容内容内容内；</view>
+				<view class="tit">{{artDataOne.title}}</view>
+				<view class="content ql-editor" v-html="artDataOne.content">
+				</view>
 			</view>
 		</view>
 		
@@ -42,15 +32,14 @@
 		data() {
 			return {
 				Router:this.$Router,
-				showView: false,
-				score:'',
-				wx_info:{},
+				artData:{},
+				artDataOne:{},
 				num:1
 			}
 		},
 		onLoad() {
 			const self = this;
-			//self.$Utils.loadAll(['getMainData'], self);
+			self.$Utils.loadAll(['getArtData','getArtOneData'], self);
 		},
 		methods: {
 			change(num){
@@ -59,23 +48,63 @@
 					self.num = num
 				}
 			},
-			getMainData() {
-				const self = this;
-				console.log('852369')
+			
+			getArtData() {
+				const self = this;			
 				const postData = {};
-				postData.tokenFuncName = 'getProjectToken';
-
-				const callback = (res) => {
-					if (res.solely_code == 100000 && res.info.data[0]) {
-						self.mainData = res.info.data;
-					} else {
-						self.$Utils.showToast(res.msg, 'none')
-					};
-					self.$Utils.finishFunc('getMainData');
-
+				postData.searchItem = {
+					thirdapp_id:2,
 				};
-				self.$apis.orderGet(postData, callback);
-
+				postData.getBefore = {
+					caseData: {
+						tableName: 'Label',
+						searchItem: {
+							title: ['=', ['佣金抽取规则']],
+						},
+						middleKey: 'menu_id',
+						key: 'id',
+						condition: 'in',
+					},
+				};
+				const callback = (res) => {
+					if (res.info.data.length > 0) {
+						self.artData = res.info.data[0];
+						const regex = new RegExp('<img', 'gi');
+						self.artData.content = self.artData.content.replace(regex, `<img style="max-width: 100%;"`);
+					}
+					console.log('self.artData',self.artData)
+					self.$Utils.finishFunc('getArtData');
+				};
+				self.$apis.articleGet(postData, callback);
+			},
+			
+			getArtOneData() {
+				const self = this;			
+				const postData = {};	
+				postData.searchItem = {
+					thirdapp_id:2,
+				};
+				postData.getBefore = {
+					caseData: {
+						tableName: 'Label',
+						searchItem: {
+							title: ['=', ['监理入驻规则']],
+						},
+						middleKey: 'menu_id',
+						key: 'id',
+						condition: 'in',
+					},
+				};
+				const callback = (res) => {
+					if (res.info.data.length > 0) {
+						self.artDataOne = res.info.data[0];
+						const regex = new RegExp('<img', 'gi');
+						self.artDataOne.content = self.artDataOne.content.replace(regex, `<img style="max-width: 100%;"`);
+					}
+					console.log('self.artDataOne',self.artDataOne)
+					self.$Utils.finishFunc('getArtOneData');
+				};
+				self.$apis.articleGet(postData, callback);
 			},
 
 		},

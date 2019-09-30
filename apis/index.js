@@ -30,7 +30,18 @@ export default {
 		};
 		http.HTTP(allParams);
 	},
-
+	
+	registerS(){
+		var allParams = {
+			url: 'Func/Common/loginByUp',
+			type: 'post',
+			data: param,
+			sCallback: function(data) {
+				callback && callback(data);
+			}
+		};
+		http.HTTP(allParams);
+	},
 
 	bindShop(param, callback) {
 
@@ -149,6 +160,37 @@ export default {
 		};
 		http.HTTP(allParams);
 	},
+	
+	orderItemGet(param, callback) {
+		var allParams = {
+			url: 'Common/OrderItem/get',
+			type: 'post',
+			noToken: true,
+			data: param,
+			sCallback: function(data) {
+				callback && callback(data);
+			}
+		};
+		http.HTTP(allParams);
+	},
+	
+	
+	orderItemUpdate(param, callback) {
+		var allParams = {
+			url: 'Common/OrderItem/update',
+			type: 'post',
+			noToken: true,
+			data: param,
+			sCallback: function(data) {
+				callback && callback(data);
+			}
+		};
+		http.HTTP(allParams);
+	},
+	
+	
+	
+	
 
 	tokenGet(param, callback) {
 		var allParams = {
@@ -167,6 +209,34 @@ export default {
 		
 		var allParams = {
 			url: 'Common/Article/get',
+			type: 'post',
+			noToken: true,
+			data: param,
+			sCallback: function(data) {
+				callback && callback(data);
+			}
+		};
+		http.HTTP(allParams);
+	},
+	
+	processGet(param, callback) {
+		
+		var allParams = {
+			url: 'Common/Process/get',
+			type: 'post',
+			noToken: true,
+			data: param,
+			sCallback: function(data) {
+				callback && callback(data);
+			}
+		};
+		http.HTTP(allParams);
+	},
+	
+	processAdd(param, callback) {
+		
+		var allParams = {
+			url: 'Common/Process/add',
 			type: 'post',
 			noToken: true,
 			data: param,

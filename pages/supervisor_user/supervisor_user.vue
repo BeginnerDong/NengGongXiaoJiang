@@ -4,8 +4,9 @@
 		<view class="userHead"  style="background: #3a3a3a;">
 			<view class="infor">
 				<view class="left">
-					<image class="photo" src="../../static/images/about-daka-img2.png" mode=""></image>
-					<view style="width: 70%;">监理昵称</view>
+					<image class="photo" 
+					:src="mainData.mainImg&&mainData.mainImg.length>0?mainData.mainImg[0].url:'../../static/images/qiyexinxi-icon2.png'" mode=""></image>
+					<view style="width: 70%;">{{mainData.name}}</view>
 				</view>
 			</view>
 		</view>
@@ -70,17 +71,40 @@
 		data() {
 			return {
 				Router:this.$Router,
-				showView: false,
-				score:'',
-				wx_info:{}
+				mainData:{}
 			}
 		},
+		
 		onLoad() {
 			const self = this;
 			//self.$Utils.loadAll(['getMainData'], self);
 		},
+		
+		onShow() {
+			const self = this;
+			self.$Utils.loadAll(['getMainData'], self);
+		},
+		
 		methods: {
-
+			getMainData() {
+				const self = this;
+				console.log('852369')
+				const postData = {};
+				postData.tokenFuncName = 'getThreeToken';
+				postData.searchItem = {
+					user_no:uni.getStorageSync('threeInfo').user_no
+				};
+				const callback = (res) => {
+					if (res.solely_code == 100000 && res.info.data[0]) {
+						self.mainData = res.info.data[0]
+					} else {
+						self.$Utils.showToast(res.msg, 'none');
+					};
+					self.$Utils.finishFunc('getMainData');
+			
+				};
+				self.$apis.userInfoGet(postData, callback);
+			},
 
 		},
 	};

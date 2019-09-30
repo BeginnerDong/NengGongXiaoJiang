@@ -16,20 +16,18 @@
 		<view class="f5H10"></view>
 		
 		<view class="supervst_idexLis pdlr4 flexRowBetween">
-			<view class="child boxShaow" v-for="(item,index) in supervisionDate" :key="index"  @click=" Router.navigateTo({route:{path:'/pages/supervisionDetail/supervisionDetail'}})">
+			<view class="child boxShaow" v-for="(item,index) in mainData" :key="index" 
+			 @click=" Router.navigateTo({route:{path:'/pages/supervisionDetail/supervisionDetail?user_no='+item.user_no}})">
 				<view class="photo">
-					<image src="../../static/images/home-supervision-img1.png" mode=""></image>
+					<image :src="item.mainImg&&item.mainImg[0]?item.mainImg[0].url:''" mode=""></image>
 				</view>
-				<view class="name avoidOverflow">李绍兰</view>
-				<view class="flexCenter starClass">
+				<view class="name avoidOverflow">{{item.name}}</view>
+				<view class="flexRowBetween starClass">
 					<view class="starBox">
-						<image src="../../static/images/home-supervision-icon1.png" mode=""></image>
-						<image src="../../static/images/home-supervision-icon1.png" mode=""></image>
-						<image src="../../static/images/home-supervision-icon1.png" mode=""></image>
-						<image src="../../static/images/home-supervision-icon2.png" mode=""></image>
-						<image src="../../static/images/home-supervision-icon3.png" mode=""></image>
+						<image v-for="c_item in stars" :src="item.level/2 > c_item ?(item.level/2-c_item == 0.5?halfSrc:selectedSrc) : normalSrc" mode="">							
+						</image>
 					</view>
-					<view>9.5分</view>
+					<view>{{item.level}}分</view>
 				</view>
 			</view>
 		</view>
@@ -51,49 +49,63 @@
 		data() {
 			return {
 				
-				showView: false,
-				score:'',
+				
 				Router:this.$Router,
-				wx_info:{},
-				scrollTop: 100,
-				currt:0,
-				index: 0,
+				
 				supervisionDate:[
 					{},{},{},{},{},{}
-				]
+				],
+				mainData:[],
+				stars: [0, 1, 2, 3, 4],
+				normalSrc: '../../static/images/home-supervision-icon3.png',
+				selectedSrc: '../../static/images/home-supervision-icon1.png',
+				halfSrc: '../../static/images/home-supervision-icon2.png',
 			}
 		},
 		
 		onLoad() {
 			const self = this;
-			// self.$Utils.loadAll(['getMainData'], self);
+			self.paginate = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
+			self.$Utils.loadAll(['getMainData'], self);
+		},
+		
+		onReachBottom() {
+			console.log('onReachBottom')
+			const self = this;
+			if (!self.isLoadAll && uni.getStorageSync('loadAllArray')) {
+				self.paginate.currentPage++;
+				self.getMainData()
+			};
 		},
 		methods: {
-			activeNav:function(index){
+			
+			getMainData(isNew) {
 				const self = this;
-				
-			},
-			bindPickerChange(e) {
-				// 搜索选择分类
-				console.log('picker发送选择改变，携带值为', e.target.value)
-				this.index = e.target.value
-			},
-			getMainData() {
-				const self = this;
-				console.log('852369')
-				const postData = {};
-				postData.tokenFuncName = 'getProjectToken';
-
-				const callback = (res) => {
-					if (res.solely_code == 100000 && res.info.data[0]) {
-						self.mainData = res.info.data;
-					} else {
-						self.$Utils.showToast(res.msg, 'none')
-					};
-					self.$Utils.finishFunc('getMainData');
-
+				if (isNew) {
+					self.mainData = [];
+					self.paginate = {
+						count: 0,
+						currentPage: 1,
+						is_page: true,
+						pagesize: 5
+					}
 				};
-				self.$apis.orderGet(postData, callback);
+				const postData = {};
+				postData.paginate = self.$Utils.cloneForm(self.paginate);
+				postData.tokenFuncName = 'getProjectToken';
+				postData.searchItem = {
+					thirdapp_id:2,
+					user_type:2,
+					level:['>',0]
+				};
+				const callback = (res) => {
+					if (res.info.data.length > 0) {
+						self.mainData.push.apply(self.mainData, res.info.data);
+					}
+					console.log('self.workOneData',self.mainData)
+					self.$Utils.finishFunc('getMainData');
+				};
+				self.$apis.userInfoGet(postData, callback);
 			},
 		},
 	};

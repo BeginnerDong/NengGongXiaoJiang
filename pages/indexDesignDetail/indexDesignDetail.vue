@@ -16,13 +16,10 @@
 						<view class="font13">{{mainData.userInfo[0].name}}</view>
 						<view class="flexRowBetween starClass">
 							<view class="starBox">
-								<image src="../../static/images/home-supervision-icon1.png" mode=""></image>
-								<image src="../../static/images/home-supervision-icon1.png" mode=""></image>
-								<image src="../../static/images/home-supervision-icon1.png" mode=""></image>
-								<image src="../../static/images/home-supervision-icon2.png" mode=""></image>
-								<image src="../../static/images/home-supervision-icon3.png" mode=""></image>
+								<image v-for="item in stars" :src="mainData.userInfo[0].level/2 > item ?(mainData.userInfo[0].level/2-item == 0.5?halfSrc:selectedSrc) : normalSrc" mode="">							
+								</image>
 							</view>
-							<view>9.5分</view>
+							<view>{{mainData.userInfo[0].level}}分</view>
 						</view>
 					</view>
 					<view class="flexRowBetween saleB">
@@ -109,7 +106,11 @@
 				mainData:{},
 				isLoadAll:false,
 				isCollect:false,
-				isFoot:false
+				isFoot:false,
+				stars: [0, 1, 2, 3, 4],
+				normalSrc: '../../static/images/home-supervision-icon3.png',
+				selectedSrc: '../../static/images/home-supervision-icon1.png',
+				halfSrc: '../../static/images/home-supervision-icon2.png',
 			}
 		},
 

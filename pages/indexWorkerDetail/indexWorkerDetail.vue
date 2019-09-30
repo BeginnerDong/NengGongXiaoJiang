@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<view class="detailxqBan">
-			<image src="../../static/images/details-img1.png" mode=""></image>
+			<image :src="mainData.label&&mainData.label[mainData.category_id]&&mainData.label[mainData.category_id].mainImg&&mainData.label[mainData.category_id].mainImg[0]?mainData.label[mainData.category_id].mainImg[0].url:''" mode=""></image>
 		</view>
 		
 		<view class="designXq_name pdlr4" style="margin-top: 0;padding: 30rpx 4%;">
@@ -15,13 +15,10 @@
 						<view class="font13">{{mainData.userInfo[0].name}}</view>
 						<view class="flexRowBetween starClass">
 							<view class="starBox">
-								<image src="../../static/images/home-supervision-icon1.png" mode=""></image>
-								<image src="../../static/images/home-supervision-icon1.png" mode=""></image>
-								<image src="../../static/images/home-supervision-icon1.png" mode=""></image>
-								<image src="../../static/images/home-supervision-icon2.png" mode=""></image>
-								<image src="../../static/images/home-supervision-icon3.png" mode=""></image>
+								<image v-for="item in stars" :src="mainData.userInfo[0].level/2 > item ?(mainData.userInfo[0].level/2-item == 0.5?halfSrc:selectedSrc) : normalSrc" mode="">							
+								</image>
 							</view>
-							<view>9.5分</view>
+							<view>{{mainData.userInfo[0].level}}分</view>
 						</view>
 					</view>
 					<view class="text2 avoidOverflow2 color3 font13">{{mainData.userInfo[0].introduce}}</view>
@@ -41,7 +38,7 @@
 		</view>
 		<view class="xqInfor">
 			<view class="cont">
-				<view>内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容</view>
+				<view>{{mainData.label[mainData.category_id].passage1}}</view>
 			</view>
 		</view>
 		
@@ -88,7 +85,7 @@
 					<view>客服</view>
 				</view>
 			</view>
-			<view class="payBtn" @click=" Router.navigateTo({route:{path:'/pages/yuyue/yuyue'}})">立即预约</view>
+			<view class="payBtn" @click="goBuy">立即预约</view>
 		</view>
 	</view>
 
@@ -105,7 +102,11 @@
 					{},{},{},{}
 				],
 				mainData:{},
-				isCollect:false
+				isCollect:false,
+				stars: [0, 1, 2, 3, 4],
+				normalSrc: '../../static/images/home-supervision-icon3.png',
+				selectedSrc: '../../static/images/home-supervision-icon1.png',
+				halfSrc: '../../static/images/home-supervision-icon2.png',
 			}
 		},
 
@@ -123,6 +124,30 @@
 		},
 
 		methods: {
+			
+			
+			
+			goBuy() {
+				const self = this;
+				if (JSON.stringify(self.mainData) == '{}') {
+					api.showToast('商品错误', 'none', 1000);
+					return;
+				};
+				var orderList = {
+					product: [{
+						id: self.mainData.id,
+						count: 1,
+						product: self.mainData
+					}],
+					type:1,
+				};
+				uni.setStorageSync('order', orderList);
+				self.$Router.navigateTo({
+					route: {
+						path: '/pages/yuyue/yuyue'
+					}
+				})
+			},
 			
 			collect() {
 				const self = this;	

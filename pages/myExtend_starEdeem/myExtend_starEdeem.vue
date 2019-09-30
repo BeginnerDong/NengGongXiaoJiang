@@ -2,10 +2,10 @@
 	<view>
 		<view class="">
 			<view class="postersbox center" style="width: 100%;">
-				<image class="pic" src="../../static/images/about-posters-img.png" mode=""></image>
+				<image class="pic" :src="artData.mainImg&&artData.mainImg[0]?artData.mainImg[0].url:''" mode=""></image>
 				<view class="infor">
-					<view class="red font24">23561J</view>
-					<view class="copyBtn font14">复制</view>
+					<view class="red font24">{{code}}</view>
+					<view class="copyBtn font14" @click="copy">复制</view>
 				</view>
 				<view class="textB" @click="xieyiAlert">《推广说明》</view>
 			</view>
@@ -13,18 +13,10 @@
 				<view class="infor">
 					<view class="colseBtn"  @click="xieyiAlert" style="top: auto;bottom: 60rpx;">×</view>
 					<view class="cont">
-						<view class="tit">推广说明</view>
-						<view>一、标题标题标题标题标题标题标题</view>
-						<view>2、内容内容内容内容内容内容内容内容内容内容内容内容内容内容容内容</view>
-						<view>2、内容内容内容内容内容内容内容内容内容内容内容内容内容内容</view>
-						<view>3、内容内容内容内容内容内容内容内容内容内容内容内容内容内容容内容内容内容内容内容内容</view>
-						<view>4、内容内容内容内容内容内容内容容内容内容内容内容内容内容</view>
-						<view>5、内容内容内容内容内容内容内容内容内容内容内容内容内容内容容内容内容内容内容内容内容内容内容内容内容内容</view>
-						<view>6、内容内容内容内容内容内容内容内容内容内容内容内容内容内容容内容</view>
-						<view>7、内容内容内容内容内容内容内容内容内容内容内容内容内容内容容内容内容内容内容内容内容</view>
-						<view>8、内容内容内容内容内容内容内容容内容内容内容内容内容内容</view>
-						<view>9、内容内容内容内容内容内容内容内容内容内容内容内容内容内容容内容内容内容内容内容内容内容内容内容内容内容</view>
-					</view>
+						<view class="tit">{{artData.title}}</view>
+						<view class="content ql-editor" v-html="artData.content">
+						</view>
+					</view>	
 				</view>
 			</view>
 		</view>
@@ -38,38 +30,67 @@
 		data() {
 			return {
 				Router:this.$Router,
-				showView: false,
-				score:'',
-				wx_info:{},
-				is_show:false
+				
+				is_show:false,
+				artData:{},
+				code:''
 			}
 		},
-		onLoad() {
+		onLoad(options) {
 			const self = this;
-			//self.$Utils.loadAll(['getMainData'], self);
+			if(options.type){
+				self.code = uni.getStorageSync('user_info').code
+			}else{
+				self.code = uni.getStorageSync('threeInfo').code
+			}
+			self.$Utils.loadAll(['getArtData'], self);
 		},
 		methods: {
+			
+			copy(){
+				const self = this;
+				uni.setClipboardData({
+				    data: self.code,
+				    success: function () {
+				        //	self.$Utils.showToast('复制成功', 'none')
+				    }
+				});
+			},
+			
+			
 			xieyiAlert(){
 				const self = this;
 				self.is_show=!self.is_show;
 			},
-			getMainData() {
-				const self = this;
-				console.log('852369')
+			
+			getArtData() {
+				const self = this;			
 				const postData = {};
-				postData.tokenFuncName = 'getProjectToken';
-
-				const callback = (res) => {
-					if (res.solely_code == 100000 && res.info.data[0]) {
-						self.mainData = res.info.data;
-					} else {
-						self.$Utils.showToast(res.msg, 'none')
-					};
-					self.$Utils.finishFunc('getMainData');
-
+			
+				postData.searchItem = {
+					thirdapp_id:2,
 				};
-				self.$apis.orderGet(postData, callback);
-
+				postData.getBefore = {
+					caseData: {
+						tableName: 'Label',
+						searchItem: {
+							title: ['=', ['推广说明']],
+						},
+						middleKey: 'menu_id',
+						key: 'id',
+						condition: 'in',
+					},
+				};
+				const callback = (res) => {
+					if (res.info.data.length > 0) {
+						self.artData = res.info.data[0];
+						const regex = new RegExp('<img', 'gi');
+						self.artData.content = self.artData.content.replace(regex, `<img style="max-width: 100%;"`);
+					}
+					console.log('self.artData',self.artData)
+					self.$Utils.finishFunc('getArtData');
+				};
+				self.$apis.articleGet(postData, callback);
 			},
 
 		},

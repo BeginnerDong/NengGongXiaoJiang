@@ -17,7 +17,7 @@
 			</view>
 			
 			<view class="mainbox">
-				<view class="twoCt" v-for="(item,index) in mainData[0].product" :key="index">
+				<view class="twoCt" v-for="(item,index) in mainData.product" :key="index">
 					<view class="leftbox">
 						<image :src="item.product&&item.product.mainImg&&item.product.mainImg[0]?item.product.mainImg[0].url:''"></image>
 					</view>
@@ -58,7 +58,7 @@
 		onLoad(options) {
 			const self = this;
 			uni.setStorageSync('canClick',true);
-			self.mainData = self.$Utils.jsonToArray(uni.getStorageSync('payPro'), 'unshift');
+			self.mainData = uni.getStorageSync('payPro');
 			self.cartData = self.$Utils.getStorageArray('cartData');
 			console.log('self.data.mainData', self.mainData);
 			console.log('self.data.cartData', self.cartData);
@@ -89,17 +89,15 @@
 			
 			addOrder() {
 				const self = this;					
-				const postData = {
-					tokenFuncName: 'getProjectToken',
-					orderList: self.mainData,
-					snap_address:self.addressData
-				};	
+				const postData = self.$Utils.cloneForm(self.mainData)
+				postData.tokenFuncName = 'getProjectToken';
+				postData.snap_address = self.addressData;
 				const callback = (res) => {
 					if (res && res.solely_code == 100000) {
 						self.orderId = res.info.id;
-						for (var i = 0; i < postData.orderList[0].product.length; i++) {
+						for (var i = 0; i < self.mainData.product.length; i++) {
 							for (var j = 0; j < self.cartData.length; j++) {
-								if(postData.orderList[0].product[i].id==self.cartData[j].id){
+								if(self.mainData.product[i].id==self.cartData[j].id){
 									self.$Utils.delStorageArray('cartData',self.cartData[j],'id')
 								}
 							}
@@ -196,10 +194,10 @@
 			counter(index,type) {
 				const self = this;			
 				if (type == '+') {
-					self.mainData[0].product[index].count++;
+					self.mainData.product[index].count++;
 				} else {
-					if (self.mainData[0].product[index].count > 1) {
-						self.mainData[0].product[index].count--;
+					if (self.mainData.product[index].count > 1) {
+						self.mainData.product[index].count--;
 					}
 				};			
 				self.countTotalPrice();
@@ -208,8 +206,8 @@
 			countTotalPrice() {
 				const self = this;
 				self.totalPrice = 0;				
-				for (var i = 0; i < self.mainData[0].product.length; i++) {
-					self.totalPrice += self.mainData[0].product[i].product.price * self.mainData[0].product[i].count;		
+				for (var i = 0; i < self.mainData.product.length; i++) {
+					self.totalPrice += self.mainData.product[i].product.price * self.mainData.product[i].count;		
 				};
 			},
 			

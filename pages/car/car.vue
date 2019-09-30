@@ -133,15 +133,13 @@
 
 			pay(e) {
 				const self = this;
-				const orderList = [{
-						product: [],
-						type: 1
-					}
-
-				];
+				const orderList = {
+					product: [],
+					type: 1
+				};
 				for (var i = 0; i < self.mainData.length; i++) {
 					if (self.mainData[i].isSelect) {
-						orderList[0].product.push({
+						orderList.product.push({
 							id: self.mainData[i].id,
 							count: self.mainData[i].count,
 							product:self.mainData[i]

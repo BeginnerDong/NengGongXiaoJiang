@@ -2,72 +2,57 @@
 	<view>
 		<view class="tooling_indNav">
 			<view class="list">
-				<view class="item" :class="index==1?'on':''" @click="changeone('1')">工人订单</view>
-				<view class="item" :class="index==2?'on':''" @click="changeone('2')">设计订单</view>
-				<view class="item" :class="index==3?'on':''" @click="changeone('3')">定制订单</view>
+				<view class="item" :class="currentType==1?'on':''" @click="changeone('1')">工人订单</view>
+				<view class="item" :class="currentType==2?'on':''" @click="changeone('2')">设计订单</view>
+				<view class="item" :class="currentType==3?'on':''" @click="changeone('3')">定制订单</view>
 			</view>
 		</view>
 		<view class="orderNav">
-			<view class="tt" :class="current==1?'on':''" @click="change('1')">全部</view>
-			<view class="tt" :class="current==2?'on':''" @click="change('2')">待确认</view>
-			<view class="tt" :class="current==3?'on':''" @click="change('3')">进行中</view>
-			<view class="tt" :class="current==4?'on':''" @click="change('4')">已完成</view>
+			<view class="tt" :class="currentStatus==1?'on':''" @click="change('1')">全部</view>
+			<view class="tt" :class="currentStatus==2?'on':''" @click="change('2')">待确认</view>
+			<view class="tt" :class="currentStatus==3?'on':''" @click="change('3')">进行中</view>
+			<view class="tt" :class="currentStatus==4?'on':''" @click="change('4')">已完成</view>
 		</view>
 		<view class="prolisbox pdlr4">
-			<view class="prolis boxShaow" v-if="index==1">
+			<view class="prolis boxShaow" v-for="(item,index) in mainData" v-if="currentType==1||currentType==2">
 				<view class="datt">
 					<view class="left">
-						<view class="color2" style="margin-bottom: 10rpx;">订单编号：123356885555</view>
-						<view class="color3">交易时间：2018-08-30</view>
+						<view class="color2" style="margin-bottom: 10rpx;">订单编号：{{item.order_no}}</view>
+						<view class="color3">交易时间：{{item.create_time}}</view>
 					</view>
-					<view class="state">等待支付</view>
+					<view class="state" v-if="item.transport_status==0">待确认</view>
+					<view class="state" v-if="item.transport_status==1">进行中</view>
+					<view class="state" v-if="item.transport_status==2">已完成</view>
 				</view>
 				<view class="twoCt">
 					<view class="leftbox">
-						<image src="../../static/images/shopping-img1.png"></image>
+						<image 
+						:src="item.userInfo&&item.userInfo[0]&&item.userInfo[0].mainImg&&item.userInfo[0].mainImg[0]?item.userInfo[0].mainImg[0].url:''"></image>
 					</view>
 					<view class="cont">
-						<view class="title avoidOverflow">标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题</view>
-						<view class="text avoidOverflow2">服务内容：欧式风、简约风、北美风、田园风</view>
-						<view class="price priceM">59</view>
+						<view class="title avoidOverflow">{{item.products&&item.products[0]&&item.products[0].snap_product?item.products[0].snap_product.title:''}}</view>
+						<view class="text avoidOverflow2">{{item.userInfo&&item.userInfo[0]?item.userInfo[0].introduce:''}}</view>
+						<view class="price priceM">{{item.price}}</view>
 					</view>
 				</view>
 				<view class="bBtn">
-					<view class="btn"  @click=" Router.navigateTo({route:{path:'/pages/myToolingOrderDetail/myToolingOrderDetail'}})">查看详情</view>
+					<view class="btn" v-if="item.type==2&&item.transport_status==2"  @click=" Router.navigateTo({route:{path:'/pages/myToolingOrderComment/myToolingOrderComment?id='+item.id}})">去评价</view>
+					<view class="btn"  
+					@click="Router.navigateTo({route:{path:'/pages/designerOrderDetail/designerOrderDetail?id='+item.id+'&type=0'}})">查看详情</view>
 				</view>
 			</view>
 			
-			<view class="prolis boxShaow"  v-if="index==2">
-				<view class="datt">
-					<view class="left">
-						<view class="color2" style="margin-bottom: 10rpx;">订单编号：123356885555</view>
-						<view class="color3">交易时间：2018-08-30</view>
-					</view>
-					<view class="state">等待支付</view>
-				</view>
-				<view class="twoCt">
-					<view class="leftbox">
-						<image src="../../static/images/shopping-img1.png"></image>
-					</view>
-					<view class="cont">
-						<view class="title avoidOverflow">标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题</view>
-						<view class="text avoidOverflow2">服务内容：欧式风、简约风、北美风、田园风</view>
-						<view class="price priceM">59</view>
-					</view>
-				</view>
-				<view class="bBtn">
-					<view class="btn"  @click=" Router.navigateTo({route:{path:'/pages/myToolingOrderComment/myToolingOrderComment'}})">去评价</view>
-					<view class="btn"  @click=" Router.navigateTo({route:{path:'/pages/myToolingOrderDetail/myToolingOrderDetail'}})">查看详情</view>
-				</view>
-			</view>
 			
-			<view class="prolis prolis3 boxShaow"  v-if="index==3">
+			
+			<view class="prolis prolis3 boxShaow" v-for="(item,index) in mainData"  v-if="currentType==3">
 				<view class="datt">
 					<view class="left">
-						<view class="color2" style="margin-bottom: 10rpx;">订单编号：123356885555</view>
-						<view class="color3">交易时间：2018-08-30</view>
+						<view class="color2" style="margin-bottom: 10rpx;">订单编号：{{item.order_no}}</view>
+						<view class="color3">交易时间：{{item.create_time}}</view>
 					</view>
-					<view class="state">等待支付</view>
+					<view class="state" v-if="item.transport_status==0">待确认</view>
+					<view class="state" v-if="item.transport_status==1">进行中</view>
+					<view class="state" v-if="item.transport_status==2">已完成</view>
 				</view>
 				<view class="twoCt">
 					<view class="leftbox">
@@ -93,32 +78,96 @@
 		data() {
 			return {
 				Router:this.$Router,
-				showView: false,
-				score: '',
-				wx_info: {},
-				current:1,
-				index:1
+				mainData:[],
+				searchItem:{
+					type:1
+				},
+				currentStatus:1,
+				currentType:1
 			}
+		},
+		
+		onLoad(options) {
+			const self = this;
+			self.paginate = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
+			self.$Utils.loadAll(['getMainData'], self)
+			
+		},
+		
+			
+		
+		onReachBottom() {
+			console.log('onReachBottom')
+			const self = this;
+			if (!self.isLoadAll && uni.getStorageSync('loadAllArray')) {
+				self.paginate.currentPage++;
+				self.getMainData()
+			};
 		},
 
 		methods: {
-			change(current) {
+			change(currentStatus) {
 				const self = this;
-				if(current!=self.current){
-					self.current = current
+				if(currentStatus!=self.currentStatus){
+					self.currentStatus = currentStatus
+					if(self.currentStatus==1){
+						delete self.searchItem.transport_status 
+					}else{
+						self.searchItem.transport_status=self.currentStatus-2
+					}
+					self.getMainData(true)
 				}
 			},
-			changeone(index){
+			
+			changeone(currentType){
 				const self=this;
-				if(index!=self.index){
-					self.index = index
-				}
+				if(currentType!=self.currentType){
+					delete self.searchItem.transport_status;
+					self.currentStatus = 1;
+					self.currentType = currentType;
+					self.searchItem.type=self.currentType;
+					self.getMainData(true);
+				};
+				
 			},
 
-			getMainData() {
+			getMainData(isNew) {
 				const self = this;
-				self.$apis.userGet(postData, callback);
-			}
+				if(isNew){
+					self.mainData = [];
+					self.paginate={
+						count: 0,
+						currentPage:1,
+						pagesize:5,
+						is_page:true,
+					};
+				};
+				const postData = {};
+				postData.paginate = self.$Utils.cloneForm(self.paginate);
+				postData.searchItem = self.$Utils.cloneForm(self.searchItem);
+				postData.tokenFuncName = 'getProjectToken';
+				postData.getAfter = {
+					userInfo:{
+						tableName:'UserInfo',
+						middleKey:'shop_no',
+						key:'user_no',
+						condition:'=',
+						searchItem:{
+							status:1
+						}
+					}
+				};
+				const callback = (res) => {
+					if (res.info.data.length > 0) {
+						self.mainData.push.apply(self.mainData, res.info.data);
+					} else {
+						self.$Utils.showToast('没有更多了','none');
+					};
+					console.log(self.mainData)
+					self.$Utils.finishFunc('getMainData');
+				};
+				self.$apis.orderGet(postData, callback);
+			},
 		}
 	}
 </script>

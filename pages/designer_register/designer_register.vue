@@ -152,13 +152,17 @@
 		onLoad(options) {
 			const self = this;
 			self.type=options.type;	
+			console.log('self.type',self.type)
 			if(self.type=='worker'){
 				self.searchItem.type=2;
 				self.submitData.identity=1
 			}else if(self.type=='designer'){
 				self.searchItem.type=3;
 				self.submitData.identity=2
-			};
+			}else if(self.type=='supervision'){
+				self.submitData.identity=0;
+				self.submitData.user_type = 2
+			}
 			self.$Utils.loadAll(['getMainData','getArtData'], self);
 		},
 		
@@ -189,7 +193,7 @@
 						self.$Utils.showToast('请阅读协议并同意', 'none')	
 						return
 					};
-					if(!self.submitData.type){
+					if((self.type=='worker'||self.type=='designer')&&!self.submitData.type){
 						uni.setStorageSync('canClick', true);
 						self.$Utils.showToast('请选择工种或类别', 'none')	
 						return
@@ -204,7 +208,7 @@
 					if (phone.trim().length != 11 || !/^1[3|4|5|6|7|8|9]\d{9}$/.test(phone)) {
 						uni.setStorageSync('canClick', true);
 						self.$Utils.showToast('手机格式不正确', 'none')			
-					} else {					
+					}else {					
 						self.register();					
 					}
 				} else {
@@ -232,6 +236,26 @@
 				};
 				self.$apis.register(postData, callback);
 			},
+			
+			/* registerTwo() {
+				const self = this;
+				const postData = {};
+				postData.data = {};
+				postData.data = self.$Utils.cloneForm(self.submitData);
+				const callback = (data) => {				
+					if (data.solely_code == 100000) {					
+						self.$Utils.showToast('注册成功', 'none');
+						setTimeout(function() {
+							self.Router.switchTab({route:{path:'/pages/user/user'}})
+						}, 800);
+						
+					} else {
+						uni.setStorageSync('canClick', true);
+						self.$Utils.showToast(data.msg, 'none', 1000)
+					}	
+				};
+				self.$apis.registerS(postData, callback);
+			}, */
 			
 			agree(){
 				const self = this;

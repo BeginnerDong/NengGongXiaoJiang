@@ -5,8 +5,10 @@
 			<image src="../../static/images/about-img1.png" style="position:absolute;height: 320rpx;width: 100%;z-index: -1;"></image>
 			<view class="infor">
 				<view class="left">
-					<image class="photo" src="../../static/images/about-daka-img2.png" mode=""></image>
-					<view style="width: 70%;">昵称昵称昵称昵称</view>
+					<view style="width: 120rpx; height: 120rpx;border-radius: 50%;overflow: hidden;margin-right: 20px;">
+						<open-data type="userAvatarUrl"></open-data>
+					</view>					
+					<view style="width: 70%;"><open-data type="userNickName"></open-data></view>
 				</view>
 			</view>
 		</view>

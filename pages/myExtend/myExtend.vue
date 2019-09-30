@@ -21,7 +21,7 @@
 			</view>
 		</view>
 		<view class="myExtendBox2" v-if="num==2">
-			<view class="postersbox pr" @click=" Router.navigateTo({route:{path:'/pages/myExtend_starEdeem/myExtend_starEdeem'}})">
+			<view class="postersbox pr" @click=" Router.navigateTo({route:{path:'/pages/myExtend_starEdeem/myExtend_starEdeem?type=user'}})">
 				<image class="pic" src="../../static/images/about-posters-img.png" mode=""></image>
 				<view class="infor">
 					<view class="red font11">23561J</view>

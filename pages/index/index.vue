@@ -37,11 +37,11 @@
 
 		<view class="ind_cont5">
 			<view class="flexRowBetween">
-				<view class="item" @click="Router.navigateTo({route:{path:'/pages/indexDesign/indexDesign'}})">
+				<view class="item" @click="Router.redirectTo({route:{path:'/pages/indexDesign/indexDesign'}})">
 					<image src="../../static/images/home-img1.png" mode=""></image>
 					<view class="tit">优秀设计师</view>
 				</view>
-				<view class="item" @click="Router.navigateTo({route:{path:'/pages/indexWorker/indexWorker'}})">
+				<view class="item" @click="Router.redirectTo({route:{path:'/pages/indexWorker/indexWorker'}})">
 					<image src="../../static/images/home-img1.png" mode=""></image>
 					<view class="tit">优秀工人</view>
 				</view>

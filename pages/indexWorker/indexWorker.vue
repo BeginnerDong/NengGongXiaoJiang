@@ -32,13 +32,10 @@
 						<view>{{item.name}}</view>
 						<view class="flexRowBetween starClass">
 							<view class="starBox">
-								<image src="../../static/images/home-supervision-icon1.png" mode=""></image>
-								<image src="../../static/images/home-supervision-icon1.png" mode=""></image>
-								<image src="../../static/images/home-supervision-icon1.png" mode=""></image>
-								<image src="../../static/images/home-supervision-icon2.png" mode=""></image>
-								<image src="../../static/images/home-supervision-icon3.png" mode=""></image>
+								<image v-for="c_item in stars" :src="item.level/2 > c_item ?(item.level/2-c_item == 0.5?halfSrc:selectedSrc) : normalSrc" mode="">							
+								</image>
 							</view>
-							<view>9.5分</view>
+							<view>{{item.level}}分</view>
 						</view>
 					</view>
 					<view class="text2">{{item.introduce}}</view>
@@ -68,13 +65,10 @@
 						<view>{{item.name}}</view>
 						<view class="flexRowBetween starClass">
 							<view class="starBox">
-								<image src="../../static/images/home-supervision-icon1.png" mode=""></image>
-								<image src="../../static/images/home-supervision-icon1.png" mode=""></image>
-								<image src="../../static/images/home-supervision-icon1.png" mode=""></image>
-								<image src="../../static/images/home-supervision-icon2.png" mode=""></image>
-								<image src="../../static/images/home-supervision-icon3.png" mode=""></image>
+								<image v-for="c_item in stars" :src="item.level/2 > c_item ?(item.level/2-c_item == 0.5?halfSrc:selectedSrc) : normalSrc" mode="">							
+								</image>
 							</view>
-							<view>9.5分</view>
+							<view>{{item.level}}分</view>
 						</view>
 					</view>
 					<view class="text2">{{item.introduce}}</view>
@@ -104,13 +98,10 @@
 						<view>{{item.name}}</view>
 						<view class="flexRowBetween starClass">
 							<view class="starBox">
-								<image src="../../static/images/home-supervision-icon1.png" mode=""></image>
-								<image src="../../static/images/home-supervision-icon1.png" mode=""></image>
-								<image src="../../static/images/home-supervision-icon1.png" mode=""></image>
-								<image src="../../static/images/home-supervision-icon2.png" mode=""></image>
-								<image src="../../static/images/home-supervision-icon3.png" mode=""></image>
+								<image v-for="c_item in stars" :src="item.level/2 > c_item ?(item.level/2-c_item == 0.5?halfSrc:selectedSrc) : normalSrc" mode="">							
+								</image>
 							</view>
-							<view>9.5分</view>
+							<view>{{item.level}}分</view>
 						</view>
 					</view>
 					<view class="text2 avoidOverflow2" >{{item.introduce}}</view>
@@ -158,7 +149,11 @@
 				],
 				workerOneData:[],
 				workerTwoData:[],
-				workerThreeData:[]
+				workerThreeData:[],
+				stars: [0, 1, 2, 3, 4],
+				normalSrc: '../../static/images/home-supervision-icon3.png',
+				selectedSrc: '../../static/images/home-supervision-icon1.png',
+				halfSrc: '../../static/images/home-supervision-icon2.png',
 			}
 		},
 		

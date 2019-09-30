@@ -21,7 +21,7 @@
 		</view>
 		<view class="submitbtn" style="margin: 200rpx auto">
 			<button type="submit" style="margin-bottom: 20rpx;" 
-			@click="login">登录</button>
+			@click="submit">登录</button>
 			<view class="agreeSel">
 				<view class="text color2" 
 				@click=" Router.navigateTo({route:{path:'/pages/designer_register/designer_register?type='+type}})">没有账号，去注册</view>
@@ -50,6 +50,8 @@
 				self.identity=1
 			}else if(self.type=='designer'){
 				self.identity=2
+			}else if(self.type=='supervision'){
+				self.identity=0
 			}
 		},
 		
@@ -60,14 +62,19 @@
 				self.Router.redirectTo({route:{path:'/pages/worker_user/worker_user'}})
 			}else if(self.type=='designer'&&uni.getStorageSync('threeToken')&&uni.getStorageSync('threeInfo').identity==2){
 				self.Router.redirectTo({route:{path:'/pages/designer_user/designer_user'}})
-			}else{
+			}else if(self.type=='supervision'&&uni.getStorageSync('threeToken')&&uni.getStorageSync('threeInfo').identity==0){
+				self.Router.redirectTo({route:{path:'/pages/supervisor_user/supervisor_user'}})
+			}else {
 				self.showPage = true
 			}
 		},
 		
 		methods: {
 			
-			
+			submit(){
+				const self = this;
+				self.login()
+			},
 			
 			login() {
 				const self = this;
@@ -88,6 +95,8 @@
 							self.Router.redirectTo({route:{path:'/pages/worker_user/worker_user'}})
 						}else if(self.type=='designer'){
 							self.Router.redirectTo({route:{path:'/pages/designer_user/designer_user'}})
+						}else if(self.type=='supervision'){
+							self.Router.redirectTo({route:{path:'/pages/supervisor_user/supervisor_user'}})
 						}
 					} else {
 						uni.setStorageSync('canClick', true);
@@ -96,6 +105,32 @@
 				};
 				self.$apis.login(postData, callback);
 			},
+			
+			superLogin() {
+				const self = this;
+				if(self.phone==''){
+					self.$Utils.showToast('请输入账号', 'none', 1000);
+					return
+				};
+				const postData = {
+					login_name:self.phone,
+					identity:self.identity
+				};				
+				const callback = (res) => {				
+					if (res.solely_code == 100000) {					
+						console.log(res)
+						uni.setStorageSync('threeInfo',res.info)
+						uni.setStorageSync('threeToken',res.token);
+						self.Router.redirectTo({route:{path:'/pages/supervisor_user/supervisor_user'}})
+					} else {
+						uni.setStorageSync('canClick', true);
+						self.$Utils.showToast(res.msg, 'none', 1000)
+					}	
+				};
+				self.$apis.superLogin(postData, callback);
+			},
+			
+			
 
 		},
 	};

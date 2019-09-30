@@ -2,9 +2,7 @@
 	<view>
 		<view class="pdlr4" style="padding-top: 40rpx;">
 			<view class="font15 title">工作进度</view>
-			<view class="tex color2">1、内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容</view>
-			<view class="tex color2">2、内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容</view>
-			<view class="tex color2">3、内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容</view>
+			<textarea placeholder="请输入工作进度"></textarea>
 		</view>
 		<view class="f5H5"></view>
 		<view class="flexRowBetween money">
@@ -16,7 +14,9 @@
 		<view class="submitbtn" style="margin-top: 200rpx;">
 			<button type="submit">确认验收</button>
 		</view>
-		
+		<view class="submitbtn" style="margin-top: 200rpx;">
+			<button type="submit">申请验收</button>
+		</view>
 	</view>
 </template>
 
@@ -58,6 +58,7 @@
 	};
 </script>
 <style>
+			textarea{ width: 100%;height: 350rpx; display: block; box-sizing: border-box; font-size: 28rpx; line-height: 44rpx; margin-bottom: 20rpx;padding: 20rpx;background: #F5F5F5;}
 	.title{padding-bottom: 30rpx;}
 	.tex{padding-bottom: 20rpx;}
 	.money{padding: 30rpx 4%;}

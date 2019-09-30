@@ -3,9 +3,9 @@
 		
 		<view class="pdlr4">
 			<view class="inforOne">
-				<view class="font15 tit">2019-06-04 星期三</view>
+				<view class="font15 tit">{{mainData.create_time}} {{mainData.description}}</view>
 				<view class="flexRowBetween time">
-					<view class="left">20:03:00</view>
+					<view class="left">{{now}}</view>
 					<view class="btn">下班</view>
 				</view>
 			</view>
@@ -14,14 +14,18 @@
 				<view class="upPhoto">
 					<view class="name">下班拍照</view>
 					<view class="phto">
-						<image src="../../static/images/daka-icon3.png" mode=""></image>
+						
+						<image  v-for="(item,index) in submitData.mainImg" :key="index"   v-if="submitData.mainImg.length>0" :src="item.url" mode=""></image>
+						
+						<image @click="upLoadImg()" src="../../static/images/daka-icon3.png" 
+						v-if="submitData.mainImg.length==0" mode=""></image>
 					</view>
 				</view>
 			</view>
 		</view>
 		
 		<view class="submitbtn" style="margin-top: 300rpx;">
-			<button type="button">确定</button>
+			<button type="button" @click="Utils.stopMultiClick(orderUpdate)">确定</button>
 		</view>
 		
 	</view>
@@ -32,33 +36,103 @@
 		data() {
 			return {
 				Router:this.$Router,
-				showView: false,
-				score:'',
-				wx_info:{}
+				Utils:this.$Utils,
+				mainData:{},
+				now:'',
+				submitData:{
+					off_time:'',
+					mainImg:[]
+				}
 			}
 		},
-		onLoad() {
+		
+		onLoad(options) {
 			const self = this;
-			//self.$Utils.loadAll(['getMainData'], self);
+			var now = Date.parse(new Date());
+			self.now = self.$Utils.timeto(now,"hms");
+			self.id = options.id;
+			self.$Utils.loadAll(['getMainData'], self);
 		},
+		
 		methods: {
+			
+			processUpdate() {
+				const self = this;
+				const postData = {};				
+				postData.data = {};
+				postData.data = self.$Utils.cloneForm(self.submitData);
+				postData.searchItem ={
+					id:self.id
+				};
+				const callback = (data) => {				
+					if (data.solely_code == 100000) {				
+						self.$Utils.showToast('打卡成功', 'none', 1000)
+						setTimeout(function() {
+							uni.navigateBack({
+								delta:1
+							})
+						}, 800);
+					} else {
+						uni.setStorageSync('canClick', true);
+						self.$Utils.showToast(data.msg, 'none', 1000)
+					}	
+				};
+				self.$apis.processUpdate(postData, callback);
+			},
+			
 			getMainData() {
 				const self = this;
-				console.log('852369')
 				const postData = {};
-				postData.tokenFuncName = 'getProjectToken';
-
+				postData.searchItem = {
+					id:self.id,
+					type:7
+				};	
+				postData.tokenFuncName = 'getThreeToken';						
 				const callback = (res) => {
-					if (res.solely_code == 100000 && res.info.data[0]) {
-						self.mainData = res.info.data;
-					} else {
-						self.$Utils.showToast(res.msg, 'none')
-					};
+					if (res.info.data.length > 0) {
+						self.mainData= res.info.data[0];
+						self.mainData.create_time = self.mainData.create_time.substr(0,10)
+					}
 					self.$Utils.finishFunc('getMainData');
-
 				};
-				self.$apis.orderGet(postData, callback);
-
+				self.$apis.processGet(postData, callback);
+			},
+			
+			upLoadImg() {
+				const self = this;			
+				wx.showLoading({
+					mask: true,
+					title: '上传中',
+				});
+				const callback = (res) => {
+					console.log('res', res)
+					if (res.solely_code == 100000) {
+						
+						self.submitData.mainImg.push({
+							url:res.info.url,
+							type:'image'
+						})
+						console.log(self.submitData)
+						wx.hideLoading()
+					} else {
+						self.$Utils.showToast('网络故障', 'none')
+					}
+				};				
+				wx.chooseImage({
+					count: 1,
+					success: function(res) {
+						console.log(res);
+						var tempFilePaths = res.tempFilePaths[0];
+						console.log(callback)
+						self.$Utils.uploadFile(tempFilePaths, 'file', {
+							tokenFuncName: 'getProjectToken',
+							type:'image'
+						}, callback)
+					},
+					fail: function(err) {
+						wx.hideLoading();
+					},			
+				})			
 			},
 
 		},

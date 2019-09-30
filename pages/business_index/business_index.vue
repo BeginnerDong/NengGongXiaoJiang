@@ -9,11 +9,11 @@
 		<view class="busnsName palr4 flexRowBetween">
 			<view class="flexRowAround ">
 				<view class="leftImg">
-					<image src="../../static/images/about-daka-img2.png"></image>
+					<image :src="mainData.mainImg[0].url"></image>
 				</view>
 				<view class="cont">
-					<view class="tit avoidOverflow">商家名称</view>
-					<view class="adrs avoidOverflow">陕西省西安市雁塔区高新大都荟</view>
+					<view class="tit avoidOverflow">{{mainData.name}}</view>
+					<view class="adrs avoidOverflow">{{mainData.address}}</view>
 				</view>
 			</view>
 			<view class="icon">
@@ -27,7 +27,9 @@
 		</view>
 		<view class="xqInfor">
 			<view class="cont">
-				<view>内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容</view>
+				<view>
+					{{mainData.introduce}}
+				</view>
 			</view>
 		</view>
 		
@@ -37,16 +39,17 @@
 			<view class="tt">发布商品</view>
 		</view>
 		<view class="designIndex pdlr4">
-			<view class="items flexRowBetween" v-for="(item,index) in businessDate" :key="index" @click=" Router.navigateTo({route:{path:'/pages/pageDetail/pageDetail'}})">
+			<view class="items flexRowBetween" v-for="(item,index) in mainData.product" :key="index" 
+			@click=" Router.navigateTo({route:{path:'/pages/pageDetail/pageDetail?id='+item.id+'&type='+item.type}})">
 				<view class="pic">
-					<image src="../../static/images/home-img3.png" alt="" />
+					<image :src="item.mainImg&&item.mainImg[0]?item.mainImg[0].url:''" alt="" />
 				</view>
 				<view class="infor">
 					<view class="title flex" style="padding-top: 10rpx;line-height: 46rpx;">
-						<view class="avoidOverflow2">厂家直销高强无收缩灌浆料-灌浆料强度高</view>
+						<view class="avoidOverflow2">{{item.title}}</view>
 					</view>
 					<view class="saleB">
-						<view class="priceM font14">56</view>
+						<view class="priceM font14">{{item.price}}</view>
 					</view>
 				</view>
 			</view>
@@ -63,37 +66,57 @@
 		data() {
 			return {
 				Router:this.$Router,
-				showView: false,
-				score:'',
-				wx_info:{},
-				businessDate:[
-					{},{},{}
-				]
+				mainData:{},
+				CardImgDate: [
+					{},{},{},{},{},{}
+				],
+				stars: [0, 1, 2, 3, 4],
+				normalSrc: '../../static/images/home-supervision-icon3.png',
+				selectedSrc: '../../static/images/home-supervision-icon1.png',
+				halfSrc: '../../static/images/home-supervision-icon2.png',
 			}
 		},
 
-		onLoad() {
+		onLoad(options) {
 			const self = this;
+			self.user_no = options.user_no;
+			self.type = options.type;
 			self.$Utils.loadAll(['getMainData'], self);
 		},
 
 		methods: {
+			
 			getMainData() {
 				const self = this;
 				const postData = {};
 				postData.tokenFuncName = 'getProjectToken';
-			
+				postData.searchItem = {
+					user_type:1,
+					user_no:self.user_no
+				};
+				postData.getAfter = {
+					
+					product:{
+						tableName:'Product',
+						middleKey:'user_no',
+						key:'user_no',
+						searchItem:{
+							status:1,
+							type:self.type
+						},
+						condition:'='
+					},
+				};
 				const callback = (res) => {
 					if (res.solely_code == 100000 && res.info.data[0]) {
-						self.mainData = res.info.data;
+						self.mainData = res.info.data[0];
 					} else {
 						self.$Utils.showToast(res.msg, 'none')
 					};
 					self.$Utils.finishFunc('getMainData');
 			
 				};
-				self.$apis.orderGet(postData, callback);
-			
+				self.$apis.userInfoGet(postData, callback);
 			}
 		}
 	}

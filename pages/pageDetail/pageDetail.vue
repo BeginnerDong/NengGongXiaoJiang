@@ -7,7 +7,7 @@
 			<view class="tit">{{mainData.title}}</view>
 			<view class="flexRowBetween">
 				<view class="pric">{{mainData.price}}</view>
-				<view class="font12 color3">销量：{{mainData.price}}</view>
+				<view class="font12 color3">销量：{{mainData.sale_count}}</view>
 			</view>
 		</view>
 		<view class="f5H10"></view>
@@ -18,7 +18,7 @@
 		</view>
 		<view class="busnsName palr4 flexRowBetween" v-if="type!=4">
 			<view class="flexRowAround">
-				<view class="leftImg" @click=" Router.navigateTo({route:{path:'/pages/business_index/business_index'}})">
+				<view class="leftImg" @click=" Router.navigateTo({route:{path:'/pages/business_index/business_index?user_no='+mainData.userInfo[0].user_no+'&type='+type}})">
 					<image :src="mainData.userInfo[0].mainImg&&mainData.userInfo[0].mainImg[0]?mainData.userInfo[0].mainImg[0].url:'../../static/images/qiyexinxi-icon2.png'"></image>
 				</view>
 				<view class="cont">
@@ -126,14 +126,14 @@
 					api.showToast('商品错误', 'none', 1000);
 					return;
 				};
-				var orderList = [{
+				var orderList = {
 					product: [{
 						id: self.mainData.id,
 						count: 1,
 						product: self.mainData
 					}],
-					type: 1,
-				}];
+					type:self.type,
+				};
 				uni.setStorageSync('payPro', orderList);
 				self.$Router.navigateTo({
 					route: {

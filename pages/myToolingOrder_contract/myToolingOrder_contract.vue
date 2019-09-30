@@ -39,15 +39,15 @@
 							<view class="td">单价</view>
 							<view class="td">小计(元)</view>
 						</view>
-						<view class="tr">
-							<view class="td">1</view>
-							<view class="td">顶面石膏板吊顶</view>
-							<view class="td">㎡</view>
-							<view class="td">1000</view>
-							<view class="td">40</view>
-							<view class="td">40000</view>
+						<view class="tr" v-for="(item,index) in mainData.products">
+							<view class="td">{{index+1}}</view>
+							<view class="td">{{item.title}}</view>
+							<view class="td">{{item.snap_product.label[item.snap_product.category_id].description}}</view>
+							<view class="td">{{item.count}}</view>
+							<view class="td">{{item.price}}</view>
+							<view class="td">{{item.price*item.count}}</view>
 						</view>
-						<view class="tr">
+						<!-- <view class="tr">
 							<view class="td">2</view>
 							<view class="td">墙面石膏板隔墙</view>
 							<view class="td">㎡</view>
@@ -86,7 +86,7 @@
 							<view class="td">200</view>
 							<view class="td">50</view>
 							<view class="td">10000</view>
-						</view>
+						</view> -->
 					</view>
 				</view>
 				<view class="center" style="width: 80%;margin: 0 auto;">注：资金托管至第三方，施工结束后确认付款，至工人账户</view>
@@ -139,7 +139,8 @@
 			</view>
 			
 			<view class="submitbtn" style="margin-top: 100rpx;">
-				<button type="button" @click=" Router.navigateTo({route:{path:'/pages/myToolingOrderDetail/myToolingOrderDetail'}})">确认合同</button>
+				<button type="button" 
+				@click="orderUpdate">确认合同</button>
 			</view>
 		</view>
 	</view>
@@ -151,16 +152,100 @@
 		data() {
 			return {
 				Router:this.$Router,
-				score: '',
-				wx_info: {}
+				mainData:{},
+				type:''
 			}
+		},
+		
+		onLoad(options) {
+			const self = this;
+			self.id = options.id;	
+			self.type=options.type;
+			self.$Utils.loadAll(['getMainData'], self)		
 		},
 
 		methods: {
+			
+			orderUpdate() {
+				const self = this;
+				const postData = {};
+				postData.searchItem = {
+					order_no: self.mainData.order_no,
+					user_type: 0
+				};
+				postData.data = {
+					comfirm: 3
+				};
+				
+				if(self.type==1){
+					postData.tokenFuncName = 'getThreeToken';
+					postData.data.comfirm = 4;
+					postData.data.transport_status = 1;
+				}else{
+					postData.tokenFuncName = 'getProjectToken';
+				};
+				postData.saveAfter = [
+					{
+						tableName: 'Process',
+						FuncName: 'add',
+						data: {
+							type: 1,
+							order_no: self.mainData.order_no,
+							title:self.type==1?(uni.getStorageSync('threeInfo').identity==1?'工人确认合同':'设计师确认合同'):'用户确认合同'
+						}
+					}
+				];	
+	
+				const callback = (res) => {
+					if (res.solely_code == 100000) {
+						self.$Utils.showToast(res.msg, 'none');
+						setTimeout(function() {
+							uni.navigateBack({
+								delta:1
+							})
+						}, 800);
+					} else {
+						self.$Utils.showToast(res.msg, 'none');
+					}
+				};
+				self.$apis.orderUpdate(postData, callback);
+			},
+			
+			
 			getMainData() {
 				const self = this;
-				self.$apis.userGet(postData, callback);
-			}
+				const postData = {};			
+				postData.searchItem = {
+					id:self.id,
+					user_type:0
+				};
+				if(self.type==1){
+					postData.tokenFuncName = 'getThreeToken';
+				}else{
+					postData.tokenFuncName = 'getProjectToken';
+				}	
+				postData.getAfter = {
+					userInfo:{
+						tableName:'UserInfo',
+						middleKey:'shop_no',
+						key:'user_no',
+						condition:'=',
+						searchItem:{
+							status:1
+						}
+					},	
+				};
+				const callback = (res) => {
+					if (res.info.data.length > 0) {
+						self.mainData=res.info.data[0];
+					} else {
+						self.$Utils.showToast(res.msg,'none');
+					};			
+					console.log(self.mainData)
+					self.$Utils.finishFunc('getMainData');
+				};
+				self.$apis.orderGet(postData, callback);
+			},
 		}
 	}
 </script>
