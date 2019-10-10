@@ -5,16 +5,16 @@
 			<view class="tt">历史资料</view>
 		</view>
 		<view class="ziliao_indLis pdlr4">
-			<view class="item" v-for="(item,index) in ziliaoDate" :key="index">
+			<view class="item" v-for="(item,index) in mainData" :key="index">
 				<view class="leftPic">
-					<image src="../../static/images/about-hetongbuchong-icon1.png" mode=""></image>
+					<image :src="item.mainImg&&item.mainImg[0]?item.mainImg[0].url:''" mode=""></image>
 				</view>
 				<view class="infor">
-					<view class="avoidOverflow">标题标题标题标题标题标题标题标题标题标题</view>
-					<view class="party font12 color3">甲方</view>
+					<view class="avoidOverflow">{{item.description}}</view>
+					<view class="party font12 color3">{{item.title=='工人上传资料'?'乙方':'甲方'}}</view>
 					<view class="flexRowBetween last">
 						<view class="upBtn">下载</view>
-						<view class="delt"  @click="deltAlert">
+						<view class="delt"  @click="deleteOne(index)">
 							<image src="../../static/images/about-address-icon3.png" mode=""></image>
 							删除
 						</view>
@@ -22,7 +22,8 @@
 				</view>
 			</view>
 			<view class="submitbtn" style="margin-top: 100rpx;">
-				<button type="button" @click=" Router.navigateTo({route:{path:'/pages/myWorkbench_database_upmsg/myWorkbench_database_upmsg'}})">上传资料</button>
+				<button type="button" 
+				@click=" Router.navigateTo({route:{path:'/pages/myWorkbench_database_upmsg/myWorkbench_database_upmsg?id='+id+'&type='+type}})">上传资料</button>
 			</view>
 			
 		</view>
@@ -45,54 +46,146 @@
 	export default {
 		data() {
 			return {
-				Router:this.$Router,
-				showView: false,
-				score:'',
-				wx_info:{},
-				ziliaoDate:[
-					{},{},{}
-				],
-				is_show:false,
-				num:1
+				Router: this.$Router,
+
+
+
+				mainData:[],
 			}
 		},
-		onLoad() {
+
+		onLoad(options) {
 			const self = this;
+			self.id = options.id;
+			self.type=options.type;
+			self.paginate = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
 			//self.$Utils.loadAll(['getMainData'], self);
 		},
+
+		onReachBottom() {
+			console.log('onReachBottom')
+			const self = this;
+			if (!self.isLoadAll && uni.getStorageSync('loadAllArray')) {
+				self.paginate.currentPage++;
+				self.getMainData()
+			};
+		},
+
+		onShow() {
+			const self = this;
+			self.mainData = [];
+			self.$Utils.loadAll(['getOrderData'], self);
+		},
+
 		methods: {
-			chage(num){
+			
+			deleteOne(index) {
 				const self = this;
-				if(num!=self.num){
-					self.num=num
-				}
+				uni.showModal({
+				    title: '提示',
+				    content: '确认是否删除这个资料',
+				    success: function (res) {
+				        if (res.confirm) {
+				            const postData = {};
+				            postData.searchItem = {};
+				            postData.searchItem.id = self.mainData[index].id;
+				            if(self.type==1){
+				            	postData.tokenFuncName = 'getThreeToken';
+				            	
+				            }else{
+				            	postData.tokenFuncName = 'getProjectToken';
+				            	
+				            };
+				            
+				            postData.data = {
+				            	status:-1
+				            };
+				            const callback = (res) => {
+				            	if (res.solely_code==100000) {
+				            		self.$Utils.showToast('删除成功', 'none');
+				            		setTimeout(function() {
+				            			self.getMainData(true);
+				            		}, 500);
+				            		
+				            	}else{
+				            		self.$Utils.showToast(res.msg, 'none');
+				            	}
+				            };
+				            self.$apis.processUpdate(postData, callback)
+				        } else if (res.cancel) {
+				            console.log('用户点击取消');
+				        }
+				    }
+				});	
+				
 			},
-			deltAlert(){
+
+			getMainData(isNew) {
 				const self = this;
-				self.is_show=!self.is_show;
-			},
-			getMainData() {
-				const self = this;
-				console.log('852369')
+				if (isNew) {
+					self.mainData = [];
+					self.paginate = {
+						count: 0,
+						currentPage: 1,
+						is_page: true,
+						pagesize: 5
+					}
+				};
 				const postData = {};
-				postData.tokenFuncName = 'getProjectToken';
-
+				if(self.type==1){
+					postData.tokenFuncName = 'getThreeToken';					
+				}else{
+					postData.tokenFuncName = 'getProjectToken';				
+				};
+				postData.paginate = self.$Utils.cloneForm(self.paginate);
+				postData.searchItem = {
+					thirdapp_id: 2,
+					type:6,
+					order_no:self.orderData.order_no
+				};		
 				const callback = (res) => {
-					if (res.solely_code == 100000 && res.info.data[0]) {
-						self.mainData = res.info.data;
+					if (res.info.data.length > 0) {
+						self.mainData.push.apply(self.mainData, res.info.data);
 					} else {
-						self.$Utils.showToast(res.msg, 'none')
+						self.$Utils.showToast('没有更多了', 'none');
 					};
+					console.log('self.mainData', self.mainData)
 					self.$Utils.finishFunc('getMainData');
-
+				};
+				self.$apis.processGet(postData, callback);
+			},
+			
+			getOrderData() {
+				const self = this;
+				const postData = {};		
+				postData.searchItem = {
+					id:self.id,
+					user_type:0
+				};
+				if(self.type==1){
+					postData.tokenFuncName = 'getThreeToken';
+				}else{
+					postData.tokenFuncName = 'getProjectToken';
+				};
+				const callback = (res) => {
+					if (res.info.data.length > 0) {
+						self.orderData=res.info.data[0];
+						
+					} else {
+						self.$Utils.showToast(res.msg,'none');
+					};				
+					console.log(self.orderData)
+					self.getMainData(true);
+					
+					
+					self.$Utils.finishFunc('getOrderData');
 				};
 				self.$apis.orderGet(postData, callback);
-
-			},
-
-		},
-	};
+			},	
+		}
+	}
 </script>
+
 <style>
 	@import "../../assets/style/user.css";
 	page{padding-bottom: 60rpx;}

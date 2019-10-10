@@ -44,9 +44,9 @@
 				Router:this.$Router,
 				
 				classLis:[
-					{iconUrl:"../../static/images/home-material-icon1.png",name:"定制材料",type:4},
-					{iconUrl:"../../static/images/home-material-icon2.png",name:"自营辅料",type:5},
-					{iconUrl:"../../static/images/home-material-icon3.png",name:"建材市场",type:6}
+					{iconUrl:"../../static/images/home-material-icon1.png",name:"定制材料",type:3},
+					{iconUrl:"../../static/images/home-material-icon2.png",name:"自营辅料",type:4},
+					{iconUrl:"../../static/images/home-material-icon3.png",name:"建材市场",type:5}
 				],
 				produtList: [
 					{},{},{},{},{},{},{},{}

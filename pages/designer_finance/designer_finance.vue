@@ -3,7 +3,7 @@
 		<view class="myExtendTop">
 			<view class="money" style="color: #222;font-weight: normal;">{{userData.balance}}</view>
 			<view class="yuan">账户余额</view>
-			<view class="txBtn" @click=" Router.navigateTo({route:{path:'/pages/myCashOut/myCashOut'}})">提现</view>
+			<view class="txBtn" @click=" Router.navigateTo({route:{path:'/pages/myCashOut/myCashOut?type=1'}})">提现</view>
 			<!-- myCashOut -->
 		</view>
 		<view class="f5H5">
@@ -17,61 +17,33 @@
 		</view> -->
 		<view class="orderNav">
 			<view class="tt" :class="num==1?'on':''" @click="change('1')">提现</view>
-			<view class="tt" :class="num==2?'on':''" @click="change('2')">收入</view>
+			<view class="tt" :class="num==2?'on':''" @click="change('2')">收入{{num}}</view>
 		</view>
 		<view class="finance_indTab" v-if="num==1">
-			<view class="item flexRowBetween">
+			<view class="item flexRowBetween" v-for="item in mainData">
 				<view class="left">
 					<view class="tit font14">提现</view>
-					<view class="time">2019/03/12</view>
+					<view class="time">{{item.create_time}}</view>
 				</view>
 				<view class="right">
 					<view class="tit font12">提现成功</view>
-					<view class="price">-235</view>
+					<view class="price">{{item.count}}</view>
 				</view>
 			</view>
-			<view class="item flexRowBetween">
-				<view class="left">
-					<view class="tit font14">提现</view>
-					<view class="time">2019/03/12</view>
-				</view>
-				<view class="right">
-					<view class="tit font12">提现失败</view>
-					<view class="price">235</view>
-				</view>
-			</view>
-			<view class="item flexRowBetween">
-				<view class="left">
-					<view class="tit font14">提现</view>
-					<view class="time">2019/03/12</view>
-				</view>
-				<view class="right">
-					<view class="tit font12">审核中</view>
-					<view class="price">-235</view>
-				</view>
-			</view>
+			
 		</view>
 		<view class="finance_indTab" v-if="num==2">
-			<view class="item flexRowBetween">
+			<view class="item flexRowBetween" v-for="(item,index) in mainData">
 				<view class="left">
-					<view class="tit font14">张丹</view>
-					<view class="time">2019/03/12</view>
+					<view class="tit font14">{{item.trade_info}}</view>
+					<view class="time">{{item.create_time}}</view>
 				</view>
 				<view class="right">
 					<view class="tit font12">订单名称</view>
-					<view class="red">+235</view>
+					<view class="red">+{{item.count}}</view>
 				</view>
 			</view>
-			<view class="item flexRowBetween">
-				<view class="left">
-					<view class="tit font14">张丹</view>
-					<view class="time">2019/03/12</view>
-				</view>
-				<view class="right">
-					<view class="tit font12">订单名称</view>
-					<view class="red">+235</view>
-				</view>
-			</view>
+			
 		</view>	
 	</view>
 </template>
@@ -89,7 +61,8 @@
 				rewardData:[
 					{},{},{}
 				],
-				userData:{}
+				userData:{},
+				mainData:[]
 			}
 		},
 		
@@ -137,7 +110,7 @@
 					} else {
 						self.$Utils.showToast(res.msg, 'none');
 					};
-					self.$Utils.finishFunc('getMainData');	
+					self.$Utils.finishFunc('getUserData');	
 				};
 				self.$apis.userInfoGet(postData, callback);
 			},
@@ -160,9 +133,7 @@
 				const callback = (res) => {
 					if (res.info.data.length > 0) {
 						self.mainData.push.apply(self.mainData, res.info.data);
-					} else {
-						self.$Utils.showToast('没有更多了', 'none');
-					};
+					}
 					console.log('self.mainData',self.mainData)
 					self.$Utils.finishFunc('getMainData');
 				};

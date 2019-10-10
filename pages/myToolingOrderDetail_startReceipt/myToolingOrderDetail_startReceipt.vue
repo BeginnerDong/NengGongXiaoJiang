@@ -22,7 +22,7 @@
 				<view class="editNum">
 					<input type="number" value="" placeholder="请输入数量" v-model="count">
 				</view>
-				<view class="optBtn flexRowBetween" v-if="orderItem.length==0">
+				<view class="optBtn flexRowBetween" v-if="orderItem.length==0&&mainData.type==1">
 
 					<view class="btn" @click="addProject">添加</view>
 				</view>
@@ -49,8 +49,8 @@
 				</view>
 			</view>
 		</view>
-		<view class="pdlr4">辅料</view>
-		<view class="ind_seach" style="border-bottom: 2rpx solid #f5f5f5;">
+		<view class="pdlr4" v-if="mainData.type==1">辅料</view>
+		<view class="ind_seach" style="border-bottom: 2rpx solid #f5f5f5;" v-if="mainData.type==1">
 			<view class="child" v-for="(item,index) in orderItemTwo">
 				<view class="sqr_name">
 					<view class="uni-list">
@@ -175,15 +175,17 @@
 						}
 					}
 				];	
-				postData.saveFunction = [
-					{
-						FuncName: 'addItem',
-						data: {
-							order_no: self.mainData.order_no,
-							item: self.postOrderItem
-						}		
-					}
-				];
+				if(self.mainData.type==1){
+					postData.saveFunction = [
+						{
+							FuncName: 'addItem',
+							data: {
+								order_no: self.mainData.order_no,
+								item: self.postOrderItem
+							}		
+						}
+					];
+				}	
 				console.log('postData', postData)
 				
 				const callback = (res) => {

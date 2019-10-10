@@ -12,7 +12,7 @@
 					<view>个人设计师</view>
 				</view>
 				<view class="item" 
-				@click=" Router.navigateTo({route:{path:'/pages/indexDesign_classify/indexDesign_classify?name=团队设计'}})">
+				@click=" Router.navigateTo({route:{path:'/pages/indexDesign_classify/indexDesign_classify?name=团队设计师'}})">
 					<image src="../../static/images/home-design-icon2.png" mode=""></image>
 					<view>团队设计</view>
 				</view>
@@ -30,7 +30,7 @@
 		<view class="f5H10"></view>
 		
 		<view style="padding: 30rpx 0;">
-			<img src="../../static/images/home-design-img1.png" style="width: 100%;height: 300rpx;" alt="">
+			<img :src="labelData.mainImg&&labelData.mainImg[0]?labelData.mainImg[0].url:''" style="width: 100%;height: 300rpx;" alt="">
 		</view>
 		<view class="f5H10"></view>
 
@@ -94,13 +94,14 @@
 				normalSrc: '../../static/images/home-supervision-icon3.png',
 				selectedSrc: '../../static/images/home-supervision-icon1.png',
 				halfSrc: '../../static/images/home-supervision-icon2.png',
+				labelData:{}
 			}
 		},
 		
 		onLoad() {
 			const self = this;
 			self.paginate = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
-			self.$Utils.loadAll(['getMainData'], self);
+			self.$Utils.loadAll(['getMainData','getLabelData'], self);
 		},
 		
 		onReachBottom() {
@@ -112,6 +113,23 @@
 			};
 		},
 		methods: {
+			
+			getLabelData() {
+				const self = this;
+				const postData = {};
+				postData.searchItem = {
+					thirdapp_id:2,
+					title:'设计师广告图'
+				};
+				
+				const callback = (res) => {
+					if (res.info.data.length > 0) {
+						self.labelData = res.info.data[0]
+					}
+					self.$Utils.finishFunc('getLabelData');
+				};
+				self.$apis.labelGet(postData, callback);
+			},
 			
 			getMainData(isNew) {
 				const self = this;

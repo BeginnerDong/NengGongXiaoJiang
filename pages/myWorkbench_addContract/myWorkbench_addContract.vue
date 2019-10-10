@@ -47,6 +47,7 @@
 			self.id = options.id;
 			self.type=options.type;
 			console.log('options',options)
+			self.$Utils.loadAll(['getMainData'], self)
 		},
 		
 		methods: {

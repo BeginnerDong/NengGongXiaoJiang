@@ -10,7 +10,7 @@
 				<view class="uni-list">
 					<view class="uni-list-cell">
 						<view class="uni-list-cell-db">
-							<picker @change="bindPickerChange" :value="index" :range="array">
+							<picker @change="bindPickerChange" :value="index" :range="classLis" range-key="name">
 								<view class="uni-input">{{array[index]}}</view>
 							</picker>
 						</view>
@@ -19,8 +19,9 @@
 				<image class="arrow" src="../../static/images/home-icon1.png"></image>
 			</view>
 			<view class="seachInput flex">
-				<input type="text" placeholder="请输入你需要的工种" placeholder-style="color:#999" />
-				<button class="Btn" type="submint" @click="Router.navigateTo({route:{path:'/pages/seachWorker/seachWorker'}})"></button>
+				<input type="text" v-model="title" placeholder="请输入你需要的工种" placeholder-style="color:#999" />
+				<button class="Btn" type="submint" 
+				@click="Router.navigateTo({route:{path:'/pages/seachWorker/seachWorker?parent_id='+parent_id+'&title='+title}})"></button>
 			</view>
 		</view>
 
@@ -38,11 +39,11 @@
 		<view class="ind_cont5">
 			<view class="flexRowBetween">
 				<view class="item" @click="Router.redirectTo({route:{path:'/pages/indexDesign/indexDesign'}})">
-					<image src="../../static/images/home-img1.png" mode=""></image>
+					<image :src="labelData.mainImg&&labelData.mainImg[0]?labelData.mainImg[0].url:''" mode=""></image>
 					<view class="tit">优秀设计师</view>
 				</view>
 				<view class="item" @click="Router.redirectTo({route:{path:'/pages/indexWorker/indexWorker'}})">
-					<image src="../../static/images/home-img1.png" mode=""></image>
+					<image :src="labelData.mainImg&&labelData.mainImg[1]?labelData.mainImg[1].url:''" mode=""></image>
 					<view class="tit">优秀工人</view>
 				</view>
 			</view>
@@ -95,6 +96,8 @@
 			return {
 				Router: this.$Router,
 				index: 0,
+				title:'',
+				parent_id:4,
 				classLis: [{
 						iconUrl: "../../static/images/home-icon3.png",
 						name: "建筑工",
@@ -134,20 +137,39 @@
 				produtList: [{}, {}, {}, {}],
 				mainData: [],
 				specialData: [],
-				array: ['建筑工', '装修工', '维修工', '园林工', '市政工', '安装工', '其他']
+				array: ['建筑工', '装修工', '维修工', '园林工', '市政工', '安装工', '其他'],
+				labelData:[]
 			}
 		},
 
 		onLoad() {
 			const self = this;
-			self.$Utils.loadAll(['getMainData', 'getSpecialData'], self);
+			self.$Utils.loadAll(['getMainData', 'getSpecialData','getLabelData'], self);
 		},
 		methods: {
+			
+			getLabelData() {
+				const self = this;
+				const postData = {};
+				postData.searchItem = {
+					thirdapp_id:2,
+					title:'首页背景图'
+				};
+				
+				const callback = (res) => {
+					if (res.info.data.length > 0) {
+						self.labelData = res.info.data[0]
+					}
+					self.$Utils.finishFunc('getLabelData');
+				};
+				self.$apis.labelGet(postData, callback);
+			},
 
 			bindPickerChange(e) {
 				// 搜索选择分类
 				console.log('picker发送选择改变，携带值为', e.target.value)
 				this.index = e.target.value
+				this.parent_id = this.classLis[this.index].id;
 			},
 
 			getMainData() {

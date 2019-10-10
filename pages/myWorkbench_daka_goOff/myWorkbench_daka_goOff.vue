@@ -25,7 +25,7 @@
 		</view>
 		
 		<view class="submitbtn" style="margin-top: 300rpx;">
-			<button type="button" @click="Utils.stopMultiClick(orderUpdate)">确定</button>
+			<button type="button" @click="Utils.stopMultiClick(processUpdate)">确定</button>
 		</view>
 		
 	</view>
@@ -50,6 +50,7 @@
 			const self = this;
 			var now = Date.parse(new Date());
 			self.now = self.$Utils.timeto(now,"hms");
+			self.submitData.off_time = now;
 			self.id = options.id;
 			self.$Utils.loadAll(['getMainData'], self);
 		},
@@ -64,6 +65,7 @@
 				postData.searchItem ={
 					id:self.id
 				};
+				postData.tokenFuncName = 'getThreeToken';	
 				const callback = (data) => {				
 					if (data.solely_code == 100000) {				
 						self.$Utils.showToast('打卡成功', 'none', 1000)

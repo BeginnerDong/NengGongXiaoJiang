@@ -139,8 +139,10 @@
 			</view>
 			
 			<view class="submitbtn" style="margin-top: 100rpx;">
-				<button type="button" 
-				@click="orderUpdate">确认合同</button>
+				<button type="button" v-if="type==0"
+				@click="pay()">确认合同</button>
+				<button type="button" v-if="type==1"
+				@click="orderUpdate()">确认合同</button>
 			</view>
 		</view>
 	</view>
@@ -153,7 +155,8 @@
 			return {
 				Router:this.$Router,
 				mainData:{},
-				type:''
+				type:'',
+				
 			}
 		},
 		
@@ -161,10 +164,73 @@
 			const self = this;
 			self.id = options.id;	
 			self.type=options.type;
-			self.$Utils.loadAll(['getMainData'], self)		
+			const callback = (res) =>{
+				self.$Utils.loadAll(['getMainData'], self)	
+			};
+			self.$Token.getProjectToken(callback,{refreshToken:true})
+				
 		},
 
 		methods: {
+			
+			pay() {
+				const self = this;
+				if(self.mainData.type==1){
+					var ratio = uni.getStorageSync('user_info').thirdApp.custom_rule.work_pay
+				}else if(self.mainData.type==2){
+					var ratio = uni.getStorageSync('user_info').thirdApp.custom_rule.design_pay
+				};
+				const postData = {};	
+				postData.wxPay = {
+					price:parseFloat(self.totalPrice).toFixed(2)*(ratio/100)+self.mPrice	
+				};
+				postData.tokenFuncName = 'getProjectToken',
+				postData.searchItem = {
+					id: self.id
+				};
+				const callback = (res) => {
+					if (res.solely_code == 100000) {
+						if (res.info) {
+							const payCallback = (payData) => {
+								console.log('payData', payData)
+								if (payData == 1) {
+									uni.showToast({
+										title: '支付成功',
+										duration: 1000,
+										success: function() {
+											
+										}
+									});
+									self.orderUpdate()
+								} else {
+									uni.setStorageSync('canClick', true);
+									uni.showToast({
+										title: '支付失败',
+										duration: 2000
+									});
+								};
+							};
+							self.$Utils.realPay(res.info, payCallback);
+						} else {						
+							uni.showToast({
+								title: '支付成功',
+								duration: 1000,
+								success: function() {
+									
+								}
+							});
+							self.orderUpdate()
+						};
+					} else {
+						uni.setStorageSync('canClick', true);
+						uni.showToast({
+							title: res.msg,
+							duration: 2000
+						});
+					};
+				};
+				self.$apis.pay(postData, callback);
+			},
 			
 			orderUpdate() {
 				const self = this;
@@ -238,6 +304,17 @@
 				const callback = (res) => {
 					if (res.info.data.length > 0) {
 						self.mainData=res.info.data[0];
+						self.totalPrice = 0;
+						self.mPrice = 0;
+						for (var i = 0; i < self.mainData.products.length; i++) {
+							if(self.mainData.products[i].behavior==1){
+								self.totalPrice += self.mainData.products[i].price * self.mainData.products[i].count;		
+							};
+							if(self.mainData.products[i].behavior==2){
+								self.mPrice += self.mainData.products[i].price * self.mainData.products[i].count;
+							}
+						};
+						console.log(self.totalPrice)
 					} else {
 						self.$Utils.showToast(res.msg,'none');
 					};			

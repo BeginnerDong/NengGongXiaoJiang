@@ -2,7 +2,7 @@
 	<view>
 		<view class="detailxqBan">
 			<!-- <image src="../../static/images/VRvideo1.png" mode=""></image> -->
-			<video src="../../static/images/video1.mp4" controls style="width: 100%;height: 100%;"></video>
+			<!-- <video src="../../static/images/video1.mp4" controls style="width: 100%;height: 100%;"></video> -->
 		</view>
 		
 		<view class="designXq_name pdlr4" style="margin-top: -20rpx; position: relative; z-index: 6;">
@@ -93,7 +93,7 @@
 
 <style>
 	@import "../../assets/style/index.css";
-	@import "../../assets/style/quill.css";
+	
 	page{padding-bottom: 140rpx!important;}
 	.xqbotomBar .left .ite{ width: 33.3%;}
 </style>

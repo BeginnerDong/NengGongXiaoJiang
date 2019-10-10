@@ -222,6 +222,9 @@
 				const postData = {};
 				postData.data = {};
 				postData.data = self.$Utils.cloneForm(self.submitData);
+				if(postData.data.code==''){
+					delete postData.data.code
+				};
 				const callback = (data) => {				
 					if (data.solely_code == 100000) {					
 						self.$Utils.showToast('注册成功', 'none');

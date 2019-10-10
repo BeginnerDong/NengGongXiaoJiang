@@ -170,7 +170,7 @@
 				const callback = (res) => {
 					console.log('res', res)
 					if (res.solely_code == 100000) {
-						
+						self.submitData.mainImg = [];
 						self.submitData.mainImg.push({
 							url:res.info.url,
 							type:'image'

@@ -52,7 +52,7 @@
 				Router:this.$Router,
 				Utils:this.$Utils,
 				submitData:{
-					description:'',
+					description:1,
 					mainImg:[],
 					type:3,
 					content:''
@@ -65,6 +65,7 @@
 			self.id = options.id;
 			self.type=options.type;
 			console.log('options',options)
+			self.$Utils.loadAll(['getMainData'], self)
 		},
 				
 		methods: {

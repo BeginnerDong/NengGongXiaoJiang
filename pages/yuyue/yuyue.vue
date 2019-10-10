@@ -84,6 +84,9 @@
 				const callback = (res) => {
 					if (res && res.solely_code == 100000) {
 						self.orderId = res.info.id;
+						setTimeout(function() {
+							self.$Router.redirectTo({route:{path:'/pages/myToolingOrder/myToolingOrder'}})
+						}, 1000);
 					} else {		
 						uni.setStorageSync('canClick', true);
 						uni.showToast({

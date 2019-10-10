@@ -37,7 +37,7 @@
 					content:'',
 					type:3,
 					bannerImg:[],
-					
+					relation_table:'message'
 				}
 			}
 		},

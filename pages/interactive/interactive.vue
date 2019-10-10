@@ -115,7 +115,8 @@
 					thirdapp_id: 2,
 					user_type:0,
 					type:3,
-					relation_id:0
+					relation_id:0,
+					relation_table:'message'
 				};
 				postData.getAfter = {
 					like: {

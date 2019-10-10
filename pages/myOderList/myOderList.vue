@@ -28,9 +28,10 @@
 					</view>
 				</view>
 				<view class="bBtn">
-					<view class="btn gopay" v-if="item.pay_status==0" @click="pay(item.id,item.price)">去支付</view>
+					<view class="btn gopay" v-if="item.pay_status==0" @click="pay(item.id,item.price,index)">去支付</view>
 					<view class="btn selt" v-if="item.pay_status==0" @click="orderUpdate(index,'1')">取消订单</view>
-					<view class="btn" @click="refundAlert">退款</view>
+					<view class="btn" v-if="item.type==4" @click="refundAlert(index)">退款</view>
+					<view class="btn" v-if="item.order_step==1">退款中</view>
 					<view class="btn" v-if="item.pay_status==1&&item.transport_status==1" @click="orderUpdate(index,'2')">确认收货</view>
 				</view>
 			</view>
@@ -40,12 +41,12 @@
 		<view class="refundAlert" v-if="is_show">
 			<view class="refundExplain">
 				<view>
-					<textarea class="textMsg" value="" placeholder="请填写退款原因" placeholder-style="color:#999" />
+					<textarea v-model="passage1" class="textMsg" value="" placeholder="请填写退款原因" placeholder-style="color:#999" />
 				</view>
 				<view class="submitbtn">
-					<button type="button" style="width: 100%; margin:80rpx 0 20rpx 0;">提交</button>
+					<button type="button" style="width: 100%; margin:80rpx 0 20rpx 0;" @click="refund()">提交</button>
 				</view>
-				<view class="colseBtn"  @click="refundAlert" style="top: auto;bottom: -120rpx;">×</view>
+				<view class="colseBtn"  @click="close" style="top: auto;bottom: -120rpx;">×</view>
 			</view>
 		</view>
 
@@ -57,12 +58,13 @@
 	export default {
 		data() {
 			return {
-				
+				passage1:'',
 				searchItem:{
 					
 				},
 				mainData:[],
-				current:1
+				current:1,
+				refundIndex:''
 			}
 		},
 
@@ -90,13 +92,57 @@
 
 		methods: {
 			
-			refundAlert(){
+			close(){
 				const self = this;
+				self.is_show = false
+			},
+			
+			refundAlert(index){
+				const self = this;
+				self.refundIndex = index;
 				self.is_show = !self.is_show
 			},
 			
-			pay(order_id,price) {
+
+			
+			refund() {
+				const self = this;		
+				const postData = {};			
+				postData.searchItem = {
+					order_no:self.mainData[self.refundIndex].order_no
+				};		
+				postData.data = {
+					passage1:self.passage1,
+					order_step:1
+				};
+				postData.tokenFuncName = 'getProjectToken';			
+				const callback = (res) => {
+					if(res.solely_code==100000){
+						
+						self.$Utils.showToast('申请成功','none',1000);							
+						setTimeout(function() {
+							self.mainData = [];
+							self.paginate={
+								count: 0,
+								currentPage:1,
+								pagesize:5,
+								is_page:true,
+							};
+							self.getMainData()
+						}, 1000);
+						
+					}else{
+						self.$Utils.showToast(res.msg,'none');
+					}
+				};
+				self.$apis.orderUpdate(postData, callback);
+			},
+			
+			pay(order_id,price,index) {
 				const self = this;
+				var ratio = uni.getStorageSync('user_info').thirdApp.custom_rule.material_in/100;
+				var tax = uni.getStorageSync('user_info').thirdApp.custom_rule.material_tax/100;
+				var reward = uni.getStorageSync('user_info').thirdApp.custom_rule.reward/100;
 				const postData = {};	
 				postData.wxPay = {
 					price: price
@@ -105,6 +151,64 @@
 				postData.searchItem = {
 					id: order_id
 				};
+				if(self.mainData[index].type==5){
+					postData.payAfter = [
+						
+						{
+							tableName: 'FlowLog',
+							FuncName: 'add',
+							data: {
+								user_no:self.mainData[index].shop_no,
+								type:2,
+								count:price*ratio - (price*ratio)*tax,
+								thirdapp_id:2,
+								trade_info:'首付款',
+								relation_user:self.mainData[index].user_no,
+								relation_id:self.mainData[index].id
+							}
+						},
+						{
+							tableName: 'FlowLog',
+							FuncName: 'add',
+							data: {
+								user_no:'U910872296194660',
+								type:2,
+								count:(price*ratio)*tax,
+								thirdapp_id:2,
+								trade_info:'平台抽成',
+								relation_user:self.mainData[index].shop_no,
+								relation_id:self.mainData[index].id
+							}
+						}
+					];
+					if(self.mainData[index].distriData.length>0&&self.mainData[index].shopInfo[0].behavior<4){
+						postData.payAfter.push(
+							{
+								tableName: 'FlowLog',
+								FuncName: 'add',
+								data: {
+									user_no:self.mainData[index].distriData[0].parent_no,
+									type:2,
+									count:(price*ratio - (price*ratio)*tax)*reward,
+									thirdapp_id:2,
+									trade_info:'返佣',
+									relation_user:self.mainData[index].shop_no,
+									relation_id:self.mainData[index].id
+								}
+							},
+							{
+								tableName: 'UserInfo',
+								FuncName: 'update',
+								data: {
+									behavior:self.mainData[index].shopInfo[0].behavior+1
+								},
+								searchItem:{
+									user_no:self.mainData[index].shop_no,
+								}
+							}
+						)
+					};
+				}
 				const callback = (res) => {
 					if (res.solely_code == 100000) {
 						if (res.info) {
@@ -206,6 +310,26 @@
 				postData.searchItem = self.$Utils.cloneForm(self.searchItem);
 				postData.tokenFuncName = 'getProjectToken';
 				postData.searchItem.type = ['in',[4,5]];
+				postData.getAfter = {
+					shopInfo:{
+						tableName:'UserInfo',
+						middleKey:'shop_no',
+						key:'user_no',
+						condition:'=',
+						searchItem:{
+							status:1
+						}
+					},	
+					distriData:{
+						tableName:'Distribution',
+						middleKey:'shop_no',
+						key:'child_no',
+						condition:'=',
+						searchItem:{
+							status:1
+						}
+					}
+				};
 				const callback = (res) => {
 					if (res.info.data.length > 0) {
 						self.mainData.push.apply(self.mainData, res.info.data);
@@ -219,6 +343,10 @@
 			
 			orderUpdate(index,type) {
 				const self = this;		
+				var ratio = uni.getStorageSync('user_info').thirdApp.custom_rule.material_in/100;
+				var tax = uni.getStorageSync('user_info').thirdApp.custom_rule.material_tax/100;
+				var reward = uni.getStorageSync('user_info').thirdApp.custom_rule.reward/100;
+				var lessPrice = parseFloat(self.mainData[index].price) - self.mainData[index].price*ratio;
 				const postData = {};			
 				postData.searchItem = {
 					order_no:self.mainData[index].order_no
@@ -230,6 +358,63 @@
 				}else{
 					postData.data = {
 						transport_status:2
+					};
+				}
+				if(self.type=='2'&&self.mainData[index].type==5){
+					postData.saveAfter = [
+						{
+							tableName: 'FlowLog',
+							FuncName: 'add',
+							data: {
+								user_no:self.mainData[index].shop_no,
+								type:2,
+								count:lessPrice - lessPrice*tax,
+								thirdapp_id:2,
+								trade_info:'尾款',
+								relation_user:self.mainData[index].user_no,
+								relation_id:self.mainData[index].id
+							}
+						},
+						{
+							tableName: 'FlowLog',
+							FuncName: 'add',
+							data: {
+								user_no:'U910872296194660',
+								type:2,
+								count:lessPrice*tax,
+								thirdapp_id:2,
+								trade_info:'平台抽成',
+								relation_user:self.mainData[index].shop_no,
+								relation_id:self.mainData[index].id
+							}
+						}
+					];		
+					if(self.mainData[index].distriData.length>0&&self.mainData[index].shopInfo[0].behavior<4){
+						postData.saveAfter.push(
+							{
+								tableName: 'FlowLog',
+								FuncName: 'add',
+								data: {
+									user_no:self.mainData[index].distriData[0].parent_no,
+									type:2,
+									count:(lessPrice - lessPrice*tax)*reward,
+									thirdapp_id:2,
+									trade_info:'返佣',
+									relation_user:self.mainData[index].shop_no,
+									relation_id:self.mainData[index].id
+								}
+							},
+							{
+								tableName: 'UserInfo',
+								FuncName: 'update',
+								data: {
+									behavior:self.mainData[index].shopInfo[0].behavior+1
+								},
+								searchItem:{
+									user_no:self.mainData[index].shop_no,
+								}
+							}
+						)
 					};
 				}
 				postData.tokenFuncName = 'getProjectToken';			

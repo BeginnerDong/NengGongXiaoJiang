@@ -111,7 +111,8 @@
 				postData.paginate = self.$Utils.cloneForm(self.paginate);
 				postData.searchItem = {
 					thirdapp_id: 2,
-					type:6
+					type:6,
+					user_no:uni.getStorageSync('threeInfo').user_no
 				};		
 				const callback = (res) => {
 					if (res.info.data.length > 0) {

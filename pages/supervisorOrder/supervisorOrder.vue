@@ -9,26 +9,31 @@
 		</view>
 		
 		<view class="prolisbox pdlr4">
-			<view class="prolis boxShaow">
+			<view class="prolis boxShaow" v-for="(item,index) in mainData">
+				
 				<view class="datt">
 					<view class="left">
-						<view class="color2" style="margin-bottom: 10rpx;">订单编号：123356885555</view>
-						<view class="color3">交易时间：2018-08-30</view>
+						<view class="color2" style="margin-bottom: 10rpx;">订单编号：{{item.order_no}}</view>
+						<view class="color3">交易时间：{{item.create_time}}</view>
 					</view>
-					<view class="state">等待确认</view>
+					<view class="state" v-if="item.transport_status==0">待确认</view>
+					<view class="state" v-if="item.transport_status==1">进行中</view>
+					<view class="state" v-if="item.transport_status==2">已完成</view>
 				</view>
 				<view class="twoCt">
 					<view class="leftbox">
-						<image src="../../static/images/shopping-img1.png"></image>
+						<image 
+						:src="item.userInfo&&item.userInfo[0]&&item.userInfo[0].mainImg&&item.userInfo[0].mainImg[0]?item.userInfo[0].mainImg[0].url:''"></image>
 					</view>
 					<view class="cont">
-						<view class="title avoidOverflow">标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题</view>
-						<view class="text avoidOverflow2">服务内容：欧式风、简约风、北美风、田园风</view>
-						<view class="price priceM">59</view>
+						<view class="title avoidOverflow">{{item.products&&item.products[0]&&item.products[0].snap_product?item.products[0].snap_product.title:''}}</view>
+						<view class="text avoidOverflow2">{{item.userInfo&&item.userInfo[0]?item.userInfo[0].introduce:''}}</view>
+						<view class="price priceM">{{item.price}}</view>
 					</view>
 				</view>
 				<view class="bBtn">
-					<view class="btn"  @click=" Router.navigateTo({route:{path:'/pages/supervisorOrderDetail/supervisorOrderDetail'}})">查看详情</view>
+					<view class="btn" 
+					 @click="Router.navigateTo({route:{path:'/pages/supervisorOrderDetail/supervisorOrderDetail?id='+item.id}})">查看详情</view>
 				</view>
 			</view>
 		</view>
@@ -41,18 +46,77 @@
 		data() {
 			return {
 				Router:this.$Router,
-				showView: false,
-				score: '',
-				wx_info: {}
+				mainData:[],
+				searchItem:{
+					
+					user_type:0,
+					
+				},
+				
 			}
+		},
+		
+		onLoad(options) {
+			const self = this;
+			self.paginate = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
+			
+			self.$Utils.loadAll(['getMainData'], self)
+			
+		},
+		
+			
+		
+		onReachBottom() {
+			console.log('onReachBottom')
+			const self = this;
+			if (!self.isLoadAll && uni.getStorageSync('loadAllArray')) {
+				self.paginate.currentPage++;
+				self.getMainData()
+			};
 		},
 
 		methods: {
 			
-			getMainData() {
+
+			getMainData(isNew) {
 				const self = this;
-				self.$apis.userGet(postData, callback);
-			}
+				if(isNew){
+					self.mainData = [];
+					self.paginate={
+						count: 0,
+						currentPage:1,
+						pagesize:5,
+						is_page:true,
+					};
+				};
+				const postData = {};
+				postData.paginate = self.$Utils.cloneForm(self.paginate);
+				postData.searchItem = self.$Utils.cloneForm(self.searchItem);
+				postData.searchItem.supervisor = uni.getStorageSync('threeInfo').user_no;
+				postData.tokenFuncName = 'getThreeToken';
+				postData.getAfter = {
+					userInfo:{
+						tableName:'UserInfo',
+						middleKey:'shop_no',
+						key:'user_no',
+						condition:'=',
+						searchItem:{
+							status:1,
+							user_type:1
+						}
+					}
+				};
+				const callback = (res) => {
+					if (res.info.data.length > 0) {
+						self.mainData.push.apply(self.mainData, res.info.data);
+					} else {
+						self.$Utils.showToast('没有更多了','none');
+					};
+					console.log(self.mainData)
+					self.$Utils.finishFunc('getMainData');
+				};
+				self.$apis.orderGet(postData, callback);
+			},
 		}
 	}
 </script>

@@ -36,7 +36,7 @@
 					</view>
 				</view>
 				<view class="bBtn">
-					<view class="btn" v-if="item.type==2&&item.transport_status==2"  @click=" Router.navigateTo({route:{path:'/pages/myToolingOrderComment/myToolingOrderComment?id='+item.id}})">去评价</view>
+					<view class="btn" v-if="item.type==2&&item.transport_status==2&&item.products[0].isremark==0"  @click=" Router.navigateTo({route:{path:'/pages/myToolingOrderComment/myToolingOrderComment?id='+item.id}})">去评价</view>
 					<view class="btn"  
 					@click="Router.navigateTo({route:{path:'/pages/designerOrderDetail/designerOrderDetail?id='+item.id+'&type=0'}})">查看详情</view>
 				</view>
@@ -56,16 +56,18 @@
 				</view>
 				<view class="twoCt">
 					<view class="leftbox">
-						<image src="../../static/images/shopping-img1.png"></image>
+						<image :src="item.products&&item.products[0]&&item.products[0].snap_product&&item.products[0].snap_product.mainImg&&item.products[0].snap_product.mainImg[0]?item.products[0].snap_product.mainImg[0].url:''"></image>
 					</view>
 					<view class="cont">
-						<view class="title avoidOverflow">标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题</view>
-						<view class="tex font12 color2 avoidOverflow">类型：橱柜</view>
-						<view class="tex font12 color2 avoidOverflow">风格：简约风</view>
+						<view class="title avoidOverflow">{{item.products&&item.products[0]?item.products[0].snap_product.title:''}}</view>
+						<view class="tex font12 color2 avoidOverflow">
+							类型：{{item.products&&item.products[0]&&item.products[0].snap_product&&item.products[0].snap_product.label&&item.products[0].snap_product.label[item.products[0].snap_product.category_id]?item.products[0].snap_product.label[item.products[0].snap_product.category_id].title:''}}
+						</view>
+						<view class="tex font12 color2 avoidOverflow">风格：{{item.products&&item.products[0]?item.products[0].snap_product.description:''}}</view>
 					</view>
 				</view>
 				<view class="bBtn">
-					<view class="btn"  @click=" Router.navigateTo({route:{path:'/pages/myTooling_madeDetail/myTooling_madeDetail'}})">查看详情</view>
+					<view class="btn"  @click="Router.navigateTo({route:{path:'/pages/myTooling_madeDetail/myTooling_madeDetail?id='+item.id}})">查看详情</view>
 				</view>
 			</view>
 		</view>
@@ -90,8 +92,14 @@
 		onLoad(options) {
 			const self = this;
 			self.paginate = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
-			self.$Utils.loadAll(['getMainData'], self)
+			//self.$Utils.loadAll(['getMainData'], self)
 			
+		},
+		
+		onShow() {
+			const self = this;
+			self.mainData = [];
+			self.getMainData(true)
 		},
 		
 			

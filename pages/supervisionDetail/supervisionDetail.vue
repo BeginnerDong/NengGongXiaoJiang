@@ -90,5 +90,5 @@
 
 <style>
 	@import "../../assets/style/index.css";
-	@import "../../assets/style/quill.css";
+	
 </style>

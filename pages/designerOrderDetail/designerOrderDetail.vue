@@ -70,7 +70,7 @@
 
 					</view>
 				</view>
-				<view class="list">
+				<view class="list" v-if="mainData.type==1">
 					<view class="lname">辅料：</view>
 					<view class="rCont">
 						<view class="yy flexRowBetween" v-for="(item,index) in materialOneData">
@@ -103,7 +103,7 @@
 						</view>
 					</view>
 				</view>
-				<view class="list">
+				<view class="list" v-if="mainData.type==1">
 					<view class="lname">辅料：</view>
 					<view class="rCont">
 						<view class="yy flexRowBetween" v-for="(item,index) in materialTwoData">
@@ -333,7 +333,8 @@
 				const postData = {};	
 				postData.searchItem = {
 					user_no:['in',[self.mainData.user_no,self.mainData.shop_no]],
-					order_no:self.mainData.order_no
+					order_no:self.mainData.order_no,
+					type:['not in',[7]]
 				};
 				postData.order = {
 					create_time:'asc'
@@ -346,9 +347,7 @@
 				const callback = (res) => {
 					if (res.info.data.length > 0) {
 						self.processData = res.info.data
-					} else {
-						self.$Utils.showToast(res.msg,'none');
-					};					
+					}				
 					console.log(self.processData)					
 				};
 				self.$apis.processGet(postData, callback);

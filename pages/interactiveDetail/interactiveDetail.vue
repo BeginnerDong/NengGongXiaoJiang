@@ -180,7 +180,8 @@
 					thirdapp_id: 2,
 					user_type:0,
 					type:3,
-					relation_id:self.originData.id
+					relation_id:self.originData.id,
+					relation_table:'message'
 				};		
 				const callback = (res) => {
 					if (res.info.data.length > 0) {
@@ -228,7 +229,8 @@
 					relation_id:self.originData.id,
 					title:self.title,
 					mainImg:self.mainImg,
-					content:self.content
+					content:self.content,
+					relation_table:'message'
 				};
 				console.log('postData',postData)
 				
@@ -274,6 +276,7 @@
 						});
 						self.originData.like.count = self.originData.like.count+1
 						self.$Utils.showToast('点赞成功', 'none', 1000)
+						console.log('self.originData',self.originData)
 					} else {
 						self.$Utils.showToast('点赞失败', 'none', 1000)
 					};
@@ -288,8 +291,8 @@
 			
 				const postData = {
 					searchItem: {
-						id: self.originData.likeMe[0].id,
-						status:self.originData.likeMe[0].status
+						id: self.originData.likeMe[0].id
+						
 					},
 					data: {
 						status: -self.originData.likeMe[0].status

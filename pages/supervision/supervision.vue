@@ -8,7 +8,7 @@
 		<view class="f5H10" style="margin-top: 20rpx;"></view>
 		
 		<view class="fabubtn">
-			<view class="icon"  @click=" Router.navigateTo({route:{path:'/pages/supervision_add/supervision_add'}})">
+			<view class="icon"   @click=" Router.navigateTo({route:{path:'/pages/designer_login/designer_login?type=supervision'}})">
 				<image src="../../static/images/home-supervision-icon4.png" mode=""></image>
 			</view>
 			<view class="tit">申请监理</view>

@@ -22,14 +22,14 @@
 			</view>
 		</view>
 		
-		<view class="fabubtn" style="top: 28%;" v-if="todayData.length==0"   @click="processAdd()">
+		<view class="fabubtn" style="top: 28%;" v-if="todayData.length==0&&type==1"   @click="processAdd()">
 			<view class="icon">
 				<image src="../../static/images/daka-icon1.png" mode=""></image>
 			</view>
 			<view class="tit">上班</view>
 		</view>
 		
-		<view class="fabubtn"  style="top: 45%;"  v-if="todayData.length>0"
+		<view class="fabubtn"  style="top: 45%;"  v-if="todayData.length>0&&type==1&&todayData.off_time!=0"
 		@click=" Router.navigateTo({route:{path:'/pages/myWorkbench_daka_goOff/myWorkbench_daka_goOff?id='+todayData[0].id}})">
 			<view class="icon">
 				<image src="../../static/images/daka-icon2.png" mode=""></image>

@@ -22,7 +22,7 @@
 				<image src="../../static/images/about-workbench-icon5.png" alt=""/>
 				<view class="tit">申请追加预算</view>
 			</view>
-			<view class="item" v-if="type==0||isWorker"  @click="Router.navigateTo({route:{path:'/pages/myWorkbench_daka/myWorkbench_daka?id='+id+'&type='+type}})">
+			<view class="item" v-if="(type==0||isWorker)&&!isDesign"  @click="Router.navigateTo({route:{path:'/pages/myWorkbench_daka/myWorkbench_daka?id='+id+'&type='+type}})">
 				<image src="../../static/images/about-workbench-icon5.png" alt=""/>
 				<view class="tit">{{type==0?'工人打卡记录':'打卡'}}</view>
 			</view>
@@ -43,7 +43,8 @@
 			return {
 				Router:this.$Router,
 				isWorker:false,
-				type:''
+				type:'',
+				isDesign:true
 			}
 		},
 		onLoad(options) {
@@ -55,11 +56,38 @@
 				self.isWorker = true
 			}
 			console.log(options)
+			self.$Utils.loadAll(['getMainData'], self)
 		},
 		
 		methods: {
 			
-
+			getMainData() {
+				const self = this;
+				const postData = {};		
+				postData.searchItem = {
+					id:self.id,
+					user_type:0
+				};
+				if(self.type==1){
+					postData.tokenFuncName = 'getThreeToken';
+				}else{
+					postData.tokenFuncName = 'getProjectToken';
+				};
+				const callback = (res) => {
+					if (res.info.data.length > 0) {
+						self.mainData=res.info.data[0];
+						if(self.mainData.type==1){
+							self.isDesign = false
+						}
+					} else {
+						self.$Utils.showToast(res.msg,'none');
+					};
+					
+					console.log(self.mainData)
+					self.$Utils.finishFunc('getMainData');
+				};
+				self.$apis.orderGet(postData, callback);
+			},	
 		},
 		
 	};

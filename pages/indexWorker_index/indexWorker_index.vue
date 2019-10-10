@@ -11,10 +11,10 @@
 						<view class="font13">{{mainData.name}}</view>
 						<view class="flexRowBetween starClass">
 							<view class="starBox">
-								<image v-for="item in stars" :src="mainData.userInfo[0].level/2 > item ?(mainData.userInfo[0].level/2-item == 0.5?halfSrc:selectedSrc) : normalSrc" mode="">							
+								<image v-for="item in stars" :src="mainData.level/2 > item ?(mainData.level/2-item == 0.5?halfSrc:selectedSrc) : normalSrc" mode="">							
 								</image>
 							</view>
-							<view>{{mainData.userInfo[0].level}}分</view>
+							<view>{{mainData.level}}分</view>
 						</view>
 					</view>
 					<view class="text2 avoidOverflow2 color3 font13">{{mainData.introduce}}</view>
@@ -153,7 +153,7 @@
 </script>
 
 <style>
-	@import "../../assets/style/quill.css";
+	
 	@import "../../assets/style/index.css";
 	@import "../../assets/style/user.css";
 	page{padding-bottom: 60rpx!important;}

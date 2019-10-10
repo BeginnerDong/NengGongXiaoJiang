@@ -29,7 +29,7 @@
 				</view>
 			</view>
 			<view class="lis2 flexRowBetween">
-				<view class="adrs font13 avoidOverflow">陕西省西安市雁塔区高新大都荟</view>
+				<view class="adrs font13 avoidOverflow">{{mainData.userInfo[0].address}}</view>
 				<view class="icon">
 					<image src="../../static/images/details-icon1.png" mode=""></image>
 				</view>
@@ -57,7 +57,7 @@
 		
 		<view class="designXq_pjLis pdlr4">
 			<view class="item" v-for="(item,index) in messageData" :key="index">
-				<view class="photo"><image :src="item.mainImg[0].url" mode=""></image></view>
+				<view class="photo"><image :src="item.mainImg[0]" mode=""></image></view>
 				<view class="cont">
 					<view class="name color2 font14">{{item.title}}</view>
 					<view class="time font12 color3">{{item.create_time}}</view>
@@ -87,7 +87,7 @@
 					<view>客服</view>
 				</view>
 			</view>
-			<view class="payBtn" @click=" Router.navigateTo({route:{path:'/pages/yuyue/yuyue'}})">立即下单</view>
+			<view class="payBtn" @click="goBuy">立即下单</view>
 		</view>
 	</view>
 
@@ -111,6 +111,7 @@
 				normalSrc: '../../static/images/home-supervision-icon3.png',
 				selectedSrc: '../../static/images/home-supervision-icon1.png',
 				halfSrc: '../../static/images/home-supervision-icon2.png',
+				messageData:[]
 			}
 		},
 
@@ -145,6 +146,28 @@
 		},
 
 		methods: {
+			
+			goBuy() {
+				const self = this;
+				if (JSON.stringify(self.mainData) == '{}') {
+					api.showToast('商品错误', 'none', 1000);
+					return;
+				};
+				var orderList = {
+					product: [{
+						id: self.mainData.id,
+						count: 1,
+						product: self.mainData
+					}],
+					type:2,
+				};
+				uni.setStorageSync('order', orderList);
+				self.$Router.navigateTo({
+					route: {
+						path: '/pages/yuyue/yuyue'
+					}
+				})
+			},
 			
 			collect() {
 				const self = this;	
@@ -262,7 +285,7 @@
 
 <style>
 	@import "../../assets/style/index.css";
-	@import "../../assets/style/quill.css";
+	
 	page{padding-bottom: 140rpx!important;}
 	.xqbotomBar .left .ite{ width: 33.3%;}
 </style>

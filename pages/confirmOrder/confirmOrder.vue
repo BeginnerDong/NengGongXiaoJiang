@@ -60,6 +60,7 @@
 			uni.setStorageSync('canClick',true);
 			self.mainData = uni.getStorageSync('payPro');
 			self.cartData = self.$Utils.getStorageArray('cartData');
+			self.type = options.type;
 			console.log('self.data.mainData', self.mainData);
 			console.log('self.data.cartData', self.cartData);
 			self.countTotalPrice();
@@ -92,6 +93,10 @@
 				const postData = self.$Utils.cloneForm(self.mainData)
 				postData.tokenFuncName = 'getProjectToken';
 				postData.snap_address = self.addressData;
+				postData.type = self.type;
+				postData.data = {
+					shop_no:self.mainData.product[0].product.user_no
+				}
 				const callback = (res) => {
 					if (res && res.solely_code == 100000) {
 						self.orderId = res.info.id;
@@ -103,7 +108,7 @@
 							}
 							
 						}
-						self.pay(self.orderId)
+						self.getOrderData()
 					} else {		
 						uni.setStorageSync('canClick', true);
 						uni.showToast({
@@ -116,9 +121,61 @@
 				self.$apis.addOrder(postData, callback);
 			},
 			
-			pay(order_id) {
+			getOrderData() {
 				const self = this;
+				const postData = {};		
+				postData.searchItem = {
+					id:self.orderId,
+					user_type:0
+				};
 				
+				postData.tokenFuncName = 'getProjectToken';
+				
+				postData.getAfter = {
+					shopInfo:{
+						tableName:'UserInfo',
+						middleKey:'shop_no',
+						key:'user_no',
+						condition:'=',
+						searchItem:{
+							status:1
+						}
+					},	
+				};
+				const callback = (res) => {
+					if (res.info.data.length > 0) {
+						self.orderData=res.info.data[0];
+						self.getDistriData()
+						
+					} else {
+						self.$Utils.showToast(res.msg,'none');
+					};
+				};
+				self.$apis.orderGet(postData, callback);
+			},	
+			
+			getDistriData() {
+				const self = this;
+				const postData = {};	
+				postData.tokenFuncName = 'getProjectToken';
+				postData.searchItem = {
+					child_no:self.orderData.shop_no,
+				};	
+				const callback = (res) => {
+					if (res.info.data.length > 0) {
+						self.distriData=res.info.data;
+						self.pay()
+					} 
+				};
+				self.$apis.distriGet(postData, callback);
+			},
+			
+			pay(order_id) {
+				const self = this;	
+				
+				var ratio = uni.getStorageSync('user_info').thirdApp.custom_rule.material_in/100;
+				var tax = uni.getStorageSync('user_info').thirdApp.custom_rule.material_tax/100;
+				var reward = uni.getStorageSync('user_info').thirdApp.custom_rule.reward/100;
 				const postData = {};	
 				postData.wxPay = {
 					price: self.totalPrice
@@ -127,8 +184,68 @@
 				postData.searchItem = {
 					id: self.orderId
 				};
+				if(self.type==5){
+					postData.payAfter = [
+						
+						{
+							tableName: 'FlowLog',
+							FuncName: 'add',
+							data: {
+								user_no:self.orderData.shop_no,
+								type:2,
+								count:self.totalPrice*ratio - (self.totalPrice*ratio)*tax,
+								thirdapp_id:2,
+								trade_info:'首付款',
+								relation_user:self.orderData.user_no,
+								relation_id:self.id
+							}
+						},
+						{
+							tableName: 'FlowLog',
+							FuncName: 'add',
+							data: {
+								user_no:'U910872296194660',
+								type:2,
+								count:(self.totalPrice*ratio)*tax,
+								thirdapp_id:2,
+								trade_info:'平台抽成',
+								relation_user:self.mainData.shop_no,
+								relation_id:self.id
+							}
+						}
+					];
+					if(self.distriData.length>0&&self.orderData.shopInfo[0].behavior<4){
+						postData.payAfter.push(
+							{
+								tableName: 'FlowLog',
+								FuncName: 'add',
+								data: {
+									user_no:self.distriData[0].parent_no,
+									type:2,
+									count:(self.totalPrice*ratio - (self.totalPrice*ratio)*tax)*reward,
+									thirdapp_id:2,
+									trade_info:'返佣',
+									relation_user:self.orderData.shop_no,
+									relation_id:self.id
+								}
+							},
+							{
+								tableName: 'UserInfo',
+								FuncName: 'update',
+								data: {
+									behavior:self.orderData.shopInfo[0].behavior+1
+								},
+								searchItem:{
+									user_no:self.orderData.shop_no,
+								}
+							}
+						)
+					};
+				}
+				
 				const callback = (res) => {
 					if (res.solely_code == 100000) {
+						uni.setStorageSync('canClick', true);
 						if (res.info) {
 							const payCallback = (payData) => {
 								console.log('payData', payData)

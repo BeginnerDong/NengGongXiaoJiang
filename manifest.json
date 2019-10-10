@@ -1,5 +1,5 @@
 {
-    "name" : "uni-one",
+    "name" : "能工小匠",
     "appid" : "",
     "description" : "",
     "versionName" : "1.0.0",
@@ -55,7 +55,7 @@
     /* 快应用特有相关 */
     "mp-weixin" : {
         /* 小程序特有相关 */
-        "appid" : "wx4c16a5493b7fff43",
+        "appid" : "wx1d4347b0634f9d62",
         "setting" : {
             "urlCheck" : false,
             "es6" : true,

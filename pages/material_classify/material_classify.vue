@@ -70,7 +70,8 @@
 				indexTwo:'',
 				indexThree:'',
 				mainData:[],
-				productData:[]
+				productData:[],
+				type:''
 			}
 		},
 		
@@ -118,7 +119,7 @@
 				
 				postData.searchItem = {
 					parentid:self.id,
-					type:self.type
+					type:self.type+1
 				};
 				if(self.type==5){
 					postData.searchItem.title = ['not in',['特价辅料']]
@@ -173,7 +174,7 @@
 				postData.paginate = self.$Utils.cloneForm(self.paginate);
 				postData.searchItem = {
 					thirdapp_id:2,
-					type:self.type-1,
+					type:self.type,
 					category_id:self.idThree
 				};
 				const callback = (res) => {

@@ -10,7 +10,7 @@
 			</scroll-view>
 		</view>
 		<view class="classifyCont">
-			<view class="class_leftNav">
+			<view class="class_leftNav" v-if="mainData[indexTwo]&&mainData[indexTwo].child">
 				<view class="cont">
 					<view class="child" v-for="item in mainData[indexTwo].child" :class="item.id==idThree?'on':''" 
 					@click="changeTwo(item.id)">

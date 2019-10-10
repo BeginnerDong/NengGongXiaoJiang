@@ -114,6 +114,6 @@
 
 <style>
 	@import "../../assets/style/index.css";
-	@import "../../assets/style/quill.css";
+	
 	.xqbotomBar .left .ite{ width: 33.3%;}
 </style>

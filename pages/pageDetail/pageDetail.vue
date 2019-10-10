@@ -58,7 +58,7 @@
 					<image src="../../static/images/details-icon4.png" mode=""></image>
 					<view>客服</view>
 				</view>
-				<view class="ite" @click="addCart()">
+				<view class="ite" @click="addCart()" v-if="type!=3">
 					<image src="../../static/images/details-icon5.png" mode=""></image>
 					<view>购物车</view>
 				</view>
@@ -134,12 +134,23 @@
 					}],
 					type:self.type,
 				};
-				uni.setStorageSync('payPro', orderList);
-				self.$Router.navigateTo({
-					route: {
-						path: '/pages/confirmOrder/confirmOrder'
-					}
-				})
+				
+				if(self.type!=3){
+					uni.setStorageSync('payPro', orderList);
+					self.$Router.navigateTo({
+						route: {
+							path: '/pages/confirmOrder/confirmOrder?type='+self.type
+						}
+					})
+				}else{
+					uni.setStorageSync('order', orderList);
+					self.$Router.navigateTo({
+						route: {
+							path: '/pages/yuyue/yuyue'
+						}
+					})
+				}
+				
 			},
 
 			getUserInfoData() {

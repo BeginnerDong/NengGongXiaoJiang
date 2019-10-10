@@ -23,7 +23,7 @@
 		
 		
 		<view class="submitbtn" style="margin-top: 200rpx;">
-			<button type="submit">确认</button>
+			<button type="submit" @click="Utils.stopMultiClick(submit)">确认</button>
 		</view>
 		
 	</view>
@@ -48,6 +48,7 @@
 			self.id = options.id;
 			self.type=options.type;
 			console.log('options',options)
+			self.$Utils.loadAll(['getMainData'], self)
 		},
 		
 		methods: {

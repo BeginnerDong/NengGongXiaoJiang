@@ -71,7 +71,7 @@
 		</view>
 		<view class="caseSbmit">
 			<view class="eidt-line" v-for="(item,index) in mainData.product" :key="index" >
-				<view class="ll">{{item.title}}：</view>
+				<view class="ll">{{item.title}}</view>
 				<view class="rr price" style="text-align: right;">{{item.price}}</view>
 			</view>
 			
@@ -121,7 +121,8 @@
 						key:'user_no',
 						searchItem:{
 							status:1,
-							type:6
+							type:6,
+							
 						},
 						condition:'='
 					},
@@ -131,7 +132,8 @@
 						key:'user_no',
 						searchItem:{
 							status:1,
-							type:1
+							type:2,
+							
 						},
 						condition:'='
 					},
@@ -152,7 +154,7 @@
 </script>
 
 <style>
-	@import "../../assets/style/quill.css";
+	
 	@import "../../assets/style/index.css";
 	@import "../../assets/style/user.css";
 	page{padding-bottom: 60rpx!important;}

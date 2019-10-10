@@ -146,12 +146,22 @@
 						}, );
 					};
 				};
-				if (orderList[0].product.length == 0) {
+				console.log('orderList.product',orderList.product)
+				if(orderList.product.length>1){
+					for (var i = 0; i < orderList.product.length; i++) {
+						if(orderList.product[i].product.user_no!=orderList.product[i+1].product.user_no){
+							self.$Utils.showToast('产品商家不同', 'none', 1000);
+							return;
+						}
+					};
+				};
+				
+				if (orderList.product.length == 0) {
 					self.$Utils.showToast('未选择商品', 'none', 1000);
 					return;
 				};
 				uni.setStorageSync('payPro', orderList);
-				self.$Router.navigateTo({route:{path:'/pages/confirmOrder/confirmOrder'}})
+				self.$Router.navigateTo({route:{path:'/pages/confirmOrder/confirmOrder?type='+orderList.product[0].product.type}})
 				
 
 			},

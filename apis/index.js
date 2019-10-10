@@ -17,11 +17,26 @@ export default {
 		};
 		http.HTTP(allParams);
 	},
+	
+	
 
 	register(param, callback) {
 
 		var allParams = {
 			url: 'Project/Solely/register',
+			type: 'post',
+			data: param,
+			sCallback: function(data) {
+				callback && callback(data);
+			}
+		};
+		http.HTTP(allParams);
+	},
+	
+	search(param, callback) {
+	
+		var allParams = {
+			url: 'Project/Solely/search',
 			type: 'post',
 			data: param,
 			sCallback: function(data) {
@@ -237,6 +252,20 @@ export default {
 		
 		var allParams = {
 			url: 'Common/Process/add',
+			type: 'post',
+			noToken: true,
+			data: param,
+			sCallback: function(data) {
+				callback && callback(data);
+			}
+		};
+		http.HTTP(allParams);
+	},
+	
+	processUpdate(param, callback) {
+		
+		var allParams = {
+			url: 'Common/Process/update',
 			type: 'post',
 			noToken: true,
 			data: param,
@@ -718,7 +747,7 @@ export default {
 	
 	logAdd(param, callback) {
 		var allParams = {
-			url: 'Common/Log/get',
+			url: 'Common/Log/add',
 			type: 'post',
 			data: param,
 			sCallback: function(data) {

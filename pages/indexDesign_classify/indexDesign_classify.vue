@@ -81,6 +81,11 @@
 			wx.setNavigationBarTitle({
 				title: options.name,
 			});
+			if(options.name=='个人设计师'){
+				self.bahavior = 1
+			}else{
+				self.bahavior = 2
+			};
 			self.paginate = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
 			
 			self.$Utils.loadAll(['getUserData','getMainData'], self);
@@ -178,6 +183,17 @@
 					type:2,
 					category_id:self.idThree
 				};
+				postData.getBefore = {
+					caseData: {
+						tableName: 'User',
+						searchItem: {
+							behavior:['in',[self.bahavior]]
+						},
+						middleKey: 'user_no',
+						key: 'user_no',
+						condition: 'in',
+					},
+				};
 				postData.getAfter = {
 					userInfo:{
 						token:uni.getStorageSync('user_token'),
@@ -190,6 +206,7 @@
 						}
 					}
 				};
+				
 				const callback = (res) => {
 					if (res.info.data.length > 0) {
 						self.productData.push.apply(self.productData, res.info.data);
