@@ -174,11 +174,4 @@
 <style>
 	@import "../../assets/style/user.css";
 	page{padding-bottom: 80rpx;}
-	.tooling_indNav{padding: 30rpx 4%;background: #f5f5f5;}
-	.tooling_indNav .list{background: #fff; border-radius: 10rpx;overflow: hidden; display: flex;justify-content: center; align-items: center;}
-	.tooling_indNav .list .item{width: 33.3%;box-sizing: border-box;text-align: center;padding: 0 10rpx;color: #666;line-height: 70rpx;border-right: 2rpx solid #e7e7e7;}
-	.tooling_indNav .list .item.on{background: #FFCB1E;}
-	.tooling_indNav .list .item:last-child{border-right: 0;}
-	.prolis3 .cont{padding: 20rpx 0;box-sizing: border-box;}
-	.prolis3 .tex{margin-top: 20rpx;}
 </style>

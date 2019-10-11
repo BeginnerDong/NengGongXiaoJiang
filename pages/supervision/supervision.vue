@@ -48,8 +48,6 @@
 		},
 		data() {
 			return {
-				
-				
 				Router:this.$Router,
 				
 				supervisionDate:[
@@ -112,11 +110,17 @@
 </script>
 
 <style>
-	@import "../../assets/style/index.css";
+	/* @import "../../assets/style/index.css"; */
 
 	page {
 		padding-bottom: 60rpx;
 	}
 	
+/* 监理 */
+.supervst_idexLis{ display: flex; align-items: normal; flex-wrap: wrap;padding-top: 30rpx;}
+.supervst_idexLis .child{width: 330rpx;padding: 40rpx 30rpx; box-sizing: border-box; text-align: center;border-radius: 10rpx; margin-bottom: 30rpx;}
+.supervst_idexLis .child .photo{ width: 220rpx; height: 220rpx;margin: 0 auto;border-radius: 50%;}
+.supervst_idexLis .child .photo image{width: 100%; height: 100%; display: block;}
+.supervst_idexLis .child .name{ font-size: 28rpx; margin: 20rpx 0;}
 
 </style>

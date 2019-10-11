@@ -177,6 +177,7 @@
 </script>
 
 <style>
+	@import "../../assets/style/designIndex.css";
 	@import "../../assets/style/index.css";
 
 	page {

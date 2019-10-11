@@ -123,7 +123,9 @@
 </script>
 
 <style>
+	@import "../../assets/style/designIndex.css";
 	@import "../../assets/style/index.css";
+	@import "../../assets/style/busnsName.css";
 	
 	page{padding-bottom: 60rpx;}
 

@@ -137,7 +137,14 @@
 <style>
 	@import "../../assets/style/user.css";
 	@import "../../assets/style/index.css";
+	
 	page{padding-bottom: 80rpx;background: #F5F5F5;}
+	/* 我的评价 */
+	.myEvaluate .prolisbox .prolis{background: #f6f6f6; margin-top: 0;}
+	.myEvaluate .prolisbox .prolis .leftbox{ width: 140rpx; height: 140rpx;}
+	.myEvaluate .prolisbox .prolis .twoCt{ justify-content: space-between;}
+	.myEvaluate .prolisbox .prolis .cont{margin-left: 0; height: auto; width: 73%;}
+	
 	.designXq_pjLis .infor{background: #fff;padding: 0rpx 20rpx 30rpx 20rpx; margin-top: 30rpx;border-radius: 10rpx;}
 	.designXq_pjLis .item{border-bottom: none;}
 	.designXq_pjLis .cont{width: 85%;}

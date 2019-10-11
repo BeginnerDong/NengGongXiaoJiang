@@ -182,7 +182,8 @@
 </script>
 
 <style>
-	@import "../../assets/style/user.css";
+	@import "../../assets/style/caseSbmit.css";
+	
 	.caseSbmit .eidt-line .rr{text-align: right;}
 	.upBook{ display: flex;justify-content: flex-start; flex-wrap: wrap;}
 	.upBook image{width: 150rpx; height: 150rpx; margin-right: 20rpx;}

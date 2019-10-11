@@ -238,6 +238,7 @@
 
 <style>
 	@import "../../assets/style/index.css";
+	@import "../../assets/style/xqbotomBar.css";
 	
 	page{padding-bottom: 140rpx!important;}
 	.xqbotomBar .left .ite{ width: 33.3%;}

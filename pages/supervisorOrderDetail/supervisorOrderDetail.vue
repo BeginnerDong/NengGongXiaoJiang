@@ -349,6 +349,8 @@
 
 <style>
 	@import "../../assets/style/user.css";
+	@import "../../assets/style/caseSbmit.css";
+	
 	page{padding-bottom: 80rpx;}
 	.tooling_detail{padding-bottom: 60rpx;}
 	

@@ -1,0 +1,29 @@
+
+/* 互动 */
+.interct_idexLis{background: #fff;border-radius: 10rpx;padding-top: ;}
+.interct_idexLis .child{ padding: 40rpx 30rpx;box-sizing: border-box;border-bottom: 2rpx solid #e7e7e7;}
+.interct_idexLis .child .photo{width: 100rpx; height: 100rpx;border-radius: 50%;overflow: hidden;margin-right: 20rpx;}
+.interct_idexLis .child .photo image{width: 100%;height: 100%; display: block;}
+.interct_idexLis .child .name{width:75%;}
+.interct_idexLis .child .time{margin-top: 10rpx;color: #999999;font-size: 24rpx;}
+.interct_idexLis .child .text{ padding: 20rpx 0;}
+.interct_idexLis .child .imgbox{display: flex;flex-wrap: wrap;}
+.interct_idexLis .imgbox .lisThree{ width:190rpx;height: 190rpx; overflow: hidden; margin-right: 20rpx;}
+.interct_idexLis .imgbox .lisThree:nth-child(3n){margin-right: 0;}
+.interct_idexLis .imgbox .lisOne{width: 100%; height: 340rpx;}
+.interct_idexLis .imgbox .lisTwo{width:300rpx; height: 300rpx;margin-right: 20rpx;}
+.interct_idexLis .imgbox .lisTwo:nth-child(2n){margin-right: 0;}
+.interct_idexLis .imgbox view{margin-bottom: 20rpx;}
+.interct_idexLis .imgbox image{width: 100%;height: 100%;border-radius: 10rpx;}
+
+.interct_idexLis .label{ display: flex;justify-content: flex-end; padding-top: 10rpx;}
+.interct_idexLis .label .lis{ margin-left: 40rpx; display: flex; color: #666; font-size: 24rpx; align-items: center;}
+.interct_idexLis .label .lis image{width: 28rpx; height: 28rpx; display: block; margin-right: 10rpx;}
+
+
+
+
+
+
+
+

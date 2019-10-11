@@ -52,7 +52,7 @@
 				<view class="selt" @click="agree">
 					<image :src="isAgree?'../../static/images/about-address-icon1.png':'../../static/images/about-address-icon4.png'" mode=""></image>
 				</view>
-				<view class="text"  @click="xieyiAlert">同意《能工小匠》入驻协议</view>
+				<view class="text"  @click="xieyiAlert"> 同意《能工小匠》入驻协议</view>
 			</view>
 		</view>
 		<view class="xieyiAlert" v-if="is_show">
@@ -230,7 +230,8 @@
 	};
 </script>
 <style>
-	@import "../../assets/style/user.css";
+	@import "../../assets/style/xieyiAlert.css";
+	@import "../../assets/style/login.css";
 </style>
 
  

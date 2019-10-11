@@ -1,0 +1,6 @@
+
+/*公共滑动导航 */
+.navLisBox{ white-space: nowrap; padding:20rpx 10rpx;}
+.nav-item{line-height: 44rpx; font-size: 28rpx; display: inline-block;margin: 0 26rpx;}
+.nav-item.active{ border-bottom: 3px solid #FFCB1E;}
+

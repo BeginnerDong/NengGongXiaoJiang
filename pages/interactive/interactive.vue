@@ -176,7 +176,8 @@
 </script>
 
 <style>
-	@import "../../assets/style/index.css";
+	/* @import "../../assets/style/index.css"; */
+	@import "../../assets/style/interct_idexLis.css";
 
 	page {
 		padding-bottom: 60rpx;

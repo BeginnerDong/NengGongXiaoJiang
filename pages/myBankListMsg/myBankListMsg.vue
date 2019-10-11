@@ -262,14 +262,11 @@
 </script>
 
 <style>
-	@import "../../assets/style/user.css";
+	
+	@import "../../assets/style/caseSbmit.css";
 	
 	.caseSbmit .eidt-line .ll{ width: 30%;}
 	.caseSbmit .eidt-line .rr{ width: 70%;}
-	/* .styleLis{ width: 100%; display: flex; flex-wrap: wrap;justify-content: flex-end;}
-	.styleLis .item{padding:0rpx 0 10rpx 30rpx;display: flex;justify-content: flex-end; align-items: center;}
-	.styleLis .item .icon{  width: 36rpx;height: 36rpx; margin-right: 10rpx;font-size: 26rpx;}
-	.styleLis .item .icon image{width: 100%;height: 100%; display: block;} */
 	.r-selt .selt{ width: 50%; justify-content: flex-start;}
 	
 

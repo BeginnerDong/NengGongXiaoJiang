@@ -73,7 +73,8 @@
 </script>
 
 <style>
-	@import "../../assets/style/user.css";
+	@import "../../assets/style/caseSbmit.css";
+	
 	.caseSbmit .eidt-line .rr{text-align: right;}
 	.styleLis{ width: 100%; display: flex; flex-wrap: wrap;justify-content: flex-end;}
 	.styleLis .item{padding:0rpx 0 10rpx 30rpx;display: flex;justify-content: flex-end; align-items: center;}

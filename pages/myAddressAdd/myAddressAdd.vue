@@ -216,6 +216,7 @@
 </script>
 
 <style>
-	@import "../../assets/style/user.css";
+	@import "../../assets/style/caseSbmit.css";
+	
 	.mmIcon{width: 100rpx;height: 42rpx;display: inline-block;}
 </style>

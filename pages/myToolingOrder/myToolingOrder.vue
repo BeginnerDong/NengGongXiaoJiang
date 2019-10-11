@@ -181,7 +181,9 @@
 </script>
 
 <style>
+	@import "../../assets/style/tooling_indNav.css";
 	@import "../../assets/style/user.css";
+	
 	page{padding-bottom: 80rpx;}
 
 	.prolis3 .cont{padding: 20rpx 0;box-sizing: border-box;}

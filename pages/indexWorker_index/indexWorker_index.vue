@@ -156,6 +156,9 @@
 	
 	@import "../../assets/style/index.css";
 	@import "../../assets/style/user.css";
+	@import "../../assets/style/tejiaBox.css";
+	@import "../../assets/style/caseSbmit.css";
+	
 	page{padding-bottom: 60rpx!important;}
 	.tejiaBox .item-lis{width: 240rpx; height: 180rpx;overflow: hidden;}
 	.tejiaBox .item-lis .img{width: 100%;height: 100%;}

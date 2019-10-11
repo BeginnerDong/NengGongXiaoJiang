@@ -153,7 +153,10 @@
 </script>
 
 <style>
+	@import "../../assets/style/xieyiAlert.css";
 	@import "../../assets/style/user.css";
+	@import "../../assets/style/myNeed_ind.css";
+	
 	page{padding-bottom: 80rpx;}
 	.caceGl_ind .item{padding: 30rpx;border-bottom: 10rpx solid #f5f5f5;}
 	.caceGl_ind .ll{width: 200rpx;height: 200rpx;}

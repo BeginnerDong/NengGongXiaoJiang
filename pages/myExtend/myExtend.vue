@@ -164,7 +164,9 @@
 </script>
 
 <style>
-	@import "../../assets/style/user.css";
+	@import "../../assets/style/tooling_indNav.css";
+	@import "../../assets/style/myExtend.css";
+	
 	.tooling_indNav .list .item{width: 50%; color: #222;}
 	
 

@@ -97,7 +97,9 @@
 </script>
 
 <style>
-	@import "../../assets/style/user.css";
+	
+	@import "../../assets/style/myNeed_ind.css";
+	
 	page{background: #f5f5f5; padding-bottom: 80rpx;}
 
 	

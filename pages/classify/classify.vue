@@ -241,6 +241,7 @@
 	};
 </script>
 <style>
+	@import "../../assets/style/designIndex.css";
 	@import "../../assets/style/index.css";
 	page{padding-bottom: 100rpx;background: #f5f5f5;}
 </style>

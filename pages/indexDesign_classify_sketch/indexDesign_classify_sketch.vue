@@ -1,7 +1,7 @@
 <template>
 	<view class="classifyBox">
 		<view class="classifyCont" style="padding-top: 30rpx;">
-			<view class="class_leftNav" style="top: 120rpx;">
+			<view class="class_leftNav" style="top: 20rpx;">
 				<view class="cont">
 					<view class="child" 
 					v-for="(item,index) in labelData.child" :class="chooseId==item.id?'on':''" 
@@ -10,8 +10,7 @@
 				</view>
 			</view>
 			<view class="class_rightCont">
-				<view class="class_sketch" 
-				>
+				<view class="class_sketch" >
 					<view class="item boxShaow" v-for="(item,index) in mainData" :key="index" 
 					@click="Router.navigateTo({route:{path:'/pages/indexDesign_classify_sketchDetail/indexDesign_classify_sketchDetail?id='+item.id}})">
 						<view class="photo">
@@ -144,6 +143,7 @@
 </script>
 <style>
 	@import "../../assets/style/index.css";
+	@import "../../assets/style/sketch.css";
 
 	page {
 		padding-bottom: 100rpx;

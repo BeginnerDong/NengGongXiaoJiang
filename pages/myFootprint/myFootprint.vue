@@ -58,6 +58,8 @@
 
 <style>
 	@import "../../assets/style/user.css";
+	@import "../../assets/style/designIndex.css";
+	
 	@import "../../assets/style/index.css";
 	page{padding-bottom: 80rpx;}
 </style>

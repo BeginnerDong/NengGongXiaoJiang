@@ -138,6 +138,7 @@
 	};
 </script>
 <style>
+	@import "../../assets/style/sketch.css";
 	@import "../../assets/style/index.css";
 	page{padding-bottom: 100rpx;background: #f5f5f5;}
 

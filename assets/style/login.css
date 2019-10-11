@@ -1,0 +1,21 @@
+
+/* 登录注册 */
+.lgoin-topBj{width: 100%;height: 448rpx; display: block;}
+.login-box{width: 90%;margin: 30rpx auto;}
+.login-box .item{padding: 20rpx 0; display: flex; justify-content: flex-start;}
+.login-box .item .icon{width: 10%;}
+.login-box .item .icon image{width: 36rpx; height: 36rpx; display: block;}
+.login-box .item .rr{width: 90%;border-bottom: 2rpx solid #e7e7e7;padding-bottom: 20rpx;font-size: 24rpx; margin-top: 6rpx;}
+.login-box .item .rr input{width: 100%; display: block; line-height: 46rpx; font-size: 24rpx;}
+.login-box .item .rr .yzmBtn{bottom:2rpx;top: auto;transform: translate(0,0);}
+
+.login-box .item .rr .arrow{ width: 12rpx; height: 24rpx; display: block;}
+.login-box .item .rr .arrow image{width: 100%; height: 100%; display: block;}
+
+.agreeSel{ width: 80%; margin: 0 auto; display: flex;justify-content: flex-start;align-items: center; color: #999; font-size: 24rpx;}
+.agreeSel .selt{width: 32rpx;height: 32rpx;}
+.agreeSel .selt image{width: 100%;height: 100%; display: block;}
+
+
+
+

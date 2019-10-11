@@ -220,9 +220,15 @@
 </script>
 
 <style>
+	
 	@import "../../assets/style/index.css";
+	@import "../../assets/style/tejiaBox.css";
 
 	page {
 		padding-bottom: 60rpx;
 	}
+	.ind_cont5{padding: 30rpx 4%;}
+	.ind_cont5 .item{width: 330rpx;height: 200rpx;overflow: hidden;position: relative;border-radius: 8rpx;}
+	.ind_cont5 .item image{width: 100%;height: 100%;}
+	.ind_cont5 .item .tit{position: absolute;top: 0;right: 0;left: 0;bottom: 0;background: rgba(0,0,0,0.4);color: #fff;display: flex;justify-content: center;align-items: center;font-size: 28rpx;}
 </style>

@@ -1,0 +1,9 @@
+/* 我的需求 */
+.myNeed_ind .item{padding: 30rpx 20rpx; margin-top: 30rpx;background: #fff;position: relative;border-radius: 10rpx; font-size: 28rpx;}
+.myNeed_ind .item .cont{width: 90%;}
+.myNeed_ind .item .cont .lis{margin-bottom: 20rpx;}
+.myNeed_ind .item .cont .lis:last-child{margin-bottom: 0;}
+.myNeed_ind .item .cont .lis .icon{ width: 28rpx; height: 28rpx;}
+.myNeed_ind .item .cont .lis .name{color: #666; margin:0 30rpx 0 20rpx;}
+.myNeed_ind .item .arrow{width: 10%;text-align: right;}
+.myNeed_ind .item .arrow image{width: 12rpx; height: 22rpx;}

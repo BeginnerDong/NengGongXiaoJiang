@@ -168,7 +168,8 @@
 </script>
 
 <style>
-	@import "../../assets/style/user.css";
+	@import "../../assets/style/caseSbmit.css";
+	
 	.rr{ justify-content:flex-end; display:flex ; text-align: right; align-items: center; }
 	.eidt-column{padding: 30rpx 4% ; border-bottom: 1px solid #e7e7e7;}
 	.eidt-column .ll{padding-bottom: 20rpx;}

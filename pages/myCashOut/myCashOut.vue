@@ -35,8 +35,6 @@
 			</view>
 		</view>
 
-
-		
 	</view>
 </template>
 
@@ -198,7 +196,7 @@
 </script>
 
 <style>
-	/* @import "../../assets/style/common.css"; */
+	
 	page{ background: #f5f5f5;}
 	
 	.bankmsg .lft{ display: flex; justify-content: flex-start; align-items: center; font-size: 26rpx;color: #999;}

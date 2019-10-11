@@ -161,6 +161,7 @@
 
 <style>
 	@import "../../assets/style/user.css";
+	@import "../../assets/style/xieyiAlert.css";
 	page{ background: #f5f5f5;}
 	.myaddress-lis{padding:30rpx;margin-bottom: 20rpx;background: #fff; margin-bottom: 30rpx;border-radius: 10rpx; margin-top: 30rpx;}
 	.myaddress-lis .name{ font-size: 28rpx; color: #222;padding: 10rpx 0;}

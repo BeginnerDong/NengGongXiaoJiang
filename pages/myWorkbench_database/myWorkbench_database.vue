@@ -188,6 +188,8 @@
 
 <style>
 	@import "../../assets/style/user.css";
+	@import "../../assets/style/xieyiAlert.css";
+	
 	page{padding-bottom: 60rpx;}
 	.leftPic{width: 200rpx; height: 200rpx; display: block;}
 	.ziliao_indLis .item{padding: 30rpx 0; display: flex; justify-content: space-between;border-bottom: 2rpx solid #E7E7E7;}

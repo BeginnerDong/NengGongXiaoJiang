@@ -62,7 +62,7 @@
 	}
 </script>
 <style>
-	
+	@import "../../assets/style/navList.css";
 	.navLisBox{ white-space: nowrap; padding:20rpx 10rpx;}
 	.nav-item{line-height: 44rpx; font-size: 28rpx; display: inline-block;margin: 0 26rpx;}
 	.nav-item.active{ border-bottom: 6rpx solid #FFCB1E;}

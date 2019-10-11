@@ -1,0 +1,7 @@
+.busnsName{ align-items: center;padding: 30rpx 4%;}
+.busnsName .leftImg{width: 80rpx; height: 80rpx;}
+.busnsName .leftImg image{width: 80rpx; height: 80rpx; margin:0 auto; display: block;}
+.busnsName .cont{width: 480rpx; margin-left: 20rpx; font-size: 28rpx; color: #666;font-size: 26rpx;}
+.busnsName .cont .tit{ font-size: 30rpx; color: #222; margin-bottom: 6rpx;}
+.busnsName .icon{ width: 80rpx; text-align: right;}
+.busnsName .icon image{ width: 50rpx; height: 50rpx;}

@@ -230,6 +230,8 @@
 
 <style>
 	@import "../../assets/style/index.css";
+	@import "../../assets/style/busnsName.css";
+	@import "../../assets/style/xqbotomBar.css";
 	@import "../../assets/style/quill.css";
 
 	page {

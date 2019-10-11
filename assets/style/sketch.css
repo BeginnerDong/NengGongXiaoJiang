@@ -1,0 +1,18 @@
+
+
+/*设计师-- 效果图 */
+.class_sketch .item{ width:100%; background: #fff; position: relative;border-radius: 10rpx;overflow: hidden; margin-bottom: 30rpx;}
+.class_sketch .item .photo{width: 100%;height: 300rpx; overflow: hidden;}
+.class_sketch .item .photo image{width: 100%; height: 100%; display: block;}
+.class_sketch .item .photo video{width: 100%; height: 100%; display: block;box-sizing: border-box;}
+.class_sketch .item .cont{padding: 10px 3%; font-size: 26rpx;}
+.class_sketch .item .cont .name{color: #FFCB1E;margin-top: 20rpx;}
+.class_sketch .item .lable{position: absolute; top: 20rpx;right: 0;background: #22ac38;padding: 0 20rpx; line-height: 44rpx;font-size: 26rpx; color: #fff;border-radius: 30rpx 0 0 30rpx;}
+.class_sketch .item .nameBj{width: 100%;line-height: 60rpx;text-align: center;background:rgba(0,0,0,0.5);padding: 0 3%;box-sizing: border-box;font-size: 26rpx; color: #fff;position: absolute;bottom: 0;left: 0;}
+
+
+
+
+
+
+

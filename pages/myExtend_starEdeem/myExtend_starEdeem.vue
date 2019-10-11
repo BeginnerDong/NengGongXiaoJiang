@@ -21,7 +21,6 @@
 			</view>
 		</view>
 		
-		
 	</view>
 </template>
 
@@ -98,14 +97,15 @@
 </script>
 
 <style>
-	@import "../../assets/style/user.css";
-	.tooling_indNav .list .item{width: 50%; color: #222;}
+	
+	@import "../../assets/style/xieyiAlert.css";
+	
 	.postersbox{position: fixed;top: 0;left: 0;right: 0;bottom: 0;}
 	.postersbox .pic{width: 100%; height: 100%; display: block;}
-	.postersbox .infor{top: 43%;}
+	.postersbox .infor{position: absolute;top: 43%; width: 300rpx;left: 50%;transform: translateX(-50%);}
 	.postersbox .infor .red{font-size: 52rpx; margin-bottom:26rpx;}
-	.postersbox .copyBtn{width: 140rpx; height: 60rpx;line-height: 60rpx;border-radius: 8rpx;}
-	.postersbox .textB{bottom:20rpx;font-size: 30rpx;padding: 20rpx;}
+	.postersbox .copyBtn{width: 140rpx; height: 60rpx;line-height: 60rpx;border-radius: 8rpx;background: #181818; color: #fff;margin: 10rpx auto;box-sizing: border-box;}
+	.postersbox .textB{position: absolute; text-align: center;left:0; width: 100%;box-sizing: border-box;bottom:20rpx;font-size: 30rpx;}
 	
 
 </style>

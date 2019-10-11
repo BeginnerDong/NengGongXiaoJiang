@@ -112,11 +112,14 @@
 </script>
 
 <style>
-	@import "../../assets/style/index.css";
-
 	page {
 		padding-bottom: 60rpx;
 	}
 	
+	/* 学员 */
+	.college_idexLis{display: flex;flex-wrap: wrap; align-items: normal;padding-top: 30rpx;}
+	.college_idexLis .child{width: 330rpx; height: 220rpx;border-radius: 10rpx;overflow: hidden; position: relative;overflow: hidden; margin-bottom: 30rpx;}
+	.college_idexLis .child .pic{width: 100%; height: 100%;}
+	.college_idexLis .child .tit{line-height: 60rpx;width: 100%;height: 60rpx;background: rgba(0,0,0,0.5); color: #fff;padding: 0 20rpx;box-sizing: border-box;font-size: 26rpx; position: absolute;left: 0;bottom: 0;}
 
 </style>

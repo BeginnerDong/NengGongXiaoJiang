@@ -1,0 +1,10 @@
+
+/* 设计师 */
+.designIndex .items{padding: 20rpx 0;width: 100%;align-items: normal;}
+.designIndex .items .pic{width: 220rpx;height: 220rpx;overflow: hidden;border-radius: 8rpx;}
+.designIndex .items .pic image{width: 100%;height: 100%; display: block;}
+.designIndex .items .infor{width: 450rpx;height: 220rpx; position: relative;}
+.designIndex .items .infor .title{font-size: 28rpx; margin-bottom: 10rpx;}
+.designIndex .items .infor .text2{ color: #666; font-size: 24rpx;}
+.designIndex .items .infor .saleB{ position: absolute; bottom: 0;width: 100%;left:0}
+

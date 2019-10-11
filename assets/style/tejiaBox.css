@@ -1,0 +1,9 @@
+.tejiaBox{padding: 20rpx 4%;}
+.tejiaBox .scrollX{white-space: nowrap; }
+.tejiaBox .scrollX .item-lis{margin-right: 30rpx;}
+.tejiaBox .item-lis{ width: 300rpx; padding-bottom: 20rpx; overflow: hidden;box-shadow: 0 0 10rpx rgba(0,0,0,0.1);background: #fff;margin: 15rpx 0; position: relative;display: inline-block;border-radius: 8rpx 8rpx 0 0;}
+.tejiaBox .item-lis .img{width: 100%;height: 182rpx;display: block;margin: 0 auto;}
+.tejiaBox .item-lis .tit{ font-size: 30rpx; padding: 24rpx 4% 15rpx 4%; line-height: 32rpx; width: 100%;box-sizing: border-box;}
+.tejiaBox .item-lis .price{font-size: 32rpx;padding: 0 4%; color: #ff3b3b;}
+.tejiaBox .item-lis .price:before{content: "￥"; font-size: 26rpx;margin-right:4rpx;}
+

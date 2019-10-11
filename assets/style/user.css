@@ -1,3 +1,5 @@
+	
+	
 	.userBox2{ margin: 0 4%; background: #fff; border-radius: 10rpx; margin: -90rpx 4% 10rpx 4% ;position: relative; z-index: 1;}
 	.userBox2 .tit{ font-size: 28rpx; height: 88rpx;padding: 0 20rpx; border-bottom: 2rpx solid #e7e7e7;}
 	.userBox2 .more{ color: #999; font-size: 22rpx;}
@@ -74,56 +76,20 @@
 		transform: translateY(-50%);
 	}
 	
-	/* 案件提交 */
-	.caseSbmit .eidt-line{
-		padding: 30rpx 4%;
-		border-bottom: 2rpx solid #e7e7e7;
-		display: flex;
-		justify-content: space-between;
-		line-height: 50rpx;
-	}
-	.caseSbmit .eidt-line .ll{ width: 25%;box-sizing: border-box;padding-right: 20rpx;}
-	.caseSbmit .eidt-line .rr{ width: 75%; box-sizing: border-box;}
-	.caseSbmit .eidt-line .rr input{
-		width: 100%;
-		padding: 0 10rpx;
-		box-sizing: border-box;
-		color: #333;
-		height: 50rpx;
-		line-height: 48rpx;
-		display: block;
-		text-align: right;
-		font-size: 28rpx;
-	}
-	.caseSbmit .eidt-line .rr textarea{
-		width: 100%;
-		padding:10rpx 20rpx;
-		box-sizing: border-box;
-		color: #333;
-		height: 160rpx;
-		background: #f2f2f2;
-		line-height: 48rpx;
-		display: block;
-		font-size: 28rpx;
-	}
-	.caseSbmit .eidt-line .rr .arrow{width: 12rpx; height: 24rpx; position: absolute;right: 0; top:50%; transform: translateY(-50%); display: block;}
-	.caseSbmit .textt{ font-size: 24rpx; color: #666;padding: 100rpx 10% 50rpx 10%; text-align: center; line-height: 44rpx;}
+
 	
 /* 点击弹框 */
 .agreeSel{ width: 80%; margin: 0 auto; display: flex;justify-content: flex-start;align-items: center; color: #999; font-size: 24rpx;}
 .agreeSel .selt{width: 32rpx;height: 32rpx;}
 .agreeSel .selt image{width: 100%;height: 100%; display: block;}
-.xieyiAlert{background: rgba(0,0,0,0.5);position: fixed;top: 0;right: 0;bottom: 0;left: 0; z-index: 999;}
-.xieyiAlert .infor{width: 90%; height: 80%;position: fixed; top: 50%;left:50%;transform: translate(-50%,-50%);background: #fff; box-sizing: border-box;padding: 30rpx 30rpx 150rpx 30rpx; z-index: 1000;font-size: 28rpx; color: #555;}
-.xieyiAlert .infor .cont{ line-height: 44rpx;height: 100%; width: 100%; overflow-y: auto;}
-.xieyiAlert .infor .cont view{padding-bottom: 20rpx;}
-.xieyiAlert .infor .cont .tit{font-size: 32rpx; text-align: center;color: #333;line-height:44rpx;padding: 26rpx 0;}
+
 	
 /* 我的订单 */
 .orderNav{display: flex; justify-content: space-between; align-items: center; height: 100rpx;background: #fff;padding: 0 4%; border-bottom: 2rpx solid #f5f5f5;}
 .orderNav .tt{ width: 25%;color: #666;  font-size: 30rpx; text-align: center; line-height: 100rpx;}
 .orderNav .on{ color: #FFCB1E; position: relative;}
 .orderNav .on::after{content: ""; width: 60rpx; height: 6rpx;background: #FFCB1E; position: absolute; bottom: 0;left: 50%;transform: translateX(-50%);}
+
 .prolisbox .prolis{width: 100%;margin: 30rpx auto 0 auto;background: #fff; border-radius: 10rpx;padding: 30rpx;box-sizing: border-box;}
 .prolis .datt{display: flex;justify-content: space-between;font-size: 24rpx;padding-bottom: 20rpx; }
 .prolis .datt .left{color: #999;}
@@ -142,13 +108,6 @@
 .btn.gopay{ border-color: #FFCB1E; color: #FFCB1E;}
 
 /* 工装订单 */
-
-.tooling_indNav{padding: 30rpx 4%;background: #f5f5f5;}
-.tooling_indNav .list{background: #fff; border-radius: 10rpx;overflow: hidden; display: flex;justify-content: center; align-items: center;}
-.tooling_indNav .list .item{width: 33.3%;box-sizing: border-box;text-align: center;padding: 0 10rpx;color: #666;line-height: 70rpx;border-right: 2rpx solid #e7e7e7;}
-.tooling_indNav .list .item.on{background: #FFCB1E;}
-.tooling_indNav .list .item:last-child{border-right: 0;}
-
 .tooling_detail{padding-left: 30rpx;border-left: 2rpx solid #FFCB1E;padding-bottom: 60rpx;}
 .tooling_detail .infor{position: relative;}
 .tooling_detail .infor .dian{width: 32rpx;height: 32rpx; display: block;position: absolute;top: -6px;left: -46rpx;}
@@ -164,53 +123,13 @@
 .tooling_detail .allMoney .btn{width: 120rpx; height: 50rpx;line-height: 50rpx;text-align: center; background: #FFCB1E; color: #222;margin: 0  20rpx; border-radius: 10rpx;}
 .tooling_detail	.okBtn{width: 200rpx; height: 60rpx;line-height: 60rpx;text-align: center; background: #FFCB1E; color: #222;margin: 0  20rpx; border-radius: 10rpx;}
 
-/* 我的需求 */
-.myNeed_ind .item{padding: 30rpx 20rpx; margin-top: 30rpx;background: #fff;position: relative;border-radius: 10rpx; font-size: 28rpx;}
-.myNeed_ind .item .cont{width: 90%;}
-.myNeed_ind .item .cont .lis{margin-bottom: 20rpx;}
-.myNeed_ind .item .cont .lis:last-child{margin-bottom: 0;}
-.myNeed_ind .item .cont .lis .icon{ width: 28rpx; height: 28rpx;}
-.myNeed_ind .item .cont .lis .name{color: #666; margin:0 30rpx 0 20rpx;}
-.myNeed_ind .item .arrow{width: 10%;text-align: right;}
-.myNeed_ind .item .arrow image{width: 12rpx; height: 22rpx;}
-
-/* 我的评价 */
-.myEvaluate .prolisbox .prolis{background: #f6f6f6; margin-top: 0;}
-.myEvaluate .prolisbox .prolis .leftbox{ width: 140rpx; height: 140rpx;}
-.myEvaluate .prolisbox .prolis .twoCt{ justify-content: space-between;}
-.myEvaluate .prolisbox .prolis .cont{margin-left: 0; height: auto; width: 73%;}
 
 
-/* 我的推广 */
-.myExtendTop{width: 100%; text-align: center;box-sizing: border-box;padding: 80rpx 4% 80rpx 4%;}
-.myExtendTop .money{font-size: 80rpx; font-weight: bold; padding: 0rpx 4%; line-height:88rpx; color: #FF3B3B;}
-.myExtendTop .money:before{content: "￥"; font-size: 50rpx;}
-.myExtendTop .yuan{ font-size:28rpx; padding:10rpx 0 30rpx 0;}
-.myExtendTop .txBtn{ width: 200rpx; height: 60rpx;line-height: 60rpx; background: #FFCB1E; color: #333; border-radius: 6rpx; margin: 0 auto;font-size: 26rpx;}
-.myExtendBox1 .item{ padding: 30rpx 4%;border-bottom: 2rpx solid #e7e7e7;}
-.myExtendBox1 .item .left{width: 80%;}
-.myExtendBox1 .item .right{width: 20%;text-align: right;font-size: 30rpx;}
-
-.myExtendBox2{padding: 50rpx 4%;}
-.myExtendBox2 .postersbox{width: 350rpx; height: 564rpx;margin: 0 auto;text-align: center;}
-.postersbox .pic{width: 100%; height: 100%;display: block;}
-.postersbox .textB{position: absolute; bottom: 20rpx; text-align: center;left:0; width: 100%;font-size: 22rpx;box-sizing: border-box;}
-.postersbox .infor{position: absolute;top: 240rpx; width: 300rpx;left: 50%;transform: translateX(-50%);}
-.postersbox .copyBtn{ width: 100rpx; height: 40rpx;line-height: 40rpx; border-radius: 6rpx; background: #181818; color: #fff;margin: 10rpx auto;box-sizing: border-box;}
 
 
-/* 登录注册 */
-.lgoin-topBj{width: 100%;height: 448rpx; display: block;}
-.login-box{width: 90%;margin: 30rpx auto;}
-.login-box .item{padding: 20rpx 0; display: flex; justify-content: flex-start;}
-.login-box .item .icon{width: 10%;}
-.login-box .item .icon image{width: 36rpx; height: 36rpx; display: block;}
-.login-box .item .rr{width: 90%;border-bottom: 2rpx solid #e7e7e7;padding-bottom: 20rpx;font-size: 24rpx; margin-top: 6rpx;}
-.login-box .item .rr input{width: 100%; display: block; line-height: 46rpx; font-size: 24rpx;}
-.login-box .item .rr .yzmBtn{bottom:2rpx;top: auto;transform: translate(0,0);}
 
-.login-box .item .rr .arrow{ width: 12rpx; height: 24rpx; display: block;}
-.login-box .item .rr .arrow image{width: 100%; height: 100%; display: block;}
+
+
 
 
 

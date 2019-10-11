@@ -41,8 +41,6 @@
 			</view>
 		</view>
 		
-		
-
 	</view>
 
 </template>
@@ -93,7 +91,14 @@
 
 <style>
 	@import "../../assets/style/index.css";
+	@import "../../assets/style/xqbotomBar.css";
 	
 	page{padding-bottom: 140rpx!important;}
 	.xqbotomBar .left .ite{ width: 33.3%;}
+	
+	/* VR视频 */
+	.VRXq_videoLis{flex-wrap: wrap;padding-top: 30rpx;}
+	.VRXq_videoLis .item{width: 330rpx; height: 186rpx;border-radius: 10rpx;overflow: hidden;position: relative; margin-bottom: 30rpx;}
+	.VRXq_videoLis .item .pic{width: 100%; height: 100%; display: block;}
+	.VRXq_videoLis .item .title{width: 100%;line-height: 60rpx;text-align: center;background:rgba(0,0,0,0.5);padding: 0 3%;box-sizing: border-box;font-size: 24rpx; color: #fff;position: absolute;bottom: 0;left: 0;}
 </style>

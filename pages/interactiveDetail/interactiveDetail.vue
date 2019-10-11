@@ -325,11 +325,22 @@
 </script>
 
 <style>
-	@import "../../assets/style/index.css";
+	/* @import "../../assets/style/index.css"; */
+	@import "../../assets/style/interct_idexLis.css";
 
 	page {
 		padding-bottom: 140rpx;
 	}
-	.interct_idexLis .imgbox .lisThree{width: 210rpx; height: 210rpx;}
 	
+	/* 互动详情页 */
+	.interct_pllis .child{padding: 30rpx;border-bottom: 2rpx solid #e7e7e7;}
+	.interct_pllis .child .photo{width: 80rpx; height: 80rpx;border-radius: 50%;margin-right: 20rpx;}
+	.interct_pllis .child .name{ width: 60%; color: #666;}
+	.interct_pllis .child .date{width: 40%; text-align: right;}
+	.interct_pllis .child .text{padding-top: 20rpx;}
+	
+	.interct_idexLis .imgbox .lisThree{width: 210rpx; height: 210rpx;}
+	.interDtFixd{ height: 110rpx; position: fixed; bottom: 0;left: 0; width: 100%;box-sizing: border-box;border-top: 2rpx solid #e7e7e7;background: #fff;padding: 0 3%;}
+	.interDtFixd input{width: 600rpx; height: 60rpx;background: #efefef; padding: 0 30rpx;box-sizing: border-box;border-radius: 40rpx;line-height: 60rpx; display: block;}
+	.interDtFixd .sendBtn{width: 80rpx; text-align: center;line-height: 60rpx;height: 60rpx;}
 </style>

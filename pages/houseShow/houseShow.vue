@@ -21,8 +21,6 @@
 				</view>
 			</view>
 		</view>
-
-		
 	</view>
 	
 </template>
@@ -115,6 +113,7 @@
 </script>
 
 <style>
+	@import "../../assets/style/house_idexLis.css";
 	@import "../../assets/style/index.css";
 
 	page {

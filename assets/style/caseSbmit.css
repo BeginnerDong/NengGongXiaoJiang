@@ -1,0 +1,42 @@
+
+
+	/* 案件提交 */
+	.caseSbmit .eidt-line{
+		padding: 30rpx 4%;
+		border-bottom: 2rpx solid #e7e7e7;
+		display: flex;
+		justify-content: space-between;
+		line-height: 50rpx;
+	}
+	.caseSbmit .eidt-line .ll{ width: 25%;box-sizing: border-box;padding-right: 20rpx;}
+	.caseSbmit .eidt-line .rr{ width: 75%; box-sizing: border-box;}
+	.caseSbmit .eidt-line .rr input{
+		width: 100%;
+		padding: 0 10rpx;
+		box-sizing: border-box;
+		color: #333;
+		height: 50rpx;
+		line-height: 48rpx;
+		display: block;
+		text-align: right;
+		font-size: 28rpx;
+	}
+	.caseSbmit .eidt-line .rr textarea{
+		width: 100%;
+		padding:10rpx 20rpx;
+		box-sizing: border-box;
+		color: #333;
+		height: 160rpx;
+		background: #f2f2f2;
+		line-height: 48rpx;
+		display: block;
+		font-size: 28rpx;
+	}
+	.caseSbmit .eidt-line .rr .arrow{width: 12rpx; height: 24rpx; position: absolute;right: 0; top:50%; transform: translateY(-50%); display: block;}
+	.caseSbmit .textt{ font-size: 24rpx; color: #666;padding: 100rpx 10% 50rpx 10%; text-align: center; line-height: 44rpx;}
+	
+	/* 点击弹框 */
+	.agreeSel{ width: 80%; margin: 0 auto; display: flex;justify-content: flex-start;align-items: center; color: #999; font-size: 24rpx;}
+	.agreeSel .selt{width: 32rpx;height: 32rpx;}
+	.agreeSel .selt image{width: 100%;height: 100%; display: block;}
+

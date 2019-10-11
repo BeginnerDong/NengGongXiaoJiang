@@ -220,7 +220,10 @@
 </script>
 
 <style>
-	@import "../../assets/style/user.css";
+	/* @import "../../assets/style/user.css"; */
+	@import "../../assets/style/xieyiAlert.css";
+	@import "../../assets/style/caseSbmit.css";
+	
 	
 	.styleLis{ width: 100%; display: flex; flex-wrap: wrap;justify-content: flex-end;}
 	.styleLis .item{padding:0rpx 0 10rpx 30rpx;display: flex;justify-content: flex-end; align-items: center;}

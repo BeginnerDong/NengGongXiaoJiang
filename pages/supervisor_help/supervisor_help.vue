@@ -22,8 +22,6 @@
 			</view>
 		</view>
 		
-	
-		
 	</view>
 </template>
 
@@ -112,7 +110,9 @@
 </script>
 
 <style>
-	@import "../../assets/style/user.css";
+	
+	@import "../../assets/style/tooling_indNav.css";
+	
 	.tooling_indNav .list .item{width: 50%; color: #222;}
 	.guizebox .texbox{font-size: 28rpx; line-height: 46rpx;padding: 30rpx 0; color: #666;}
 	.guizebox .texbox .tit{font-size: 30rpx;color:#222;}

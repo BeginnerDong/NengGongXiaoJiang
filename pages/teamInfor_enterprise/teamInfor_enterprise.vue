@@ -241,6 +241,8 @@
 </script>
 
 <style>
-	@import "../../assets/style/user.css";
+	/* @import "../../assets/style/user.css"; */
+	@import "../../assets/style/caseSbmit.css";
+	
 	.rr{ justify-content:flex-end; display:flex ; text-align: right; align-items: center; }
 </style> 

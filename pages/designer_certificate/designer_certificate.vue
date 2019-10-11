@@ -131,6 +131,8 @@
 
 <style>
 	@import "../../assets/style/user.css";
+	@import "../../assets/style/myNeed_ind.css";
+	
 	page{background: #f5f5f5; padding-bottom: 80rpx;}
 	.item_delt{ display: flex;justify-content: flex-end; color: #999;}
 	.deltIcon{ width: 30rpx; height: 30rpx;margin-right: 10rpx;}

@@ -184,6 +184,10 @@ input,textarea {outline: none; -webkit-box-shadow: none; box-shadow: none;-webki
 .noDataBox{margin: 80rpx auto;}
 .noDataBox image{width: 275rpx; height: 282rpx; display: block;margin: 0 auto;}
 
+/* 展开更多 */
+.openMore{height: 100rpx; width: 100%; display: flex; justify-content: center; align-items: center;text-align: center;}
+.openMore .icon{ width: 18rpx; height: 10rpx; display: block;}
+
 
 /* 选择 */
 .r-selt{ display: flex;}
@@ -239,7 +243,6 @@ input,textarea {outline: none; -webkit-box-shadow: none; box-shadow: none;-webki
 /* 大星星 */
 .starBigBox{ display: flex;flex-direction: row; justify-content: flex-end; align-items: center; }
 .starBigBox image{width: 36rpx; height: 36rpx; margin:0 10rpx;}
-
 
 
 /* 填写信息列表 */

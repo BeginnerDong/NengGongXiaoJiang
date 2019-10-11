@@ -6,15 +6,8 @@
 			<view class="txBtn" @click=" Router.navigateTo({route:{path:'/pages/myCashOut/myCashOut?type=1'}})">提现</view>
 			<!-- myCashOut -->
 		</view>
-		<view class="f5H5">
-			
-		</view>	
-		<!-- <view class="tooling_indNav">
-			<view class="list">
-				<view class="item" :class="num==1?'on':''" @click="change('1')">推广赏金</view>
-				<view class="item" :class="num==2?'on':''" @click="change('2')">推广海报</view>
-			</view>
-		</view> -->
+		<view class="f5H5"></view>	
+		
 		<view class="orderNav">
 			<view class="tt" :class="num==1?'on':''" @click="change('1')">提现</view>
 			<view class="tt" :class="num==2?'on':''" @click="change('2')">收入{{num}}</view>
@@ -145,7 +138,10 @@
 </script>
 
 <style>
+	
 	@import "../../assets/style/user.css";
+	@import "../../assets/style/myExtend.css";
+	
 	.orderNav .tt{width: 50%;}
 	.finance_indTab .item{padding:30rpx 4%;border-bottom: 2rpx solid #E7E7E7;}
 	.finance_indTab .item .tit{margin-bottom: 14rpx; line-height: 40rpx;}

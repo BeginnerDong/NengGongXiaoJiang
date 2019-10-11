@@ -114,6 +114,4 @@
 
 <style>
 	@import "../../assets/style/index.css";
-	
-	.xqbotomBar .left .ite{ width: 33.3%;}
 </style>

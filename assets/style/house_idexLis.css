@@ -1,0 +1,12 @@
+
+/* 房源 */
+.house_idexLis{padding-top: 30rpx;}
+.house_idexLis .item{margin-bottom: 30rpx;border-radius: 10rpx;overflow: hidden;}
+.house_idexLis .item .img{width: 100%; height: 340rpx;overflow: hidden;}
+.house_idexLis .item .img image{width: 100%;height: 100%;}
+.house_idexLis .item .infor{padding: 20rpx;}
+.house_idexLis .infor .tit{font-size: 28rpx;}
+.house_idexLis .adrs{padding-left: 40rpx;font-size: 24rpx;color: #666; margin: 16rpx 0;}
+.house_idexLis .adrs .icon{ width:30rpx; height:30rpx; display: block;position: absolute;
+left: 0;top: 0;}
+
