@@ -149,6 +149,7 @@
 				postData.searchItem = {
 					type:2
 				};
+				postData.searchItem.user_no = uni.getStorageSync('user_info').user_no
 				const callback = (res) => {
 					if (res.solely_code == 100000 && res.info.data[0]) {
 						self.mainData.push.apply(self.mainData,res.info.data)

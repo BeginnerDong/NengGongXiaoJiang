@@ -16,7 +16,7 @@
 		<view class="flexRowBetween money">
 			<view>价格</view>
 			<view class="">
-				<input type="number" value="" v-model="price"  style="text-align: right;" placeholder="请输入价格"/>
+				<input value="" v-model="price"  style="text-align: right;" placeholder="请输入价格"/>
 			</view>
 		</view>
 		<view class="f5H5"></view>
@@ -52,7 +52,7 @@
 			}else if(uni.getStorageSync('threeInfo').identity==2){
 				self.type='designer'				
 			}
-			self.$Utils.loadAll(['getMainData'], self);
+			self.$Utils.loadAll(['getMainData','getUserInfoData'], self);
 			if(options.id){
 				self.id = options.id;
 				
@@ -60,6 +60,25 @@
 		},
 		
 		methods: {
+			
+			getUserInfoData() {
+				const self = this;
+				console.log('852369')
+				const postData = {};
+				postData.tokenFuncName = 'getThreeToken';
+				postData.searchItem = {
+					user_no:uni.getStorageSync('threeInfo').user_no
+				};
+				const callback = (res) => {
+					if (res.solely_code == 100000 && res.info.data[0]) {
+						self.userInfoData = res.info.data[0]
+					} else {
+						self.$Utils.showToast(res.msg, 'none');
+					};
+					self.$Utils.finishFunc('getUserInfoData');
+				};
+				self.$apis.userInfoGet(postData, callback);
+			},
 			
 			submit(){
 				const self = this;
@@ -145,7 +164,7 @@
 				const self = this;
 				
 				uni.setStorageSync('canClick', false);
-				if(uni.getStorageSync('threeInfo').info.mainImg.length==0){
+				if(self.userInfoData.mainImg.length==0){
 					uni.setStorageSync('canClick', true);
 					uni.showModal({
 					    title: '提示',

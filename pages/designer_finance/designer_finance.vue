@@ -10,16 +10,16 @@
 		
 		<view class="orderNav">
 			<view class="tt" :class="num==1?'on':''" @click="change('1')">提现</view>
-			<view class="tt" :class="num==2?'on':''" @click="change('2')">收入{{num}}</view>
+			<view class="tt" :class="num==2?'on':''" @click="change('2')">收入</view>
 		</view>
 		<view class="finance_indTab" v-if="num==1">
 			<view class="item flexRowBetween" v-for="item in mainData">
 				<view class="left">
-					<view class="tit font14">提现</view>
+					<view class="tit font14">{{item.trade_info}}</view>
 					<view class="time">{{item.create_time}}</view>
 				</view>
 				<view class="right">
-					<view class="tit font12">提现成功</view>
+					<!-- <view class="tit font12">提现成功</view> -->
 					<view class="price">{{item.count}}</view>
 				</view>
 			</view>
@@ -32,11 +32,10 @@
 					<view class="time">{{item.create_time}}</view>
 				</view>
 				<view class="right">
-					<view class="tit font12">订单名称</view>
+					<!-- <view class="tit font12">订单名称</view> -->
 					<view class="red">+{{item.count}}</view>
 				</view>
-			</view>
-			
+			</view>	
 		</view>	
 	</view>
 </template>
@@ -123,6 +122,8 @@
 				postData.tokenFuncName = 'getThreeToken';
 				postData.paginate = self.$Utils.cloneForm(self.paginate);
 				postData.searchItem = self.$Utils.cloneForm(self.searchItem);
+				postData.searchItem.user_no = uni.getStorageSync('threeInfo').user_no;
+				postData.searchItem.status = ['in',[0,1]];
 				const callback = (res) => {
 					if (res.info.data.length > 0) {
 						self.mainData.push.apply(self.mainData, res.info.data);

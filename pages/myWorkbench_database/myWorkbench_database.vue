@@ -14,7 +14,7 @@
 					<view class="party font12 color3">{{item.title=='工人上传资料'?'乙方':'甲方'}}</view>
 					<view class="flexRowBetween last">
 						<view class="upBtn">下载</view>
-						<view class="delt"  @click="deleteOne(index)">
+						<view class="delt"  @click="deleteOne(index)" v-if="item.user_no==user_no">
 							<image src="../../static/images/about-address-icon3.png" mode=""></image>
 							删除
 						</view>
@@ -48,8 +48,8 @@
 			return {
 				Router: this.$Router,
 
-
-
+				user_no:'',
+				
 				mainData:[],
 			}
 		},
@@ -60,6 +60,11 @@
 			self.type=options.type;
 			self.paginate = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
 			//self.$Utils.loadAll(['getMainData'], self);
+			if(self.type==1){
+				self.user_no = uni.getStorageSync('user_info').user_no
+			}else{
+				self.user_no = uni.getStorageSync('threeInfo').user_no
+			}
 		},
 
 		onReachBottom() {

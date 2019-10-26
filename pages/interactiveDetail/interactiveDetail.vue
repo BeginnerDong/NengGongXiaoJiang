@@ -237,7 +237,7 @@
 				const callback = (data) => {				
 					if (data.solely_code == 100000) {					
 						self.$Utils.showToast('评论成功', 'none');
-						
+						self.content = '';
 						self.getOriginData()
 					} else {
 						uni.setStorageSync('canClick', true);

@@ -27,12 +27,12 @@
 		</view>
 		<view class="f5H5"></view>
 		
-		<view class="fabubtn" style="top: 460rpx;right:20rpx">
+		<button class="fabubtn" style="top: 460rpx;right:20rpx">
 			<view class="icon">
 				<image src="../../static/images/about-order-details-icon1.png" mode=""></image>
 			</view>
 			<view class="tit">联系客服</view>
-		</view>
+		</button>
 		
 		<view class="infor-title flexRowBetween">
 			<view class="xian"></view>
@@ -204,11 +204,9 @@
 					user_type:0,
 					status:['in',[1,-1]]
 				};
-				if(self.type==1){
-					postData.tokenFuncName = 'getThreeToken';
-				}else{
-					postData.tokenFuncName = 'getProjectToken';
-				}	
+				
+				postData.tokenFuncName = 'getThreeToken';
+				
 				postData.order = {
 					id:'asc'
 				};
@@ -242,11 +240,9 @@
 				postData.order = {
 					id:'asc'
 				};
-				if(self.type==1){
-					postData.tokenFuncName = 'getThreeToken';
-				}else{
-					postData.tokenFuncName = 'getProjectToken';
-				}	
+				
+				postData.tokenFuncName = 'getThreeToken';
+				
 				const callback = (res) => {
 					if (res.info.data.length > 0) {
 						self.orderItemTwoData.push.apply(self.orderItemTwoData,res.info.data);
@@ -278,11 +274,9 @@
 				postData.order = {
 					create_time:'asc'
 				};
-				if(self.type==1){
-					postData.tokenFuncName = 'getThreeToken';
-				}else{
-					postData.tokenFuncName = 'getProjectToken';
-				}	
+				
+				postData.tokenFuncName = 'getThreeToken';
+				
 				const callback = (res) => {
 					if (res.info.data.length > 0) {
 						self.processData = res.info.data
@@ -303,11 +297,9 @@
 					id:self.id,
 					user_type:0
 				};
-				if(self.type==1){
-					postData.tokenFuncName = 'getThreeToken';
-				}else{
-					postData.tokenFuncName = 'getProjectToken';
-				}	
+				
+				postData.tokenFuncName = 'getThreeToken';
+				
 				postData.getAfter = {
 					shopInfo:{
 						tableName:'UserInfo',
@@ -350,7 +342,17 @@
 <style>
 	@import "../../assets/style/user.css";
 	@import "../../assets/style/caseSbmit.css";
-	
+	button{
+		background: none;
+		line-height: 1.5;
+	}
+	button::after{
+		border: none;
+	}
+	.button-hover{
+		color: #000000;
+		background: none;
+	}
 	page{padding-bottom: 80rpx;}
 	.tooling_detail{padding-bottom: 60rpx;}
 	

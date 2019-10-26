@@ -188,6 +188,18 @@
 				postData.searchItem = {
 					id: self.id
 				};
+				postData.saveAfter = [
+					{
+						tableName: 'Process',
+						FuncName: 'add',
+						data: {
+							type: 1,
+							order_no: self.mainData.order_no,
+							title:'用户确认合同',
+							price:parseFloat(self.totalPrice).toFixed(2)*(ratio/100)+self.mPrice
+						}
+					}
+				];
 				const callback = (res) => {
 					if (res.solely_code == 100000) {
 						if (res.info) {

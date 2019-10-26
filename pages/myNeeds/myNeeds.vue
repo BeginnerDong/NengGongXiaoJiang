@@ -47,7 +47,6 @@
 		onShow() {
 			const self = this;
 			
-			
 		},
 
 		onReachBottom() {
@@ -79,7 +78,8 @@
 				postData.paginate = self.$Utils.cloneForm(self.paginate);
 				postData.searchItem = {
 					thirdapp_id: 2,
-					type:2
+					type:2,
+					user_no:uni.getStorageSync('user_info').user_no
 				};		
 				const callback = (res) => {
 					if (res.info.data.length > 0) {

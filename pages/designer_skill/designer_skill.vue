@@ -156,6 +156,7 @@
 				postData.paginate = self.$Utils.cloneForm(self.paginate);
 				postData.searchItem = {
 					thirdapp_id: 2,
+					user_no:uni.getStorageSync('threeInfo').user_no
 				};		
 				if(self.isWorker){
 					postData.searchItem.type=1

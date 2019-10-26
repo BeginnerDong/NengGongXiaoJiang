@@ -113,6 +113,97 @@ export default {
 			}
 		})
 	},
+	
+	getLocation(type, callback) {
+		wx.getSetting({
+			success: (res) => {
+				if (res.authSetting['scope.userLocation'] != undefined && res.authSetting['scope.userLocation'] != true) { //非初始化进入该页面,且未授权
+					callback&&callback(res)
+				} else if (res.authSetting['scope.userLocation'] == undefined) { //初始化进入
+					wx.getLocation({
+					  type: 'gcj02',
+					  success: function (res) {
+					    var latitude = res.latitude
+					    var longitude = res.longitude
+					    
+					    if(type=='getGeocoder'){
+					        callback&&callback(res)
+					        return;
+					    };
+					    if(type=='reverseGeocoder'){
+					        wxMap.reverseGeocoder({
+					          location: {
+					            latitude: latitude,
+					            longitude: longitude
+					          },
+					          success: function (res) {
+					            callback&&callback(res.result)
+					          },
+					          fail(res){
+					            wx.showToast({
+					                title:'获取位置失败',
+					                icon:'none',
+					                duration:2000,
+					                mask:true,
+					            });
+					          }
+					        });  
+					    }
+					  },
+					  fail(res) {
+					    wx.showToast({
+					        title:'获取经纬度失败',
+					        icon:'none',
+					        duration:2000,
+					        mask:true,
+					    }); 
+					  }
+					})
+				} else { //授权后默认加载
+					wx.getLocation({
+					  type: 'gcj02',
+					  success: function (res) {
+					    var latitude = res.latitude
+					    var longitude = res.longitude
+						/* var latitude = 33.0678400000
+						var longitude = 107.0319400000 */
+					    if(type=='getGeocoder'){
+					        callback&&callback(res)
+					        return;
+					    };
+					    if(type=='reverseGeocoder'){
+					        wxMap.reverseGeocoder({
+					          location: {
+					            latitude: latitude,
+					            longitude: longitude
+					          },
+					          success: function (res) {
+					            callback&&callback(res.result)
+					          },
+					          fail(res){
+					            wx.showToast({
+					                title:'获取位置失败',
+					                icon:'none',
+					                duration:2000,
+					                mask:true,
+					            });
+					          }
+					        });  
+					    }
+					  },
+					  fail(res) {
+					    wx.showToast({
+					        title:'获取经纬度失败',
+					        icon:'none',
+					        duration:2000,
+					        mask:true,
+					    }); 
+					  }
+					})
+				}
+			}
+		})
+	},
 
 	showToast(title, type, duration, func) {
 		uni.showToast({

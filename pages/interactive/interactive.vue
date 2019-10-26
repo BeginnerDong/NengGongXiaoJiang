@@ -15,8 +15,7 @@
 		</view>
 
 		<view class="interct_idexLis mglr4 boxShaow">
-			<view class="child" v-for="item in mainData" 
-			@click="Router.navigateTo({route:{path:'/pages/interactiveDetail/interactiveDetail?id='+item.id}})">
+			<view class="child" v-for="(item,index) in mainData">
 				<view class="flex">
 					<view class="photo">
 						<image :src="item.mainImg&&item.mainImg[0]?item.mainImg[0]:''" mode=""></image>
@@ -29,11 +28,11 @@
 				<view class="text font13">{{item.content}}</view>
 				<view class="imgbox">
 					<view v-for="c_item in item.bannerImg" :class="item.bannerImg.length==1?'lisOne':(item.bannerImg.length==2?'lisTwo':'lisThree')">
-						<image :src="c_item" mode=""></image>
+						<image mode="aspectFill" @click="previewImage(index)" :src="c_item"></image>
 					</view>
 					<!--  -->
 				</view>
-				<view class="label">
+				<view class="label" @click="Router.navigateTo({route:{path:'/pages/interactiveDetail/interactiveDetail?id='+item.id}})">
 					<view class="lis">
 						<image src="../../static/images/home-interactive-icon3.png" mode=""></image>
 						<view>{{item.view_count}}</view>
@@ -96,6 +95,22 @@
 		},
 
 		methods: {
+			
+			previewImage(index){
+				const self = this;
+				uni.previewImage({
+					urls: self.mainData[index].bannerImg,
+					longPressActions: {
+						itemList: ['发送给朋友', '保存图片', '收藏'],
+						success: function(data) {
+							console.log('选中了第' + (data.tapIndex + 1) + '个按钮,第' + (data.index + 1) + '张图片');
+						},
+						fail: function(err) {
+							console.log(err.errMsg);
+						}
+					}
+				});
+			},
 
 			getMainData(isNew) {
 				const self = this;

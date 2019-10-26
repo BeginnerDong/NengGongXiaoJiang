@@ -32,9 +32,11 @@
 				Utils:this.$Utils,
 				mainData:{},
 				type:'',
-				flowLogData:{},
+				
 				lessMoney:0,
-				distriData:[]
+				distriData:[],
+				hasPay:0,
+				flowLogData:[]
 			}
 		},
 		
@@ -77,7 +79,8 @@
 						data: {
 							type: 1,
 							order_no: self.mainData.order_no,
-							title:'用户已确认验收'
+							title:'用户已确认验收',
+							price:self.lessMoney
 						}
 					},
 					{
@@ -157,7 +160,11 @@
 											
 										}
 									});
-									
+									setTimeout(function() {
+										uni.navigateBack({
+											delta: 1
+										});
+									}, 1000);
 								} else {
 									uni.setStorageSync('canClick', true);
 									uni.showToast({
@@ -175,7 +182,11 @@
 									
 								}
 							});
-							
+							setTimeout(function() {
+								uni.navigateBack({
+									delta: 1
+								});
+							}, 1000);
 						};
 					} else {
 						uni.setStorageSync('canClick', true);
@@ -252,6 +263,16 @@
 							status:1
 						}
 					},	
+					parentOrder:{
+						tableName:'Order',
+						middleKey:'parent_no',
+						key:'order_no',
+						condition:'=',
+						searchItem:{
+							status:1,
+							user_type:0
+						}
+					},
 				};
 				const callback = (res) => {
 					if (res.info.data.length > 0) {
@@ -282,7 +303,7 @@
 				const self = this;
 				const postData = {};		
 				postData.searchItem = {
-					order_no:self.mainData.order_no,
+					order_no:self.mainData.parentOrder[0].order_no,
 					user_type:0
 				};
 				if(self.type==1){
@@ -292,8 +313,11 @@
 				};
 				const callback = (res) => {
 					if (res.info.data.length > 0) {
-						self.flowLogData=res.info.data[0];
-						self.lessMoney = (parseFloat(self.mainData.price) + parseFloat(self.flowLogData.count)).toFixed(2)
+						self.flowLogData.push.apply(self.flowLogData,res.info.data);
+						for (var i = 0; i < self.flowLogData.length; i++) {
+							self.hasPay += parseFloat(self.flowLogData[i].count)
+						}
+						self.lessMoney = (parseFloat(self.mainData.price) + parseFloat(self.hasPay)).toFixed(2)
 					};
 					console.log('self.mainData.price',self.mainData.price)
 					console.log('5',parseFloat(self.flowLogData.count).toFixed(2))

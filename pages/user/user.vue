@@ -2,7 +2,7 @@
 	<view>
 
 		<view class="userHead" style="position: relative;">
-			<image src="../../static/images/about-img1.png" style="position:absolute;height: 320rpx;width: 100%;z-index: -1;"></image>
+			<image src="../../static/images/about-img1.jpg" style="position:absolute;height: 320rpx;width: 100%;z-index: -1;"></image>
 			<view class="infor">
 				<view class="left">
 					<view style="width: 120rpx; height: 120rpx;border-radius: 50%;overflow: hidden;margin-right: 20px;">

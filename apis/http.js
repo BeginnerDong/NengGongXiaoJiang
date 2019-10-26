@@ -10,7 +10,7 @@ export default {
             if(res){
                 obj.data.refreshToken=false;
             };
-            self.HTTP(obj);
+             self.HTTP(obj);
         };
         if(obj.data.tokenFuncName){
             

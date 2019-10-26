@@ -20,19 +20,19 @@
 					<view class="cont">
 						<view class="title avoidOverflow">{{mainData.products&&mainData.products[0]&&mainData.products[0].snap_product?mainData.products[0].snap_product.title:''}}</view>
 						<view class="text avoidOverflow2">{{mainData.userInfo&&mainData.userInfo[0]?mainData.userInfo[0].introduce:''}}</view>
-						<view class="price priceM">{{mainData.price}}</view>
+						<view class="price priceM">{{mainData.parentOrder&&mainData.parentOrder[0]?mainData.parentOrder[0].price:''}}</view>
 					</view>
 				</view>
 			</view>
 		</view>
 		<view class="f5H5"></view>
 		
-		<view class="fabubtn" style="top: 460rpx;right:20rpx">
+		<button class="fabubtn" style="top: 460rpx;right:20rpx" open-type="contact">
 			<view class="icon">
 				<image src="../../static/images/about-order-details-icon1.png" mode=""></image>
 			</view>
 			<view class="tit">联系客服</view>
-		</view>
+		</button>
 		
 		<view class="infor-title flexRowBetween" style="padding-bottom: 50rpx;">
 			<view class="xian"></view>
@@ -377,6 +377,16 @@
 							status:1
 						}
 					},
+					parentOrder:{
+						tableName:'Order',
+						middleKey:'parent_no',
+						key:'order_no',
+						condition:'=',
+						searchItem:{
+							status:1,
+							user_type:0
+						}
+					}
 					/* process:{
 						tableName:'Process',
 						middleKey:'order_no',
@@ -410,5 +420,16 @@
 <style>
 	@import "../../assets/style/user.css";
 	page{padding-bottom: 80rpx;}
+	button{
+		background: none;
+		line-height: 1.5;
+	}
+	button::after{
+		border: none;
+	}
+	.button-hover{
+		color: #000000;
+		background: none;
+	}
 	.WorkbenchBtn{width: 90%; margin: 20rpx auto; height:70rpx; line-height: 70rpx;text-align: center; background: #FFCB1E;border-radius: 10rpx;}
 </style>

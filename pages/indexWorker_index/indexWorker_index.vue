@@ -59,7 +59,7 @@
 		<view class="tejiaBox">
 			<scroll-view class="scrollX" scroll-x>
 				<view class="item-lis" v-for="(item,index) in mainData.message" :key="index" >
-					<image class="img" :src="item.mainImg[0].url" alt="" />
+					<image class="img" @click="previewImage(index)" :src="item.mainImg[0].url" alt="" />
 				</view>
 			</scroll-view>
 		</view>
@@ -70,15 +70,13 @@
 			<view class="tt">技能</view>
 		</view>
 		<view class="caseSbmit">
-			<view class="eidt-line" v-for="(item,index) in mainData.product" :key="index" >
+			<view class="eidt-line" v-for="(item,index) in mainData.product" 
+			:key="index" @click=" Router.navigateTo({route:{path:'/pages/indexWorkerDetail/indexWorkerDetail?id='+item.id}})">
 				<view class="ll">{{item.title}}：</view>
 				<view class="rr price" style="text-align: right;">{{item.price}}</view>
 			</view>
-			
 		</view>
-		
 	</view>
-
 </template>
 
 
@@ -95,6 +93,7 @@
 				normalSrc: '../../static/images/home-supervision-icon3.png',
 				selectedSrc: '../../static/images/home-supervision-icon1.png',
 				halfSrc: '../../static/images/home-supervision-icon2.png',
+				imageArray:[]
 			}
 		},
 
@@ -105,6 +104,26 @@
 		},
 
 		methods: {
+			
+			previewImage(index){
+				const self = this;
+				for (var i = 0; i < self.mainData.message.length; i++) {
+					self.imageArray.push(self.mainData.message[i].mainImg[0].url)
+				};
+				uni.previewImage({
+					urls: self.imageArray,
+					current:index,
+					longPressActions: {
+						itemList: ['发送给朋友', '保存图片', '收藏'],
+						success: function(data) {
+							console.log('选中了第' + (data.tapIndex + 1) + '个按钮,第' + (data.index + 1) + '张图片');
+						},
+						fail: function(err) {
+							console.log(err.errMsg);
+						}
+					}
+				});
+			},
 			
 			getMainData() {
 				const self = this;
@@ -139,6 +158,7 @@
 				const callback = (res) => {
 					if (res.solely_code == 100000 && res.info.data[0]) {
 						self.mainData = res.info.data[0];
+						
 					} else {
 						self.$Utils.showToast(res.msg, 'none')
 					};

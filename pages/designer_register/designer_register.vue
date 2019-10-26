@@ -37,7 +37,7 @@
 			<view class="item">
 				<view class="icon"><image src="../../static/images/regietered-icon3.png" mode=""></image></view>
 				<view class="rr">
-					<input type="number" placeholder="请输入提升星级兑换码">
+					<input type="text" placeholder="请输入提升星级兑换码" v-model="submitData.code">
 				</view>
 			</view>
 			<view class="item" v-if="type=='worker'">
@@ -297,6 +297,7 @@
 			
 			workChange(e) {
 				const self = this;
+				self.workStyleArray = [];
 				console.log(e);
 				console.log('picker发送选择改变，携带值为', e.target.value)
 				self.submitData.type=self.workArray[e.target.value].id
@@ -317,9 +318,7 @@
 				const callback = (res) => {
 					if (res.solely_code == 100000 && res.info.data[0]) {
 						self.workStyleArray = res.info.data
-					} else {
-						self.$Utils.showToast(res.msg, 'none')
-					};		
+					}
 				};
 				self.$apis.labelGet(postData, callback);
 			},

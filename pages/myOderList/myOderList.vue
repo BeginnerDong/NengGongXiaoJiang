@@ -30,7 +30,7 @@
 				<view class="bBtn">
 					<view class="btn gopay" v-if="item.pay_status==0" @click="pay(item.id,item.price,index)">去支付</view>
 					<view class="btn selt" v-if="item.pay_status==0" @click="orderUpdate(index,'1')">取消订单</view>
-					<view class="btn" v-if="item.type==4" @click="refundAlert(index)">退款</view>
+					<view class="btn" v-if="item.type==4&&item.pay_status==1" @click="refundAlert(index)">退款</view>
 					<view class="btn" v-if="item.order_step==1">退款中</view>
 					<view class="btn" v-if="item.pay_status==1&&item.transport_status==1" @click="orderUpdate(index,'2')">确认收货</view>
 				</view>
@@ -64,7 +64,8 @@
 				},
 				mainData:[],
 				current:1,
-				refundIndex:''
+				refundIndex:'',
+				is_show:false
 			}
 		},
 

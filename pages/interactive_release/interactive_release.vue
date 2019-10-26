@@ -46,10 +46,13 @@
 			const self = this;
 			uni.setStorageSync('canClick', true);
 			
-			//self.$Utils.loadAll(['getMainData'], self);
+			//self.$Utils.loadAll(['getLocation'], self);
 		},
 		
 		methods: {
+			
+			
+			
 			
 			upLoadImg(type) {
 				const self = this;			

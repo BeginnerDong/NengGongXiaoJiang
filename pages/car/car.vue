@@ -9,7 +9,7 @@
 				</view>
 				<view class="twoCt flexRowBetween">
 					<view class="leftbox">
-						<image src="../../static/images/home-interactive-img1.png"></image>
+						<image :src="item.mainImg&&item.mainImg[0]?item.mainImg[0].url:''"></image>
 					</view>
 					<view class="cont">
 						<view class="title avoidOverflow2">{{item.title}}</view>

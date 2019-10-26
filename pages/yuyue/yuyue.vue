@@ -80,10 +80,12 @@
 				const postData = self.$Utils.cloneForm(self.mainData)
 				postData.tokenFuncName = 'getProjectToken';
 				postData.snap_address = self.addressData;
-				postData.data = self.$Utils.cloneForm(self.submitData)
+				postData.parent = 1;
+				postData.data = self.$Utils.cloneForm(self.submitData);
 				const callback = (res) => {
 					if (res && res.solely_code == 100000) {
 						self.orderId = res.info.id;
+						self.$Utils.showToast('预约成功', 'none')	
 						setTimeout(function() {
 							self.$Router.redirectTo({route:{path:'/pages/myToolingOrder/myToolingOrder'}})
 						}, 1000);

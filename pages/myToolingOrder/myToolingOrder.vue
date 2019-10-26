@@ -32,7 +32,7 @@
 					<view class="cont">
 						<view class="title avoidOverflow">{{item.products&&item.products[0]&&item.products[0].snap_product?item.products[0].snap_product.title:''}}</view>
 						<view class="text avoidOverflow2">{{item.userInfo&&item.userInfo[0]?item.userInfo[0].introduce:''}}</view>
-						<view class="price priceM">{{item.price}}</view>
+						<view class="price priceM">{{item.parentOrder&&item.parentOrder[0]?item.parentOrder[0].price:''}}</view>
 					</view>
 				</view>
 				<view class="bBtn">
@@ -163,8 +163,19 @@
 						searchItem:{
 							status:1
 						}
+					},
+					parentOrder:{
+						tableName:'Order',
+						middleKey:'parent_no',
+						key:'order_no',
+						condition:'=',
+						searchItem:{
+							status:1,
+							user_type:0
+						}
 					}
 				};
+				
 				const callback = (res) => {
 					if (res.info.data.length > 0) {
 						self.mainData.push.apply(self.mainData, res.info.data);

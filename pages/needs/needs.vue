@@ -5,7 +5,7 @@
 				<view class="eidt-line">
 					<view class="ll">所在城市：</view>
 					<view class="rr" @click="showMulLinkageThreePicker">
-						<input type="text" placeholder="请选择" :value="submitData.passage1">
+						<input disabled="true" type="text" placeholder="请选择" :value="submitData.passage1">
 					</view>
 				</view>
 				<view class="eidt-line">

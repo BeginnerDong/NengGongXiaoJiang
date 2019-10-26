@@ -164,8 +164,9 @@
 				const callback = (res) => {
 					if (res.info.data.length > 0) {
 						self.distriData=res.info.data;
-						self.pay()
+						
 					} 
+					self.pay()
 				};
 				self.$apis.distriGet(postData, callback);
 			},
