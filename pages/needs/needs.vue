@@ -37,7 +37,7 @@
 						<input type="number" v-model="submitData.phone" placeholder="请输入手机号码" maxlength="11" onkeyup="this.value=this.value.replace(/\D/g,'')" >
 					</view>
 				</view>
-				<view class="submitbtn" style="margin: 200rpx auto">
+				<view class="submitbtn" style="margin: 200rpx auto 60rpx auto">
 					<button type="submit" style="margin-bottom: 20rpx;"  open-type="getUserInfo"  @getuserinfo="Utils.stopMultiClick(submit)">立即发布</button>
 					<view class="agreeSel">
 						<view class="selt" @click="agree">
@@ -60,6 +60,37 @@
 		</view>
 		<mpvue-city-picker :themeColor="themeColor" ref="mpvueCityPicker" :pickerValueDefault="cityPickerValueDefault"
 		         @="" @onConfirm="onConfirm"></mpvue-city-picker>
+				 
+		
+		<!--底部tab键-->
+		<view class="navbar">
+			<view class="navbar_item" @click="Router.redirectTo({route:{path:'/pages/index/index'}})">
+				<view class="nav_img">
+					<image src="../../static/images/nabar1.png" />
+				</view>
+				<view class="text">首页</view>
+			</view>
+			<view class="navbar_item" @click="Router.redirectTo({route:{path:'/pages/needs/needs'}})" >
+				<view class="nav_img">
+					<image src="../../static/images/nabar2-a.png" />
+				</view>
+				<view class="text this-text">需求</view>
+			</view>
+			<view class="navbar_item" @click="Router.redirectTo({route:{path:'/pages/car/car'}})" >
+				<view class="nav_img">
+					<image src="../../static/images/nabar3.png" />
+				</view>
+				<view class="text">购物车</view>
+			</view>
+			<view class="navbar_item" @click="Router.redirectTo({route:{path:'/pages/user/user'}})">
+				<view class="nav_img">
+					<image src="../../static/images/nabar4.png" />
+				</view>
+				<view class="text">我的</view>
+			</view>
+		</view>
+		<!--底部tab键 end-->
+		
 	</view>
 </template>
 
@@ -223,6 +254,8 @@
 	/* @import "../../assets/style/user.css"; */
 	@import "../../assets/style/xieyiAlert.css";
 	@import "../../assets/style/caseSbmit.css";
+	@import "../../assets/style/navbar.css";
+	page{padding-bottom: 140rpx;}
 	
 	
 	.styleLis{ width: 100%; display: flex; flex-wrap: wrap;justify-content: flex-end;}

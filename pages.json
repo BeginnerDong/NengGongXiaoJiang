@@ -663,37 +663,37 @@
 			"path": "", //启动页面，必选
 			"query": "" //启动参数，在页面的onLoad函数里面得到
 		}]
-	},
-	"tabBar":{
-		"color":"#a8a8a8",
-		"selectedColor":"#222222",
-		"backgroundColor": "#ffffff",
-		"list": [
-			{
-			   "pagePath": "pages/index/index",
-			   "text": "首页",
-			   "iconPath": "static/images/nabar1.png",
-			   "selectedIconPath": "static/images/nabar1-a.png"
-			},
-			{
-			  "pagePath": "pages/needs/needs",
-			  "text": "需求",
-			  "iconPath": "static/images/nabar2.png",
-			  "selectedIconPath": "static/images/nabar2-a.png"
-			},
-			{
-			  "pagePath": "pages/car/car",
-			  "text": "购物车",
-			  "iconPath": "static/images/nabar3.png",
-			  "selectedIconPath": "static/images/nabar3-a.png"
-			},
-			{
-			  "pagePath": "pages/user/user",
-			  "text": "我的",
-			  "iconPath": "static/images/nabar4.png",
-			  "selectedIconPath": "static/images/nabar4-a.png"
-			}
-			
-		]
 	}
+	// "tabBar":{
+	// 	"color":"#a8a8a8",
+	// 	"selectedColor":"#222222",
+	// 	"backgroundColor": "#ffffff",
+	// 	"list": [
+	// 		{
+	// 		   "pagePath": "pages/index/index",
+	// 		   "text": "首页",
+	// 		   "iconPath": "static/images/nabar1.png",
+	// 		   "selectedIconPath": "static/images/nabar1-a.png"
+	// 		},
+	// 		{
+	// 		  "pagePath": "pages/needs/needs",
+	// 		  "text": "需求",
+	// 		  "iconPath": "static/images/nabar2.png",
+	// 		  "selectedIconPath": "static/images/nabar2-a.png"
+	// 		},
+	// 		{
+	// 		  "pagePath": "pages/car/car",
+	// 		  "text": "购物车",
+	// 		  "iconPath": "static/images/nabar3.png",
+	// 		  "selectedIconPath": "static/images/nabar3-a.png"
+	// 		},
+	// 		{
+	// 		  "pagePath": "pages/user/user",
+	// 		  "text": "我的",
+	// 		  "iconPath": "static/images/nabar4.png",
+	// 		  "selectedIconPath": "static/images/nabar4-a.png"
+	// 		}
+	// 		
+	// 	]
+	// }
 }

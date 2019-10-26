@@ -1,0 +1,42 @@
+/**app.wxss**/
+
+/***********navbar***********/
+.navbar{
+	height:110rpx;
+	width:100%;
+	position:fixed;
+	bottom:0rpx;
+	z-index:999;
+	background:#fff;
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	text-align:center;
+	box-shadow:0rpx 0rpx 15rpx #D5D5D5;
+}
+.navbar_item{
+	width: 25%;
+	text-align:center;
+}
+.nav_img image{
+	width:44rpx;
+	height:44rpx;
+	display: block;
+	margin: 0 auto;
+}
+
+.navbar .text{
+	color:#999999;
+	font-size:24rpx;
+	margin-top: 4rpx;
+}
+.navbar .this-text{
+	color:#222;
+}
+.nav_img{
+	width:48rpx;
+	height:48rpx;
+	margin:0 auto;
+}
+/***********navbar***********/
+
