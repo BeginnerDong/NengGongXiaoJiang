@@ -80,7 +80,9 @@
 							type: 1,
 							order_no: self.mainData.order_no,
 							title:'用户已确认验收',
-							price:self.lessMoney
+							price:self.lessMoney,
+							thirdapp_id:2,
+							user_no:uni.getStorageSync('user_info').user_no,
 						}
 					},
 					{
@@ -303,7 +305,7 @@
 				const self = this;
 				const postData = {};		
 				postData.searchItem = {
-					order_no:self.mainData.parentOrder[0].order_no,
+					order_no:self.mainData.order_no,
 					user_type:0
 				};
 				if(self.type==1){

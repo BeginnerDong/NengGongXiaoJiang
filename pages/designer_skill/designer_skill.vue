@@ -62,7 +62,7 @@
 				Router: this.$Router,
 
 
-
+				isWorker:false,
 				mainData:[],
 				is_show: false,
 				num: 1,
@@ -80,9 +80,9 @@
 		
 		onShow() {
 			const self = this;
-			if(uni.getStorageSync('threeInfo').identity==1){
+			if(parseInt(uni.getStorageSync('threeInfo').identity)==1){
 				self.isWorker=true
-			}else if(uni.getStorageSync('threeInfo').identity==2){
+			}else if(parseInt(uni.getStorageSync('threeInfo').identity)==2){
 				self.isWorker=false
 			};
 			self.mainData = [];

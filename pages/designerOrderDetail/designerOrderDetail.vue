@@ -74,7 +74,7 @@
 					<view class="lname">辅料：</view>
 					<view class="rCont">
 						<view class="yy flexRowBetween" v-for="(item,index) in materialOneData">
-							<view class="xx flex">
+							<view class="xx flex" style="width: 80%;">
 								<view>{{item.title}}</view>
 								<view class="price priceM">{{item.price}}</view>
 								<view>{{item.count}}{{item.snap_product&&item.snap_product.label&&item.snap_product.label[item.snap_product.category_id]?item.snap_product.label[item.snap_product.category_id].description:''}}</view>

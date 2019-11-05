@@ -60,7 +60,8 @@
 				daka_time: '',
 				week: ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'],
 				todayData: [],
-				type: ''
+				type: '',
+				urlArray:[	]
 			}
 		},
 
@@ -94,8 +95,11 @@
 			
 			previewImage(index){
 				const self = this;
+				for (var i = 0; i < self.mainData[index].mainImg.length; i++) {
+					self.urlArray.push(self.mainData[index].mainImg[i].url)
+				};
 				uni.previewImage({
-					urls: self.mainData[index].mainImg,
+					urls: self.urlArray,
 					longPressActions: {
 						itemList: ['发送给朋友', '保存图片', '收藏'],
 						success: function(data) {
@@ -210,6 +214,7 @@
 							self.mainData[i].on_time = self.$Utils.timeto(self.mainData[i].on_time, "hms")
 							self.mainData[i].off_time = self.$Utils.timeto(self.mainData[i].off_time, "hms")
 						}
+
 					} else {
 						self.$Utils.showToast('没有更多了', 'none');
 					};

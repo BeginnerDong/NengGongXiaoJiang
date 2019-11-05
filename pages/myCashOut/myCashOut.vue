@@ -1,18 +1,18 @@
 <template>
 	<view>
 		
-		<view class="flexRowBetween bankmsg addBtn" v-if="mainData.number" style="justify-content: space-between;">
+		<view class="flexRowBetween bankmsg addBtn"  @click=" Router.navigateTo({route:{path:'/pages/myBankList/myBankList'}})" v-if="mainData.number" style="justify-content: space-between;">
 			<view>到账银行卡</view>
 			<view class="lft font12">
 				{{mainData.label&&mainData.label[0]?mainData.label[0].title:''}}
 				<view class="color2 num">({{mainData.number}})</view>
 			</view>
-			<view @click=" Router.navigateTo({route:{path:'/pages/myBankList/myBankList'}})">
+			<view>
 				<image style="width: 14rpx; height: 28rpx;" src="../../static/images/about-icon1.png" mode=""></image>
 			</view>
 		</view>
 		
-		<view class="center addBtn" v-else  @click=" Router.navigateTo({route:{path:'/pages/addBankCard/addBankCard'}})">
+		<view class="center addBtn" v-else  @click=" Router.navigateTo({route:{path:'/pages/myBankListMsg/myBankListMsg'}})">
 			<image src="../../static/images/withdrawal-icon.png" mode=""></image>
 			添加银行卡
 		</view>
@@ -109,7 +109,7 @@
 				  postData.refreshToken = true;
 				};
 				postData.data = {
-					count:self.submitData.count,
+					count:-self.submitData.count,
 					thirdapp_id:2,
 					status:0,
 					trade_info:'提现',

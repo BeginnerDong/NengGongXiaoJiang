@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<view class="detailxqBan">
-			<image src="../../static/images/details-img1.png" mode=""></image>
+			<image :src="mainData.label&&mainData.label[mainData.category_id]&&mainData.label[mainData.category_id].mainImg&&mainData.label[mainData.category_id].mainImg[0]?mainData.label[mainData.category_id].mainImg[0].url:''" mode=""></image>
 		</view>
 		
 		<view class="designXq_name pdlr4" style="margin-top: -60rpx;">

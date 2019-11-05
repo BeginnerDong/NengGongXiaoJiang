@@ -52,12 +52,14 @@
 		<view class="pdlr4" v-if="mainData.type==1">辅料</view>
 		<view class="ind_seach" style="border-bottom: 2rpx solid #f5f5f5;" v-if="mainData.type==1">
 			<view class="child" v-for="(item,index) in orderItemTwo">
-				<view class="sqr_name">
+				<view class="sqr_name" style="overflow: hidden;">
 					<view class="uni-list">
 						<view class="uni-list-cell">
 							<view class="uni-list-cell-db">
 								<picker @change="PickerChangeThree" :data-index="index" :range="materialData" range-key="title">
-									<view class="uni-input">{{orderItemTwo[index].title!=''?orderItemTwo[index].title:'请选择'}}</view>
+									<view class="uni-input">
+									{{orderItemTwo[index].title!=''?orderItemTwo[index].title:'请选择'}}
+									</view>
 								</picker>
 							</view>
 						</view>

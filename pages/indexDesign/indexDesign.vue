@@ -42,7 +42,7 @@
 			<view class="items flexRowBetween" v-for="(item,index) in mainData" :key="index" 
 			@click=" Router.navigateTo({route:{path:'/pages/indexDesign_index/indexDesign_index?user_no='+item.user_no}})">
 				<view class="pic">
-					<image :src="item.mainImg[0].url" alt="" />
+					<image :src="item.mainImg&&item.mainImg[0]?item.mainImg[0].url:''" alt="" />
 				</view>
 				<view class="infor">
 					<view class="title flex">

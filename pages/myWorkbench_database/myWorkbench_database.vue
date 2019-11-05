@@ -13,7 +13,7 @@
 					<view class="avoidOverflow">{{item.description}}</view>
 					<view class="party font12 color3">{{item.title=='工人上传资料'?'乙方':'甲方'}}</view>
 					<view class="flexRowBetween last">
-						<view class="upBtn">下载</view>
+						<view class="upBtn" @click="save(index)">下载</view>
 						<view class="delt"  @click="deleteOne(index)" v-if="item.user_no==user_no">
 							<image src="../../static/images/about-address-icon3.png" mode=""></image>
 							删除
@@ -61,9 +61,9 @@
 			self.paginate = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
 			//self.$Utils.loadAll(['getMainData'], self);
 			if(self.type==1){
-				self.user_no = uni.getStorageSync('user_info').user_no
-			}else{
 				self.user_no = uni.getStorageSync('threeInfo').user_no
+			}else{
+				self.user_no = uni.getStorageSync('user_info').user_no
 			}
 		},
 
@@ -75,6 +75,9 @@
 				self.getMainData()
 			};
 		},
+		
+		
+		
 
 		onShow() {
 			const self = this;
@@ -83,6 +86,63 @@
 		},
 
 		methods: {
+			
+			save(index) {
+				let self = this
+				//若二维码未加载完毕，加个动画提高用户体验
+				wx.showToast({
+					icon: 'loading',
+					title: '正在下载图片',
+					duration: 1000
+				})
+				//判断用户是否授权"保存到相册"
+				wx.getSetting({
+					success(res) {
+						//没有权限，发起授权
+						if (!res.authSetting['scope.writePhotosAlbum']) {
+							wx.authorize({
+								scope: 'scope.writePhotosAlbum',
+								success() { //用户允许授权，保存图片到相册
+									self.savePhoto(index);
+								},
+								fail() { //用户点击拒绝授权，跳转到设置页，引导用户授权
+									wx.openSetting({
+										success() {
+											wx.authorize({
+												scope: 'scope.writePhotosAlbum',
+												success() {
+													self.savePhoto(index);
+												}
+											})
+										}
+									})
+								}
+							})
+						} else { //用户已授权，保存到相册
+							self.savePhoto(index)
+						}
+					}
+				})
+			},
+			//保存图片到相册，提示保存成功
+			savePhoto(index) {
+				let self = this
+				wx.downloadFile({
+					url: self.mainData[index].mainImg[0].url,
+					success: function(res) {
+						wx.saveImageToPhotosAlbum({
+							filePath: res.tempFilePath,
+							success(res) {
+								wx.showToast({
+									title: '保存成功',
+									icon: "success",
+									duration: 1000
+								})
+							}
+						})
+					}
+				})
+			},
 			
 			deleteOne(index) {
 				const self = this;

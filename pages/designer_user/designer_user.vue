@@ -50,13 +50,13 @@
 				<view class="ilblock">技能管理</view>
 				<image class="arrow" src="../../static/images/arrow-icon1.png" ></image>
 			</view>
-			<view class="info" @click=" Router.navigateTo({route:{path:'/pages/designer_case/designer_case'}})">
+			<!-- <view class="info" @click=" Router.navigateTo({route:{path:'/pages/designer_case/designer_case'}})">
 				<view class="ilblock listimg">
 					<image src="../../static/images/workers-icon7.png"></image>
 				</view>
 				<view class="ilblock">案例管理</view>
 				<image class="arrow" src="../../static/images/arrow-icon1.png" ></image>
-			</view>
+			</view> -->
 			<view class="info" @click=" Router.navigateTo({route:{path:'/pages/designer_finance/designer_finance'}})">
 				<view class="ilblock listimg">
 					<image src="../../static/images/workers-icon8.png"></image>
@@ -119,13 +119,17 @@
 			
 			toDetail(){
 				const self = this;
-				console.log(22)
-				if(self.mainData.behavior==0){
+				
+				console.log(self.mainData.behavior)
+				if(parseInt(self.mainData.behavior)==0){
 					console.log(233)
 					self.Router.navigateTo({route:{path:'/pages/teamInfor/teamInfor'}})
-				}else if(self.mainData.bahavior==1){
+				}
+				if(parseInt(self.mainData.behavior)==1){
+					console.log(456)
 					self.Router.navigateTo({route:{path:'/pages/teamInfor_personal/teamInfor_personal'}})
-				}else if(self.mainData.bahavior==2){
+				} 
+				if(parseInt(self.mainData.behavior)==2){
 					self.Router.navigateTo({route:{path:'/pages/teamInfor_enterprise/teamInfor_enterprise'}})
 				}
 			},

@@ -281,7 +281,7 @@
 						self.$Utils.showToast('操作成功', 'none');
 						if(type=='1'){
 							self.addOrder()
-						}else{
+						}else if(type=='2'){
 							setTimeout(function() {						
 								uni.navigateBack({
 									delta:1

@@ -61,7 +61,15 @@
 		onLoad() {
 			const self = this;
 			self.paginate = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
-			self.$Utils.loadAll(['getUserData','getMainData'], self);
+			self.$Utils.loadAll(['getUserData'], self);
+		},
+		
+		
+		onShow() {
+			const self = this;
+			//self.paginate = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
+			//self.mainData = [];
+			self.getMainData(true)
 		},
 		
 		onReachBottom() {

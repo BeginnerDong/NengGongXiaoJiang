@@ -20,7 +20,7 @@
 					<view class="rr pr" style="padding-right: 20rpx;">
 						<view style="width: 50%;">
 							<picker mode="date" @change="timeChange">
-								请选择
+								{{submitData.establish_time!=''?submitData.establish_time:'请选择'}}
 							</picker>
 							
 						</view>
@@ -37,7 +37,7 @@
 					<view class="ll">所在地：</view>
 					<view class="rr pr" style="padding-right: 20rpx;">
 						<view style="width: 50%;" @click="showMulLinkageThreePicker">
-							<input type="text" placeholder="请选择地址" :value="submitData.address" disabled="true">
+							<input type="text" placeholder="请选择地址" v-model="submitData.location" disabled="true">
 						</view>
 						<image class="arrow" src="../../static/images/case-icon1.png" mode=""></image>
 					</view>
@@ -59,7 +59,8 @@
 				</view>
 			</form>
 		</view>
-		
+		<mpvue-city-picker :themeColor="themeColor" ref="mpvueCityPicker" :pickerValueDefault="cityPickerValueDefault"
+		 @="" @onConfirm="onConfirm"></mpvue-city-picker>
 	</view>
 </template>
 
@@ -114,6 +115,7 @@
 			timeChange(e){
 				const self = this;
 				console.log(e)
+				self.submitData.establish_time = e.detail.value
 			},
 			
 			submit() {

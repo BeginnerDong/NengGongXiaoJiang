@@ -2,7 +2,7 @@
 	<view>
 		<scroll-view class="navLisBox" scroll-x>
 			<!-- 点击导航选中当前项 -->
-			<view class="nav-item " :class="num==1?'active':''" @click="Router.switchTab({route:{path:'/pages/index/index'}})">热门</view>
+			<view class="nav-item " :class="num==1?'active':''" @click="Router.redirectTo({route:{path:'/pages/index/index'}})">热门</view>
 			<view class="nav-item" :class="num==2?'active':''" @click="Router.redirectTo({route:{path:'/pages/indexDesign/indexDesign'}})">设计</view>
 			<view class="nav-item" :class="num==3?'active':''" @click="Router.redirectTo({route:{path:'/pages/indexWorker/indexWorker'}})">工人</view>
 			<view class="nav-item" :class="num==4?'active':''"  @click="Router.redirectTo({route:{path:'/pages/material/material'}})">材料</view>

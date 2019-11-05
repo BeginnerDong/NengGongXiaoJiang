@@ -59,7 +59,7 @@
 		<view class="proLis flexRowBetween">
 			<view class="item-lis" v-for="(item,index) in mainData" :key="index" 
 			@click="Router.navigateTo({route:{path:'/pages/pageDetail/pageDetail?id='+item.id+'&type='+item.type}})">
-				<image class="img" :src="item.mainImg[0].url" alt="" />
+				<image class="img" :src="item.mainImg&&item.mainImg[0]?item.mainImg[0].url:''" alt="" />
 				<view class="tit avoidOverflow">{{item.title}}</view>
 				<view class="price">{{item.price}}</view>
 			</view>
@@ -73,7 +73,7 @@
 		<view class="tejiaBox">
 			<scroll-view class="scrollX" scroll-x>
 				<view class="item-lis" v-for="(item,index) in specialData" :key="index" @click="Router.navigateTo({route:{path:'/pages/pageDetail/pageDetail'}})">
-					<image class="img" :src="item.mainImg[0].url" alt="" />
+					<image class="img" :src="item.mainImg&&item.mainImg[0]?item.mainImg[0].url:''" alt="" />
 					<view class="tit avoidOverflow">{{item.title}}</view>
 					<view class="price">{{item.price}}</view>
 				</view>
