@@ -92,7 +92,7 @@
 				<view class="nav_img">
 					<image src="../../static/images/nabar2.png" />
 				</view>
-				<view class="text">需求</view>
+				<view class="text">发需求</view>
 			</view>
 			<view class="navbar_item" @click="Router.redirectTo({route:{path:'/pages/car/car'}})" >
 				<view class="nav_img">
@@ -144,6 +144,11 @@
 						id: 6
 					},
 					{
+						iconUrl: "../../static/images/home-icon8.png",
+						name: "安装工",
+						id: 10
+					},
+					{
 						iconUrl: "../../static/images/home-icon6.png",
 						name: "园林工",
 						id: 8
@@ -154,11 +159,6 @@
 						id: 9
 					},
 					{
-						iconUrl: "../../static/images/home-icon8.png",
-						name: "安装工",
-						id: 10
-					},
-					{
 						iconUrl: "../../static/images/home-icon9.png",
 						name: "其他",
 						id: 11
@@ -167,7 +167,7 @@
 				produtList: [{}, {}, {}, {}],
 				mainData: [],
 				specialData: [],
-				array: ['建筑工', '装修工', '维修工', '园林工', '市政工', '安装工', '其他'],
+				array: ['建筑工', '装修工', '维修工','安装工', '园林工', '市政工',  '其他'],
 				labelData:[]
 			}
 		},

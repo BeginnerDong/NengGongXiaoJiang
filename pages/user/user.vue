@@ -43,7 +43,7 @@
 				<view class="ilblock listimg">
 					<image src="../../static/images/about-icon6.png"></image>
 				</view>
-				<view class="ilblock">工装订单</view>
+				<view class="ilblock">工程订单</view>
 				<image class="arrow" src="../../static/images/arrow-icon1.png" ></image>
 			</view>
 			<view class="info"  @click=" Router.navigateTo({route:{path:'/pages/myNeeds/myNeeds'}})" >
@@ -125,7 +125,7 @@
 				<view class="nav_img">
 					<image src="../../static/images/nabar2.png" />
 				</view>
-				<view class="text">需求</view>
+				<view class="text">发需求</view>
 			</view>
 			<view class="navbar_item" @click="Router.redirectTo({route:{path:'/pages/car/car'}})" >
 				<view class="nav_img">

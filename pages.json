@@ -10,7 +10,7 @@
 		{
 			"path": "pages/needs/needs",
 			"style": {
-				"navigationBarTitleText": "需求",//设置页面标题文字
+				"navigationBarTitleText": "发需求",//设置页面标题文字
 				"onReachBottomDistance":100
 			}
 		},
@@ -278,7 +278,7 @@
 		{
 			"path": "pages/myToolingOrder/myToolingOrder",
 			"style": {
-				"navigationBarTitleText": "工装订单",
+				"navigationBarTitleText": "工程订单",
 				"onReachBottomDistance":100
 			}
 		},
@@ -483,7 +483,7 @@
 		{
 			"path": "pages/teamInfor_enterprise/teamInfor_enterprise",
 			"style": {
-				"navigationBarTitleText": "企业信息",
+				"navigationBarTitleText": "个人信息",
 				"onReachBottomDistance":100
 			}
 		},

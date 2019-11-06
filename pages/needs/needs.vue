@@ -74,7 +74,7 @@
 				<view class="nav_img">
 					<image src="../../static/images/nabar2-a.png" />
 				</view>
-				<view class="text this-text">需求</view>
+				<view class="text this-text">发需求</view>
 			</view>
 			<view class="navbar_item" @click="Router.redirectTo({route:{path:'/pages/car/car'}})" >
 				<view class="nav_img">

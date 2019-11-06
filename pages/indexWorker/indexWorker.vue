@@ -16,6 +16,13 @@
 		</view>
 		
 		<view class="f5H10"></view>
+		
+		<view class="fabubtn" @click=" Router.navigateTo({route:{path:'/pages/designer_login/designer_login?type=worker'}})">
+			<view class="icon">
+				<image src="../../static/images/home-interactive-icon1.png" mode=""></image>
+			</view>
+			<view class="tit">注册工人</view>
+		</view>
 
 		<view class="infor-title flexRowBetween" v-if="workerOneData.length>0">
 			<view class="xian"></view>
@@ -126,7 +133,7 @@
 				<view class="nav_img">
 					<image src="../../static/images/nabar2.png" />
 				</view>
-				<view class="text">需求</view>
+				<view class="text">发需求</view>
 			</view>
 			<view class="navbar_item" @click="Router.redirectTo({route:{path:'/pages/car/car'}})" >
 				<view class="nav_img">
@@ -167,9 +174,9 @@
 					{iconUrl:"../../static/images/home-icon3.png",name:"建筑工",id:4},
 					{iconUrl:"../../static/images/home-icon4.png",name:"装修工",id:5},
 					{iconUrl:"../../static/images/home-icon5.png",name:"维修工",id:6},
+					{iconUrl:"../../static/images/home-icon8.png",name:"安装工",id:10},
 					{iconUrl:"../../static/images/home-icon6.png",name:"园林工",id:8},
 					{iconUrl:"../../static/images/home-icon7.png",name:"市政工",id:9},
-					{iconUrl:"../../static/images/home-icon8.png",name:"安装工",id:10},
 					{iconUrl:"../../static/images/home-icon9.png",name:"其他",id:11}
 				],
 				produtList: [

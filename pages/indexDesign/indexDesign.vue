@@ -33,6 +33,13 @@
 			<img :src="labelData.mainImg&&labelData.mainImg[0]?labelData.mainImg[0].url:''" style="width: 100%;height: 300rpx;" alt="">
 		</view>
 		<view class="f5H10"></view>
+		
+		<view class="fabubtn" @click=" Router.navigateTo({route:{path:'/pages/designer_login/designer_login?type=designer'}})" style="width: 140rpx;">
+			<view class="icon">
+				<image src="../../static/images/home-interactive-icon1.png" mode=""></image>
+			</view>
+			<view class="tit font13">注册设计师</view>
+		</view>
 
 		<view class="infor-title flexRowBetween">
 			<view class="xian"></view>
@@ -78,7 +85,7 @@
 				<view class="nav_img">
 					<image src="../../static/images/nabar2.png" />
 				</view>
-				<view class="text">需求</view>
+				<view class="text">发需求</view>
 			</view>
 			<view class="navbar_item" @click="Router.redirectTo({route:{path:'/pages/car/car'}})" >
 				<view class="nav_img">

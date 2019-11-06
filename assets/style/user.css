@@ -107,7 +107,7 @@
 .bBtn .btn{ padding: 0 6rpx; line-height: 50rpx; height: 50rpx; border-radius: 10rpx; color: #666; border:2rpx solid #ccc;font-size: 24rpx; margin-left: 20rpx; width: 130rpx; text-align: center;}
 .btn.gopay{ border-color: #FFCB1E; color: #FFCB1E;}
 
-/* 工装订单 */
+/* 工程订单 */
 .tooling_detail{padding-left: 30rpx;border-left: 2rpx solid #FFCB1E;padding-bottom: 60rpx;}
 .tooling_detail .infor{position: relative;}
 .tooling_detail .infor .dian{width: 32rpx;height: 32rpx; display: block;position: absolute;top: -6px;left: -46rpx;}

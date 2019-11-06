@@ -53,12 +53,12 @@
 		<view class="f5H10"></view>
 		<view class="infor-title flexRowBetween">
 			<view class="xian"></view>
-			<view class="tt">资质证书</view>
+			<view class="tt">经典案例</view>
 		</view>
 		
 		<view class="tejiaBox">
 			<scroll-view class="scrollX" scroll-x>
-				<view class="item-lis" v-for="(item,index) in mainData.message" :key="index" >
+				<view class="item-lis" v-for="(item,index) in mainData.message" :key="index">
 					<image class="img" @click="previewImage(index)" :src="item.mainImg[0].url" alt="" />
 				</view>
 			</scroll-view>
@@ -75,11 +75,9 @@
 				<view class="ll">{{item.title}}</view>
 				<view class="rr price" style="text-align: right;">{{item.price}}</view>
 			</view>
-			
 		</view>
 		
 	</view>
-
 </template>
 
 
@@ -89,16 +87,12 @@
 			return {
 				Router:this.$Router,
 				mainData:{},
-				CardImgDate: [
-					{},{},{},{},{},{}
-				],
 				stars: [0, 1, 2, 3, 4],
 				normalSrc: '../../static/images/home-supervision-icon3.png',
 				selectedSrc: '../../static/images/home-supervision-icon1.png',
 				halfSrc: '../../static/images/home-supervision-icon2.png',
 			}
 		},
-
 		onLoad(options) {
 			const self = this;
 			self.user_no = options.user_no;
@@ -106,7 +100,6 @@
 		},
 
 		methods: {
-			
 			previewImage(index){
 				const self = this;
 				for (var i = 0; i < self.mainData.message.length; i++) {
@@ -191,6 +184,7 @@
 	@import "../../assets/style/caseSbmit.css";
 	
 	page{padding-bottom: 60rpx!important;}
-	.tejiaBox .item-lis{width: 240rpx; height: 180rpx;overflow: hidden;}
+	.tejiaBox .item-lis{width: 240rpx; height: 180rpx;overflow: hidden;border-radius: 8rpx; padding-bottom: 0;}
 	.tejiaBox .item-lis .img{width: 100%;height: 100%;}
+
 </style>
