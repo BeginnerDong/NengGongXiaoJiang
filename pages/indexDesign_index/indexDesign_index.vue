@@ -58,10 +58,24 @@
 		
 		<view class="tejiaBox">
 			<scroll-view class="scrollX" scroll-x>
-				<view class="item-lis" v-for="(item,index) in mainData.message" :key="index">
+				<view class="item-lis" v-for="(item,index) in mainData.message" :key="index"  @click="imglisttkShow">
 					<image class="img" @click="previewImage(index)" :src="item.mainImg[0].url" alt="" />
 				</view>
 			</scroll-view>
+		</view>
+		
+		<!-- 案例图片放大弹出层 -->
+		<view class="imglisttk" v-show="is_imglisttk">
+			<view class="colse" @click="imglisttkShow">×</view>
+			<view class="imgList">
+				<swiper class="swiper-box" indicator-dots="true" autoplay="true" interval="3000" duration="1000" indicator-active-color="#FFCB1E">
+					<block v-for="(item,index) in mainData.message" :key="index">
+						<swiper-item class="swiper-item">
+							<image :src="item.mainImg[0].url" class="slide-image pic" />
+						</swiper-item>
+					</block>
+				</swiper>
+			</view>
 		</view>
 		
 		<view class="f5H10"></view>
@@ -91,6 +105,7 @@
 				normalSrc: '../../static/images/home-supervision-icon3.png',
 				selectedSrc: '../../static/images/home-supervision-icon1.png',
 				halfSrc: '../../static/images/home-supervision-icon2.png',
+				is_imglisttk:false
 			}
 		},
 		onLoad(options) {
@@ -100,6 +115,10 @@
 		},
 
 		methods: {
+			imglisttkShow(){
+				const self = this;
+				self.is_imglisttk = !self.is_imglisttk
+			},
 			previewImage(index){
 				const self = this;
 				for (var i = 0; i < self.mainData.message.length; i++) {
@@ -186,5 +205,11 @@
 	page{padding-bottom: 60rpx!important;}
 	.tejiaBox .item-lis{width: 240rpx; height: 180rpx;overflow: hidden;border-radius: 8rpx; padding-bottom: 0;}
 	.tejiaBox .item-lis .img{width: 100%;height: 100%;}
+	.caseSbmit .eidt-line .ll{ font-size: 28rpx;}
 
+	.imglisttk{position: fixed;top: 0;right:0; bottom: 0; left: 0;background: rgba(0,0,0,0.7);z-index: 66;}
+	.imglisttk .colse{ font-size: 70rpx; color: #fff; position: absolute; top: 80rpx;right: 40%;transform: translateX(-50%);padding: 20rpx;}
+	.imgList{width:600rpx; height: 450rpx;  position: absolute; top: 50%;left: 50%;transform: translate(-50%,-50%);}
+	.imgList .swiper-box{height: 100%;}
+	.imgList .pic{ width: 100%; height: 100%; display: block;margin: 0 auto;}
 </style>
