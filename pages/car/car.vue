@@ -77,7 +77,11 @@
 				Router:this.$Router,
 				totalPrice:0,
 				mainData:[],
-				isChooseAll:false
+				isChooseAll:false,
+				proListDate:[
+					{price:'28',integral:'860',count:'1'},
+					{price:'28',integral:'860',count:'1'}
+				],
 			}
 		},
 

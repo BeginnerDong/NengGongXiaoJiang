@@ -10,7 +10,7 @@
 		</view>
 		<view class="classifyCont">
 			<view class="class_leftNav">
-				<view class="cont">
+				<view class="cont" v-if="indexTwo!=''">
 					<view class="child" v-for="item in mainData[indexTwo].child" :class="item.id==idThree?'on':''" 
 					@click="changeTwo(item.id)">
 						{{item.title}}
@@ -33,7 +33,7 @@
 						<view class="items flexRowBetween" v-for="(item,index) in productData" :key="index" 
 						@click=" Router.navigateTo({route:{path:'/pages/pageDetail/pageDetail?id='+item.id+'&type='+type}})">
 							<view class="pic">
-								<image :src="item.mainImg[0].url" alt="" />
+								<image :src="item.mainImg&&item.mainImg[0]?item.mainImg[0].url:''" alt="" />
 							</view>
 							<view class="infor">
 								<view class="title flex">
@@ -95,7 +95,7 @@
 				if(id!=self.idTwo){
 					self.idTwo = id;
 					self.indexTwo = index;
-					if(self.mainData[index].child[0]){
+					if(self.mainData[index].child&&self.mainData[index].child[0]){
 						self.idThree = self.mainData[index].child[0].id;
 						self.indexThree = 0;
 						self.productGet()
@@ -145,11 +145,16 @@
 				const callback = (res) => {
 					if (res.solely_code == 100000 && res.info.data[0]) {
 						self.mainData = res.info.data;
+						
 						self.idTwo = self.mainData[0].id;
 						self.indexTwo = 0;
-						self.idThree = self.mainData[0].child[0].id;
-						self.indexThree = 0;
-						self.productGet()
+						if(self.mainData[0].child){
+							self.idThree = self.mainData[0].child[0].id;
+							self.indexThree = 0;
+							self.productGet()
+						}
+						
+						
 					} else {
 						self.$Utils.showToast(res.msg, 'none')
 					};

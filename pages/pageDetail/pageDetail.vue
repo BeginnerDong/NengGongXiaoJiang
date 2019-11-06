@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<view class="detailxqBan">
-			<image :src="mainData.mainImg[0].url" mode=""></image>
+			<image :src="mainData.mainImg&&mainData.mainImg[0]?mainData.mainImg[0].url:''" mode=""></image>
 		</view>
 		<view class="detailTit">
 			<view class="tit">{{mainData.title}}</view>
