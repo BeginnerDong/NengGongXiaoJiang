@@ -18,7 +18,7 @@
 			<view class="menu flexRowBetween">
 				<view class="child" @click=" Router.navigateTo({route:{path:'/pages/teamInfor_personal/teamInfor_personal'}})">
 					<image src="../../static/images/workers-icon3.1.png"></image>
-					<view>企业信息</view>
+					<view>个人信息</view>
 				</view>
 				<view class="child" @click=" Router.navigateTo({route:{path:'/pages/designer_certificate/designer_certificate'}})">
 					<image src="../../static/images/workers-icon3.2.png"></image>

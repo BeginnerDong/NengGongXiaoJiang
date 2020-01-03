@@ -7,8 +7,8 @@
 		<view class="f5H10" style="margin-top: 20rpx;"></view>
 		
 		<view class="house_idexLis pdlr4">
-			<view class="item boxShaow" v-for="(item,index) in mainData" :key="index" 
-			@click=" Router.navigateTo({route:{path:'/pages/houseShowDetail/houseShowDetail?id='+item.id}})">
+			<view class="item boxShaow" v-for="(item,index) in mainData" :key="index" :data-id="item.id"
+			@click=" Router.navigateTo({route:{path:'/pages/houseShowDetail/houseShowDetail?id='+$event.currentTarget.dataset.id}})">
 				<view class="img">
 					<image :src="item.mainImg[0].url" alt=""></image>
 				</view>
@@ -120,7 +120,7 @@
 					caseData: {
 						tableName: 'Label',
 						searchItem: {
-							title: ['=', ['房源展示']],
+							title: ['=', ['信息']],
 						},
 						middleKey: 'menu_id',
 						key: 'id',

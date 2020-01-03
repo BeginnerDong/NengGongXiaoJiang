@@ -1,8 +1,8 @@
 <template>
 	<view>
 		<view class="designIndex pdlr4" style="padding-top: 10rpx;">
-			<view class="items flexRowBetween" v-for="(item,index) in footData" :key="index"  
-			@click=" Router.navigateTo({route:{path:'/pages/indexDesignDetail/indexDesignDetail?id='+item.id}})">
+			<view class="items flexRowBetween" v-for="(item,index) in footData" :key="index"  :data-id="item.id"
+			@click=" Router.navigateTo({route:{path:'/pages/indexDesignDetail/indexDesignDetail?id='+$event.currentTarget.dataset.id}})">
 				<view class="pic">
 					<image :src="item.userInfo[0].mainImg[0].url" alt="" />
 				</view>

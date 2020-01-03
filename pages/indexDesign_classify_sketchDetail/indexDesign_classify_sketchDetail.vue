@@ -1,7 +1,7 @@
 <template>
 	<view class="">
 		<view class="sketchXq">
-			<swiper class="swiper-box" indicator-dots="false" autoplay="false" interval="3000" duration="1000" indicator-active-color="#FFCB1E">
+			<swiper class="swiper-box" :autoplay="autoplay" :indicator-dots="indicatorDots"  interval="3000" duration="1000" indicator-active-color="#FFCB1E">
 				<block v-for="(item,index) in mainData.bannerImg" :key="index">
 					<swiper-item class="swiper-item">
 						<image :src="item.url" class="slide-image"/>
@@ -25,7 +25,9 @@
 					"../../static/images/home-banenr.png",
 					"../../static/images/details-img1.png",
 				],
-				mainData:{}
+				mainData:{},
+				autoplay:false,
+				indicatorDots:false
 			}
 		},
 		onLoad(options) {

@@ -4,7 +4,7 @@
 		<view class="designXq_name pdlr4" style="margin-top: 0;padding: 30rpx 4%;">
 			<view class="lis1">
 				<view class="photo">
-					<image :src="mainData.mainImg[0].url" mode=""></image>
+					<image :src="mainData.mainImg&&mainData.mainImg[0]?mainData.mainImg[0].url:''" mode=""></image>
 				</view>
 				<view class="cont">
 					<view class="flex namebox">
@@ -53,13 +53,13 @@
 		<view class="f5H10"></view>
 		<view class="infor-title flexRowBetween">
 			<view class="xian"></view>
-			<view class="tt">资质证书</view>
+			<view class="tt">上传案例</view>
 		</view>
 		
 		<view class="tejiaBox">
 			<scroll-view class="scrollX" scroll-x>
 				<view class="item-lis" v-for="(item,index) in mainData.message" :key="index" >
-					<image class="img" @click="previewImage(index)" :src="item.mainImg[0].url" alt="" />
+					<image class="img" @click="previewImage(index)" :src="item.mainImg&&item.mainImg[0]?item.mainImg[0].url:''" alt="" />
 				</view>
 			</scroll-view>
 		</view>
@@ -70,8 +70,8 @@
 			<view class="tt">技能</view>
 		</view>
 		<view class="caseSbmit">
-			<view class="eidt-line" v-for="(item,index) in mainData.product" 
-			:key="index" @click=" Router.navigateTo({route:{path:'/pages/indexWorkerDetail/indexWorkerDetail?id='+item.id}})">
+			<view class="eidt-line" v-for="(item,index) in mainData.product" :data-id="item.id"
+			:key="index" @click=" Router.navigateTo({route:{path:'/pages/indexWorkerDetail/indexWorkerDetail?id='+$event.currentTarget.dataset.id}})">
 				<view class="ll">{{item.title}}：</view>
 				<view class="rr price" style="text-align: right;">{{item.price}}</view>
 			</view>

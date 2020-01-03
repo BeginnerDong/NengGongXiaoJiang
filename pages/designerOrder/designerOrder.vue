@@ -31,11 +31,11 @@
 					</view>
 				</view>
 				<view class="bBtn">
-					<view class="btn"  
+					<view class="btn"  :data-id="item.id"
 					
-					@click=" Router.navigateTo({route:{path:'/pages/designerOrderDetail/designerOrderDetail?id='+item.id+'&type=1'}})">查看详情</view>
-					<view class="btn yellow"  v-if="item.comfirm==0"
-					 @click=" Router.navigateTo({route:{path:'/pages/designerOrderDetail/designerOrderDetail?id='+item.id+'&type=1'}})">确认接单</view>
+					@click=" Router.navigateTo({route:{path:'/pages/designerOrderDetail/designerOrderDetail?id='+$event.currentTarget.dataset.id+'&type=1'}})">查看详情</view>
+					<view class="btn yellow"  v-if="item.comfirm==0" :data-id="item.id"
+					 @click=" Router.navigateTo({route:{path:'/pages/designerOrderDetail/designerOrderDetail?id='+$event.currentTarget.dataset.id+'&type=1'}})">确认接单</view>
 				</view>
 			</view>
 		</view>

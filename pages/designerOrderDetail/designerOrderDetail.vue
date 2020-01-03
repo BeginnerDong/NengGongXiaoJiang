@@ -64,8 +64,9 @@
 								<view class="price priceM">{{item.price}}</view>
 								<view>{{item.count}}{{item.snap_product&&item.snap_product.label&&item.snap_product.label[item.snap_product.category_id]?item.snap_product.label[item.snap_product.category_id].description:''}}</view>
 							</view>
-							<view class="deltBtn" v-if="mainData.comfirm==1&&type==0" 
-							@click="item.status==1?deleteItem(item.id):''">{{item.status==1?'删除':'已删除'}}</view>
+							<view class="deltBtn" v-if="mainData.comfirm==1&&type==0&&item.status==1&&index!=0" :data-id="item.id"
+							 @click="deleteItem($event.currentTarget.dataset.id)">删除</view>
+							 <view class="deltBtn" v-if="mainData.comfirm==1&&type==0&&item.status==-1&&index!=0">已删除</view>
 						</view>
 
 					</view>
@@ -79,8 +80,9 @@
 								<view class="price priceM">{{item.price}}</view>
 								<view>{{item.count}}{{item.snap_product&&item.snap_product.label&&item.snap_product.label[item.snap_product.category_id]?item.snap_product.label[item.snap_product.category_id].description:''}}</view>
 							</view>
-							<view class="deltBtn" v-if="mainData.comfirm==1&&type==0"
-							 @click="item.status==1?deleteItem(item.id):''">{{item.status==1?'删除':'已删除'}}</view>
+							<view class="deltBtn" v-if="mainData.comfirm==1&&type==0&&item.status==1" :data-id="item.id"
+							 @click="deleteItem($event.currentTarget.dataset.id)">删除</view>
+							 <view class="deltBtn" v-if="mainData.comfirm==1&&type==0&&item.status==-1">已删除</view>
 						</view>
 
 					</view>
@@ -227,34 +229,46 @@
 			
 			deleteItem(id) {
 				const self = this;
-				const postData = {};	
-				postData.searchItem = {
-					id:id
-				};
-				postData.data ={
-					status:-1
-				};
-				if(self.type==1){
-					postData.tokenFuncName = 'getThreeToken';
-				}else{
-					postData.tokenFuncName = 'getProjectToken';
-				}	
-				const callback = (res) => {
-					if (res.solely_code == 100000) {
-						self.orderItemOneData=[],
-						self.orderItemTwoData=[],
-						self.skillOneData=[],
-						self.skillTwoData=[],
-						self.materialOneData=[],
-						self.materialTwoData=[],
-						self.processData=[]
-						self.getMainData()
-					} else {
-						self.$Utils.showToast(res.msg,'none');
-					};					
-					console.log(self.mainData)					
-				};
-				self.$apis.orderItemUpdate(postData, callback);
+				console.log(id)
+				const postData = {};
+				uni.showModal({
+				    title: '提示',
+				    content: '确认是否删除',
+				    success: function (res) {
+				        if (res.confirm) {
+				           postData.searchItem = {
+				           	id:id
+				           };
+				           postData.data ={
+				           	status:-1
+				           };
+				           if(self.type==1){
+				           	postData.tokenFuncName = 'getThreeToken';
+				           }else{
+				           	postData.tokenFuncName = 'getProjectToken';
+				           }	
+				           const callback = (res) => {
+				           	if (res.solely_code == 100000) {
+				           		self.orderItemOneData=[],
+				           		self.orderItemTwoData=[],
+				           		self.skillOneData=[],
+				           		self.skillTwoData=[],
+				           		self.materialOneData=[],
+				           		self.materialTwoData=[],
+				           		self.processData=[]
+				           		self.getMainData()
+				           	} else {
+				           		self.$Utils.showToast(res.msg,'none');
+				           	};					
+				           	console.log(self.mainData)					
+				           };
+				           self.$apis.orderItemUpdate(postData, callback);
+				        } else if (res.cancel) {
+				            console.log('用户点击取消');
+				        }
+				    }
+				});		
+				
 			},
 			
 			orderItemOne() {

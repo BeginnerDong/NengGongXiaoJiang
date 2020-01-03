@@ -5,8 +5,8 @@
 			<view class="nav-item " :class="num==1?'active':''" @click="Router.redirectTo({route:{path:'/pages/index/index'}})">热门</view>
 			<view class="nav-item" :class="num==2?'active':''" @click="Router.redirectTo({route:{path:'/pages/indexDesign/indexDesign'}})">设计</view>
 			<view class="nav-item" :class="num==3?'active':''" @click="Router.redirectTo({route:{path:'/pages/indexWorker/indexWorker'}})">工人</view>
-			<view class="nav-item" :class="num==4?'active':''"  @click="Router.redirectTo({route:{path:'/pages/material/material'}})">材料</view>
-			<view class="nav-item" :class="num==5?'active':''"  @click="Router.redirectTo({route:{path:'/pages/houseShow/houseShow'}})">房源展示</view>
+			<view class="nav-item" :class="num==4?'active':''"  @click="Router.redirectTo({route:{path:'/pages/material/material'}})">定制辅料</view>
+			<view class="nav-item" :class="num==5?'active':''"  @click="Router.redirectTo({route:{path:'/pages/houseShow/houseShow'}})">信息</view>
 			<view class="nav-item" :class="num==6?'active':''"  @click="Router.redirectTo({route:{path:'/pages/interactive/interactive'}})">互动</view>
 			<view class="nav-item" :class="num==7?'active':''"  @click="Router.redirectTo({route:{path:'/pages/supervision/supervision'}})">监理</view>
 			<view class="nav-item" :class="num==8?'active':''"  @click="Router.redirectTo({route:{path:'/pages/college/college'}})">学院</view>

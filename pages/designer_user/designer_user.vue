@@ -20,9 +20,9 @@
 					<image src="../../static/images/workers-icon3.1.png"></image>
 					<view>个人信息</view>
 				</view>
-				<view class="child" @click=" Router.navigateTo({route:{path:'/pages/designer_certificate/designer_certificate'}})">
+				<view class="child" @click=" Router.navigateTo({route:{path:'/pages/designer_case/designer_case'}})">
 					<image src="../../static/images/workers-icon3.2.png"></image>
-					<view>资质证书</view>
+					<view>经典案例</view>
 				</view>
 				<view class="child" @click=" Router.navigateTo({route:{path:'/pages/designer_closingShop/designer_closingShop'}})">
 					<image src="../../static/images/workers-icon3.png"></image>

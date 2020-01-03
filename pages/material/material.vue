@@ -6,8 +6,8 @@
 		
 		<view class="ind-cont4">
 			<scroll-view class="list" scroll-x>
-				<view class="item" v-for="(item,index) in classLis" :key="index"  
-				@click=" Router.navigateTo({route:{path:'/pages/material_classify/material_classify?type='+item.type+'&name='+item.name}})">
+				<view class="item" v-for="(item,index) in classLis" :key="index"  :data-type="item.type" :data-name="item.name"
+				@click=" Router.navigateTo({route:{path:'/pages/material_classify/material_classify?type='+$event.currentTarget.dataset.type+'&name='+$event.currentTarget.dataset.name}})">
 					<image :src="item.iconUrl" mode=""></image>
 					<view>{{item.name}}</view>
 				</view>
@@ -17,8 +17,8 @@
 		<view class="f5H10"></view>
 		
 		<view class="proLis flexRowBetween">
-			<view class="item-lis" v-for="(item,index) in mainData" :key="index" 
-			@click=" Router.navigateTo({route:{path:'/pages/pageDetail/pageDetail?id='+item.id+'&type='+item.type}})">
+			<view class="item-lis" v-for="(item,index) in mainData" :key="index" :data-id="item.id" :data-type="item.type"
+			@click=" Router.navigateTo({route:{path:'/pages/pageDetail/pageDetail?id='+$event.currentTarget.dataset.id+'&type='+$event.currentTarget.dataset.type}})">
 				<image class="img" :src="item.mainImg&&item.mainImg[0]?item.mainImg[0].url:''" alt="" />
 				<view class="tit avoidOverflow">{{item.title}}</view>
 				<view class="price">{{item.price}}</view>
@@ -72,9 +72,9 @@
 				Router:this.$Router,
 				
 				classLis:[
-					{iconUrl:"../../static/images/home-material-icon1.png",name:"定制材料",type:3},
-					{iconUrl:"../../static/images/home-material-icon2.png",name:"自营辅料",type:4},
-					{iconUrl:"../../static/images/home-material-icon3.png",name:"建材市场",type:5}
+					{iconUrl:"../../static/images/home-material-icon1.png",name:"定制家居",type:3},
+					{iconUrl:"../../static/images/home-material-icon2.png",name:"辅料配件",type:4},
+					{iconUrl:"../../static/images/home-material-icon3.png",name:"软装配饰",type:5}
 				],
 				produtList: [
 					{},{},{},{},{},{},{},{}
@@ -120,7 +120,9 @@
 					type:['in',[3,4,5]],
 					category_id: ['not in', [46]]
 				};
-				
+				postData.order = {
+					listorder:'desc'
+				};
 				const callback = (res) => {
 					if (res.info.data.length > 0) {
 						self.mainData.push.apply(self.mainData, res.info.data);

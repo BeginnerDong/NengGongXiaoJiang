@@ -15,8 +15,8 @@
 		</view>
 		
 		<view class="college_idexLis pdlr4 flexRowBetween">
-			<view class="child"  v-for="(item,index) in mainData" :key="index"  
-			@click=" Router.navigateTo({route:{path:'/pages/collegeDetail/collegeDetail?id='+item.id}})">
+			<view class="child"  v-for="(item,index) in mainData" :key="index" :data-id="item.id"
+			@click=" Router.navigateTo({route:{path:'/pages/collegeDetail/collegeDetail?id='+$event.currentTarget.dataset.id}})">
 				<image class="pic" :src="item.mainImg[0].url" mode=""></image>
 				<view class="tit avoidOverflow">{{item.title}}</view>
 			</view>
@@ -117,7 +117,7 @@
 					caseData: {
 						tableName: 'Label',
 						searchItem: {
-							title: ['=', ['学院']],
+							title: ['=', ['学院首页']],
 						},
 						middleKey: 'menu_id',
 						key: 'id',

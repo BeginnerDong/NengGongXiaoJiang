@@ -23,8 +23,8 @@
 							<view class="deltBtn" @click="deleteOne(index)">
 								<image class="deltIcon" src="../../static/images/certificate-icon2.png" mode=""></image>删除
 							</view>
-							<view class="deltBtn" 
-							@click=" Router.navigateTo({route:{path:'/pages/designer_case_add/designer_case_add?id='+item.id}})">
+							<view class="deltBtn" :data-id="item.id"
+							@click=" Router.navigateTo({route:{path:'/pages/designer_case_add/designer_case_add?id='+$event.currentTarget.dataset.id}})">
 								<image class="deltIcon" src="../../static/images/skills-icon3.png" style="width: 28rpx; height: 27rpx;" mode=""></image>编辑
 							</view>
 						</view>

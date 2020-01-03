@@ -10,7 +10,7 @@
 			</scroll-view>
 		</view>
 		<view class="classifyCont">
-			<view class="class_leftNav" v-if="mainData[indexTwo]&&mainData[indexTwo].child">
+			<view class="class_leftNav">
 				<view class="cont">
 					<view class="child" v-for="item in mainData[indexTwo].child" :class="item.id==idThree?'on':''" 
 					@click="changeTwo(item.id)">
@@ -20,19 +20,29 @@
 			</view>
 			<view class="class_rightCont">
 				<view class="class_sort">
-					<view class="child" @click="order('price')">
-						<view>价格</view>
-						<image src="../../static/images/workers-icon2.png" mode=""></image>
+					<view class="child"  @click="orderChange('price')">
+						<view :style="order.price?'color:#FFCB1E':''">价格</view>
+						<image 
+						:src="order.price&&orderType=='asc'?'../../static/images/asc.png':'../../static/images/workers-icon2.png'" 
+						mode=""></image>
 					</view>
-					<view class="child" @click="order('sale_count')">
-						<view>销量</view>
-						<image src="../../static/images/workers-icon2.png" mode=""></image>
+					<view class="child"  @click="orderChange('sale_count')">
+						<view :style="order.sale_count?'color:#FFCB1E':''">销量</view>
+						<image
+						:src="order.sale_count&&orderType=='asc'?'../../static/images/asc.png':'../../static/images/workers-icon2.png'" 
+						mode=""></image>
+					</view>
+					<view class="child" @click="orderChange('distance')">
+						<view :style="order.distance?'color:#FFCB1E':''">距离</view>
+						<image
+						:src="order.distance&&orderType=='asc'?'../../static/images/asc.png':'../../static/images/workers-icon2.png'" 
+						mode=""></image>
 					</view>
 				</view>
 				<view class="class_infor">
 					<view class="designIndex">
-						<view class="items flexRowBetween" v-for="(item,index) in productData" :key="index" 
-						@click=" Router.navigateTo({route:{path:'/pages/indexWorkerDetail/indexWorkerDetail?id='+item.id}})">
+						<view class="items flexRowBetween" v-for="(item,index) in productData" :key="index" :data-id="item.id"
+						@click=" Router.navigateTo({route:{path:'/pages/indexWorkerDetail/indexWorkerDetail?id='+$event.currentTarget.dataset.id}})">
 							<view class="pic">
 								<image :src="item.userInfo[0].mainImg[0].url" alt="" />
 							</view>
@@ -72,8 +82,8 @@
 				],
 				idTwo:'',
 				idThree:'',
-				indexTwo:'',
-				indexThree:'',
+				indexTwo:0,
+				indexThree:0,
 				mainData:[],
 				productData:[],
 				order:{}
@@ -87,26 +97,46 @@
 			});
 			self.paginate = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
 			self.id = parseInt(options.id)
-			self.$Utils.loadAll(['getUserData','getMainData'], self);
+			self.$Utils.loadAll(['getUserData','getMainData','getLocation'], self);
 		},
 		
 		methods: {
 			
-			order(type){
+			getLocation() {
 				const self = this;
-				if(JSON.stringify(self.order)=='{}'){
-					if(type='sale_count'){
-						self.num =1;
-						self.order[type]='desc'
-					}else{
-						self.num=2
-						self.order[type]='asc'
-					}			
+				const callback = (res) => {
+					if (res) {
+						console.log('res', res)
+						if(res.authSetting){
+							console.log(232)
+							return
+						}
+						self.content = res.address;
+						self.lng = res.location.lng;
+						self.lat = res.location.lat
+					};
+				};
+				self.$Utils.getLocation('reverseGeocoder', callback);
+				self.$Utils.finishFunc('getLocation');
+			},
+			
+			orderChange(item){
+				const self = this;
+				self.order = {};
+				if(self.orderType=='desc'){
+					self.orderType='asc'
 				}else{
-					if(self.num==1&&type=='sale_count'){
-						return
-					}else if(self.num==1&&type=='sale_count'){}
-				}
+					self.orderType='desc'
+				};
+				self.order = {
+					[item]:self.orderType
+				};
+				if(item=='distance'){
+					self.order.longitude = self.lng;
+					self.order.latitude = self.lat;
+				};
+				console.log('self.order',self.order)
+				self.productGet(true)
 			},
 			
 			getUserData() {
@@ -135,6 +165,7 @@
 					if(self.mainData[index].child[0]){
 						self.idThree = self.mainData[index].child[0].id;
 						self.indexThree = 0;
+						self.order = {};
 						self.productGet()
 					}
 					
@@ -208,6 +239,9 @@
 				};
 				const postData = {};
 				postData.paginate = self.$Utils.cloneForm(self.paginate);
+				if (JSON.stringify(self.order) != '{}') {
+					postData.order = self.$Utils.cloneForm(self.order);
+				};
 				postData.searchItem = {
 					thirdapp_id:2,
 					type:1,
@@ -243,6 +277,7 @@
 <style>
 	@import "../../assets/style/designIndex.css";
 	@import "../../assets/style/index.css";
+	@import "../../assets/style/navList.css";
 	page{padding-bottom: 100rpx;background: #f5f5f5;}
 </style>
 

@@ -10,6 +10,10 @@
 					<view class="">电话</view>
 					<view>{{mainData.phone}}</view>
 				</view>
+				<view class="item flexRowBetween" @click="intoMap()">
+					<view class="" style="width: 50%;">地址</view>
+					<view>{{mainData.passage2}}</view>
+				</view>
 			</view>
 		</view>
 		<view class="pdlr4">工程信息</view>
@@ -51,29 +55,66 @@
 		</view>
 		<view class="pdlr4" v-if="mainData.type==1">辅料</view>
 		<view class="ind_seach" style="border-bottom: 2rpx solid #f5f5f5;" v-if="mainData.type==1">
-			<view class="child" v-for="(item,index) in orderItemTwo">
-				<view class="sqr_name" style="overflow: hidden;">
-					<view class="uni-list">
-						<view class="uni-list-cell">
-							<view class="uni-list-cell-db">
-								<picker @change="PickerChangeThree" :data-index="index" :range="materialData" range-key="title">
-									<view class="uni-input">
-									{{orderItemTwo[index].title!=''?orderItemTwo[index].title:'请选择'}}
-									</view>
-								</picker>
+			<view  v-for="(item,index) in orderItemTwo">
+				<view class="" style="display: flex;justify-content: space-between;">
+					<view class="sqr_name" style="overflow: hidden;">
+						<view class="uni-list">
+							<view class="uni-list-cell">
+								<view class="uni-list-cell-db">
+									<picker @change="topTypeChange" :data-index="index" 
+									:range="topTypeData" range-key="title">
+										<view class="uni-input">
+										{{orderItemTwo[index].parent!=''?orderItemTwo[index].parent:'请选择'}}
+										</view>
+									</picker>
+								</view>
 							</view>
 						</view>
+						<image class="arrow" src="../../static/images/home-icon1.png"></image>
 					</view>
-					<image class="arrow" src="../../static/images/home-icon1.png"></image>
+					<view class="sqr_name" style="overflow: hidden;">
+						<view class="uni-list">
+							<view class="uni-list-cell">
+								<view class="uni-list-cell-db">
+									<picker @change="typeChange" :data-index="index" 
+									:range="testTwo[orderItemTwo[index]['parentid']]" range-key="title">
+										<view class="uni-input">
+										{{orderItemTwo[index].category!=''?orderItemTwo[index].category:'请选择'}}
+										</view>
+									</picker>
+								</view>
+							</view>
+						</view>
+						<image class="arrow" src="../../static/images/home-icon1.png"></image>
+					</view>
+					<view class="sqr_name" style="overflow: hidden;">
+						<view class="uni-list">
+							<view class="uni-list-cell">
+								<view class="uni-list-cell-db">
+							
+									<picker @change="PickerChangeThree" :data-index="index" 
+									:range="test[orderItemTwo[index]['category_id']]" range-key="title">
+										<view class="uni-input">
+										{{orderItemTwo[index].title!=''?orderItemTwo[index].title:'请选择'}}
+										</view>
+									</picker>
+								</view>
+							</view>
+						</view>
+						<image class="arrow" src="../../static/images/home-icon1.png"></image>
+					</view>
 				</view>
-				<view class="editNum">
-					<input type="number" value="" placeholder="请输入数量" v-model="orderItemTwo[index].count">
-				</view>
-				<view class="optBtn flexRowBetween">
-					<view class="btn btn1">删除</view>
-					<view class="btn" @click="addMaterialData" v-if="orderItemTwo.length==index+1">添加</view>
+				<view class="" style="display: flex;margin-top:10px;">
+					<view class="editNum" style="margin-left: 0;width:200rpx">
+						<input type="number" value="" placeholder="请输入数量" v-model="orderItemTwo[index].count">
+					</view>
+					<view class="optBtn flexRowBetween">
+						<view class="btn btn1">删除</view>
+						<view class="btn" @click="addMaterialData" v-if="orderItemTwo.length==index+1">添加</view>
+					</view>
 				</view>
 			</view>
+			
 		</view>
 
 		<view class="submitbtn" style="margin-top: 200rpx;">
@@ -97,10 +138,22 @@
 				skillData: [],
 				materialData: [],
 				orderItemTwo: [{
+					category:'',
 					product_id: '',
 					count: '',
-					title: ''
-				}]
+					title: '',
+					category_id:'',
+					parent:'',
+					parentid:''
+				}],
+				typeData:[],
+				test:{
+					'9999':[],
+					'55555':'nnnnn'
+				},
+				testTwo:{},
+				tokenStr:0,
+				topTypeData:[]
 			}
 		},
 
@@ -108,10 +161,28 @@
 			const self = this;
 			self.id = options.id;
 
-			self.$Utils.loadAll(['getMainData', 'getSkillData', 'getMaterialData'], self)
+			self.$Utils.loadAll(['getMainData', 'getSkillData','getTopTypeData'], self)
 		},
 
 		methods: {
+			
+			intoMap() {
+				const self = this;
+				wx.getLocation({
+					type: 'gcj02', //返回可以用于wx.openLocation的经纬度
+					success: function(res) { //因为这里得到的是你当前位置的经纬度
+						var latitude = res.latitude
+						var longitude = res.longitude
+						wx.openLocation({ //所以这里会显示你当前的位置
+							longitude: parseFloat(self.mainData.longitude),
+							latitude: parseFloat(self.mainData.latitude),
+							name: self.mainData.passage2,
+							//address: self.mainData.passage2,
+							scale: 28
+						})
+					}
+				})
+			},
 
 			addProject() {
 				const self = this;
@@ -125,6 +196,7 @@
 			addMaterialData() {
 				const self = this;
 				self.orderItemTwo.push({
+					category:'',
 					product_id: '',
 					count: '',
 					title: ''
@@ -212,10 +284,28 @@
 				self.orderItem[e.target.dataset.index].product_id = productData.id;
 				self.orderItem[e.target.dataset.index].title = productData.title;
 			},
-
+			
+			topTypeChange(e){
+				const self = this;
+				var id = self.topTypeData[e.detail.value].id;
+				self.orderItemTwo[e.target.dataset.index].parent = self.topTypeData[e.detail.value].title;
+				self.orderItemTwo[e.target.dataset.index].parentid = id;
+				self.getTypeData(id)
+			},
+			
+			typeChange(e){
+				const self = this;
+				var typeData = self.testTwo[self.orderItemTwo[e.target.dataset.index].parentid][e.detail.value];
+				var id = typeData.id;
+				self.orderItemTwo[e.target.dataset.index].category = typeData.title;
+				self.orderItemTwo[e.target.dataset.index].category_id = typeData.id;
+				self.getMaterialData(id)
+			},
+			
 			PickerChangeThree(e) {
 				const self = this;
-				var productData = self.materialData[e.detail.value];
+				console.log(e);
+				var productData = self.test[self.orderItemTwo[e.target.dataset.index].category_id][e.detail.value];
 				console.log('productData', productData);
 				self.orderItemTwo[e.target.dataset.index].product_id = productData.id;
 				self.orderItemTwo[e.target.dataset.index].title = productData.title;
@@ -238,17 +328,63 @@
 				};
 				self.$apis.productGet(postData, callback);
 			},
-
-			getMaterialData() {
+			
+			getTopTypeData() {
 				const self = this;
 				const postData = {};
 				postData.searchItem = {
-					type: 4,
-					category_id: ['not in', [46]]
+					type: 5,
+					id: ['not in', [46]],
+					parentid:0
+				};
+				postData.order = {
+					listorder:'desc'
+				}
+				const callback = (res) => {
+					if (res.info.data.length > 0) {
+						self.topTypeData.push.apply(self.topTypeData, res.info.data)
+					}
+					self.$Utils.finishFunc('getTopTypeData');
+				};
+				self.$apis.labelGet(postData, callback);
+			},
+			
+			getTypeData(id) {
+				const self = this;
+				if(self.testTwo[id]){
+					return;
+				};
+				const postData = {};
+				postData.searchItem = {
+					type: 5,
+					id: ['not in', [46]],
+					parentid:id
 				};
 				const callback = (res) => {
 					if (res.info.data.length > 0) {
-						self.materialData.push.apply(self.materialData, res.info.data)
+						
+						self.$set(self.testTwo,id,res.info.data);
+					}
+					
+				};
+				self.$apis.labelGet(postData, callback);
+			},
+
+			getMaterialData(id) {
+				const self = this;
+				if(self.test[id]){
+					return;
+				};
+				const postData = {};
+				postData.searchItem = {
+					type: 4,
+					category_id: id
+				};
+				const callback = (res) => {
+					if (res.info.data.length > 0) {
+						self.$set(self.test,id,res.info.data);
+						
+						console.log('self.test',self.test)
 					}
 					self.$Utils.finishFunc('getMaterialData');
 				};

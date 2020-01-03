@@ -8,7 +8,7 @@
 			</view>
 			<view class="item" @click="Router.navigateTo({route:{path:'/pages/myWorkbench_dispute/myWorkbench_dispute?id='+id+'&type='+type}})">
 				<image src="../../static/images/about-workbench-icon2.png" alt=""/>
-				<view class="tit">维权争议</view>
+				<view class="tit">退款申请</view>
 			</view>
 			<view class="item" @click="Router.navigateTo({route:{path:'/pages/myWorkbench_inspect/myWorkbench_inspect?id='+id+'&type='+type}})">
 				<image src="../../static/images/about-workbench-icon3.png" alt=""/>
@@ -30,7 +30,7 @@
 			
 			<view class="item" @click="Router.navigateTo({route:{path:'/pages/myWorkbench_database/myWorkbench_database?id='+id+'&type='+type}})">
 				<image src="../../static/images/about-workbench-icon6.png" alt=""/>
-				<view class="tit">资料库</view>
+				<view class="tit">{{isDesign?'方案文件':'资料库'}}</view>
 			</view>
 		</view>
 		

@@ -6,10 +6,10 @@
 		</view>
 		<view class="flexRowBetween r-selt mglr4" style="padding: 30rpx 0;border-bottom: 2rpx solid #e7e7e7;">
 			<view class="selt"  @click="change('1')">
-				<image :src="submitData.type==1?'../../static/images/case-icon2.png':'../../static/images/case-icon3.png'" mode=""></image>法人对私银行账户
+				<image :src="submitData.type==1?'../../static/images/case-icon2.png':'../../static/images/case-icon3.png'" mode=""></image>个人账户
 			</view>
 			<view class="selt"  @click="change('2')">
-				<image :src="submitData.type==2?'../../static/images/case-icon2.png':'../../static/images/case-icon3.png'" mode=""></image>对公银行账户
+				<image :src="submitData.type==2?'../../static/images/case-icon2.png':'../../static/images/case-icon3.png'" mode=""></image>对公账户
 			</view>
 		</view>
 		<view class="caseSbmit">

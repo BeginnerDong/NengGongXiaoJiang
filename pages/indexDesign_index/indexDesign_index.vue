@@ -84,8 +84,8 @@
 			<view class="tt">技能</view>
 		</view>
 		<view class="caseSbmit">
-			<view class="eidt-line" v-for="(item,index) in mainData.product" :key="index" 
-			@click="Router.navigateTo({route:{path:'/pages/indexDesignDetail/indexDesignDetail?id='+item.id}})">
+			<view class="eidt-line" v-for="(item,index) in mainData.product" :key="index" :data-id="item.id"
+			@click="Router.navigateTo({route:{path:'/pages/indexDesignDetail/indexDesignDetail?id='+$event.currentTarget.dataset.id}})">
 				<view class="ll">{{item.title}}</view>
 				<view class="rr price" style="text-align: right;">{{item.price}}</view>
 			</view>

@@ -22,7 +22,7 @@
 				</view>
 				<view class="item" @click=" Router.navigateTo({route:{path:'/pages/indexDesign_classify_VR/indexDesign_classify_VR'}})">
 					<image src="../../static/images/home-design-icon4.png" mode=""></image>
-					<view>VR视频</view>
+					<view>视频</view>
 				</view>
 			</scroll-view>
 		</view>
@@ -30,7 +30,8 @@
 		<view class="f5H10"></view>
 		
 		<view style="padding: 30rpx 0;">
-			<img :src="labelData.mainImg&&labelData.mainImg[0]?labelData.mainImg[0].url:''" style="width: 100%;height: 300rpx;" alt="">
+			<img :src="labelData.mainImg&&labelData.mainImg[0]?labelData.mainImg[0].url:''"  
+			@click="Router.navigateTo({route:{path:labelData.url}})" style="width: 100%;height: 300rpx;" alt="">
 		</view>
 		<view class="f5H10"></view>
 		
@@ -46,8 +47,8 @@
 			<view class="tt">推荐设计师</view>
 		</view>
 		<view class="designIndex pdlr4">
-			<view class="items flexRowBetween" v-for="(item,index) in mainData" :key="index" 
-			@click=" Router.navigateTo({route:{path:'/pages/indexDesign_index/indexDesign_index?user_no='+item.user_no}})">
+			<view class="items flexRowBetween" v-for="(item,index) in mainData" :key="index" :data-user_no="item.user_no"
+			@click=" Router.navigateTo({route:{path:'/pages/indexDesign_index/indexDesign_index?user_no='+$event.currentTarget.dataset.user_no}})">
 				<view class="pic">
 					<image :src="item.mainImg&&item.mainImg[0]?item.mainImg[0].url:''" alt="" />
 				</view>

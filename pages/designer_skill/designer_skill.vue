@@ -34,7 +34,8 @@
 					<view class="deltBtn" @click="deleteOne(index)">
 						<image class="deltIcon" src="../../static/images/certificate-icon2.png" mode=""></image>删除
 					</view>
-					<view class="deltBtn" @click=" Router.navigateTo({route:{path:'/pages/designer_skill_add/designer_skill_add?id='+item.id}})">
+					<view class="deltBtn" :data-id="item.id"
+					@click=" Router.navigateTo({route:{path:'/pages/designer_skill_add/designer_skill_add?id='+$event.currentTarget.dataset.id}})">
 						<image class="deltIcon" src="../../static/images/skills-icon3.png" style="width: 28rpx; height: 27rpx;" mode=""></image>编辑
 					</view>
 				</view>
@@ -114,7 +115,7 @@
 				    content: '确认是否删除这个技能',
 				    success: function (res) {
 				        if (res.confirm) {
-				            const postData = {};
+				             const postData = {};
 				            postData.searchItem = {};
 				            postData.searchItem.id = self.mainData[index].id;
 				            postData.tokenFuncName = 'getThreeToken';

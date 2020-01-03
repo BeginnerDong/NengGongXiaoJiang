@@ -171,7 +171,11 @@
 					    content: '需完善个人信息后才能添加',
 					    success: function (res) {
 					        if (res.confirm) {
-					            
+					            if(self.type=='worker'){
+					            	self.Router.redirectTo({route:{path:'/pages/teamInfor_personal/teamInfor_personal'}})
+					            }else{
+					            	self.Router.redirectTo({route:{path:'/pages/teamInfor/teamInfor'}})
+					            };
 					        } else if (res.cancel) {
 					            console.log('用户点击取消');
 					        }

@@ -7,8 +7,8 @@
 		</view>
 		
 		<view class="designIndex pdlr4" style="padding-top: 10rpx;" v-if="current==1&&designData.length>0">
-			<view class="items flexRowBetween" v-for="(item,index) in designData" :key="index"  
-			@click=" Router.navigateTo({route:{path:'/pages/indexDesignDetail/indexDesignDetail?id='+item.id}})">
+			<view class="items flexRowBetween" v-for="(item,index) in designData" :key="index"  :data-id="item.id"
+			@click=" Router.navigateTo({route:{path:'/pages/indexDesignDetail/indexDesignDetail?id='+$event.currentTarget.dataset.id}})">
 				<view class="pic">
 					<image :src="item.userInfo[0].mainImg[0].url" alt="" />
 				</view>
@@ -25,8 +25,8 @@
 			</view>
 		</view>
 		<view class="designIndex pdlr4" style="padding-top: 10rpx;" v-if="current==2&&workerData.length>0">
-			<view class="items flexRowBetween" v-for="(item,index) in workerData" :key="index" 
-			 @click=" Router.navigateTo({route:{path:'/pages/indexWorkerDetail/indexWorkerDetail?id='+item.id}})">
+			<view class="items flexRowBetween" v-for="(item,index) in workerData" :key="index" :data-id="item.id"
+			 @click=" Router.navigateTo({route:{path:'/pages/indexWorkerDetail/indexWorkerDetail?id='+$event.currentTarget.dataset.id}})">
 				<view class="pic">
 					<image :src="item.userInfo[0].mainImg[0].url" alt="" />
 				</view>

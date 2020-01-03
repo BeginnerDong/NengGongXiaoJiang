@@ -32,11 +32,31 @@
 						<view>女</view>
 					</view>
 				</view>
+				<view class="eidt-line">
+					<view class="ll">地址</view>
+					<view class="rr" @click="chooseAddress()">
+						<input type="text" disabled="true" v-model="submitData.address" />
+					</view>
+				</view>
 				<view class="eidt-column">
 					<view class="ll">个人介绍</view>
 					<view class="">
 						<textarea value="" placeholder="请简单的介绍下一下自己" v-model="submitData.introduce"/>
 					</view>
+				</view>
+				<view class="eidt-column">
+					<view class="ll">上传身份证正面</view>
+					<view @click="upLoadImgTwo('1')" v-if="submitData.id_img_front.length==0" style="width: 300rpx;height:340rpx;background: #f5f5f5;line-height: 340rpx;text-align: center;font-size: 40px;">
+						+
+					</view>
+					<image v-else :src="submitData.id_img_front[0]?submitData.id_img_front[0].url:''"  style="width: 300rpx;height:340rpx;"></image>
+				</view>
+				<view class="eidt-column">
+					<view class="ll">上传身份证反面</view>
+					<view @click="upLoadImgTwo('2')" v-if="submitData.id_img_back.length==0"  style="width: 300rpx;height:340rpx;background: #f5f5f5;line-height: 340rpx;text-align: center;font-size: 40px;">
+						+
+					</view>
+					<image v-else :src="submitData.id_img_back[0]?submitData.id_img_back[0].url:''"  style="width: 300rpx;height:340rpx;"></image>
 				</view>
 				<view class="eidt-column">
 					<view class="ll">工作经历</view>
@@ -64,7 +84,12 @@
 					mainImg:[],
 					gender:'',
 					introduce:'',
-					experience:''
+					experience:'',
+					address:'',
+					longitude:'',
+					latitude:'',
+					id_img_front:[],
+					id_img_back:[]
 				}
 			}
 		},
@@ -73,6 +98,126 @@
 			self.$Utils.loadAll(['getMainData'], self);
 		},
 		methods: {
+			
+			upLoadImgTwo(type) {
+				const self = this;			
+				wx.showLoading({
+					mask: true,
+					title: '上传中',
+				});
+				const callback = (res) => {
+					console.log('res', res)
+					if (res.solely_code == 100000) {
+						if(type=='1'){
+							self.submitData.id_img_front.push({url:res.info.url,type:'image'})
+						}else if(type==2){
+							self.submitData.id_img_back.push({url:res.info.url,type:'image'})
+						};
+						console.log(self.submitData)
+						wx.hideLoading()
+					} else {
+						self.$Utils.showToast('网络故障', 'none')
+					}
+				};				
+				wx.chooseImage({
+					count: 1,
+					success: function(res) {
+						console.log(res);
+						var tempFilePaths = res.tempFilePaths[0];
+						console.log(callback)
+						self.$Utils.uploadFile(tempFilePaths, 'file', {
+							tokenFuncName: 'getProjectToken',
+							type:'image'
+						}, callback)
+					},
+					fail: function(err) {
+						wx.hideLoading();
+					},			
+				})			
+			},
+			
+			chooseAddress(e) {
+				const self = this;
+				uni.authorize({
+				    scope: 'scope.userLocation',
+				    success() {
+				        uni.chooseLocation({
+				        	success: (res) => {
+				        		console.log(res)
+				        		self.submitData.address = res.address;
+				        		self.submitData.longitude = res.longitude;
+				        		self.submitData.latitude  = res.latitude;
+				        	},
+				        	fail: (e) => {
+				        		uni.getSetting({
+				        			success: (res) => {
+				        				console.log(res)
+				        				let locaAuth = res.authSetting['scope.userLocation']
+				        				if (locaAuth) {/* 判断位置是否已经授权，是选择地图位置点击取消触发的fail，再选择位置 */
+				        					console.log('地图点击取消')
+				        					uni.chooseLocation({
+				        						success: (res) => {
+				        							self.submitData.address = res.address;
+				        							self.submitData.longitude = res.longitude;
+				        							self.submitData.latitude  = res.latitude;
+				        						},
+				        					});
+				        				}
+				        				if (!locaAuth) { /* 如果地理位置没授权 */
+				        					console.log(222)
+				        					uni.showModal({
+				        					    title: '提示',
+				        					    content: '需要授权位置信息',
+				        						confirmColor:'#ca1c1d',
+				        						showCancel:true,
+				        					    success: function (res) {
+				        					        if (res.confirm) {
+				        					            uni.openSetting({
+				        					            	success: (res) => {
+				        					            		console.log(res.authSetting)
+				        					            	},
+				        					            	fail: (res) => {
+				        					            		console.log(res)
+				        					            	},
+				        					            });
+				        					        } else if (res.cancel) {
+				        					           
+				        					        }
+				        					    }
+				        					});			
+				        					
+				        				
+				        				}
+				        			}
+				        		})
+				        	}
+				        });
+				    },
+					fail: (e) => {
+						uni.showModal({
+						    title: '提示',
+						    content: '需要授权位置信息',
+							confirmColor:'#ca1c1d',
+							showCancel:true,
+						    success: function (res) {
+						        if (res.confirm) {
+						            uni.openSetting({
+						            	success: (res) => {
+						            		console.log(res.authSetting)
+						            	},
+						            	fail: (res) => {
+						            		console.log(res)
+						            	},
+						            });
+						        } else if (res.cancel) {
+						           
+						        }
+						    }
+						});
+					}
+				})
+				
+			},
 			
 			submit() {
 				const self = this;
@@ -146,12 +291,13 @@
 						self.submitData.gender = self.mainData.gender;
 						self.submitData.introduce = self.mainData.introduce;
 						self.submitData.experience = self.mainData.experience;
-						
+						self.submitData.address = self.mainData.address;
+						self.submitData.longitude = self.mainData.longitude;
+						self.submitData.latitude = self.mainData.latitude;
 					} else {
 						self.$Utils.showToast(res.msg, 'none');
 					};
 					self.$Utils.finishFunc('getMainData');
-			
 				};
 				self.$apis.userInfoGet(postData, callback);
 			},

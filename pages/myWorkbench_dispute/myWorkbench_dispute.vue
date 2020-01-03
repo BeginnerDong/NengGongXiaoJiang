@@ -8,12 +8,12 @@
 			<view class="selt" @click="change('1')">
 				<image :src="curr==1?'../../static/images/case-icon2.png':'../../static/images/case-icon3.png'" mode="">
 					
-				</image>无理要求、无法完成
+				</image>维权退款
 			</view>
 			<view class="selt" @click="change('2')">
 				<image :src="curr==2?'../../static/images/case-icon2.png':'../../static/images/case-icon3.png'" mode="">
 					
-				</image>不讲诚信、拒付赏金
+				</image>余额退款
 			</view>
 		</view>
 		<view class="f5H10"></view>

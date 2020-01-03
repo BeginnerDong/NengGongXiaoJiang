@@ -19,11 +19,11 @@
 		<view class="busnsName palr4 flexRowBetween" v-if="type!=4">
 			<view class="flexRowAround">
 				<view class="leftImg" @click=" Router.navigateTo({route:{path:'/pages/business_index/business_index?user_no='+mainData.userInfo[0].user_no+'&type='+type}})">
-					<image :src="mainData.userInfo[0].mainImg&&mainData.userInfo[0].mainImg[0]?mainData.userInfo[0].mainImg[0].url:'../../static/images/qiyexinxi-icon2.png'"></image>
+					<image :src="mainData.userInfo&&mainData.userInfo[0]&&mainData.userInfo[0].mainImg&&mainData.userInfo[0].mainImg[0]?mainData.userInfo[0].mainImg[0].url:'../../static/images/qiyexinxi-icon2.png'"></image>
 				</view>
 				<view class="cont">
-					<view class="tit avoidOverflow">{{mainData.userInfo[0].name}}</view>
-					<view class="adrs avoidOverflow">{{mainData.userInfo[0].address}}</view>
+					<view class="tit avoidOverflow">{{mainData.userInfo&&mainData.userInfo[0]?mainData.userInfo[0].name:''}}</view>
+					<view class="adrs avoidOverflow">{{mainData.userInfo&&mainData.userInfo[0]?mainData.userInfo[0].address:''}}</view>
 				</view>
 			</view>
 			<view class="icon">
@@ -46,7 +46,7 @@
 		<!-- 底部菜单按钮 -->
 		<view class="xqbotomBar">
 			<view class="left">
-				<view class="ite" @click=" Router.switchTab({route:{path:'/pages/index/index'}})">
+				<view class="ite" @click=" Router.redirectTo({route:{path:'/pages/index/index'}})">
 					<image src="../../static/images/details-icon2.png" mode=""></image>
 					<view>返回首页</view>
 				</view>
@@ -54,10 +54,10 @@
 					<image :src="isCollect?'../../static/images/details-icon6.png':'../../static/images/details-icon3.png'" mode=""></image>
 					<view>收藏</view>
 				</view>
-				<view class="ite">
+				<button class="ite" open-type="contact">
 					<image src="../../static/images/details-icon4.png" mode=""></image>
 					<view>客服</view>
-				</view>
+				</button>
 				<view class="ite" @click="addCart()" v-if="type!=3">
 					<image src="../../static/images/details-icon5.png" mode=""></image>
 					<view>购物车</view>
@@ -233,7 +233,17 @@
 	@import "../../assets/style/busnsName.css";
 	@import "../../assets/style/xqbotomBar.css";
 	@import "../../assets/style/quill.css";
-
+	button{
+		background: none;
+		line-height: 1.5;
+	}
+	button::after{
+		border: none;
+	}
+	.button-hover{
+		color: #000000;
+		background: none;
+	}
 	page {
 		padding-bottom: 140rpx;
 	}

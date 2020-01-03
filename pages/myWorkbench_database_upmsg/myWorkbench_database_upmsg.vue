@@ -13,10 +13,11 @@
 		</view>
 		<view class="pdlr4">
 			<view class="uploadBtn">
-				<image  v-for="(item,index) in submitData.mainImg" :key="index"   v-if="submitData.mainImg.length>0" :src="item.url" mode=""></image>
+				<image  v-for="(item,index) in submitData.mainImg" :key="index"   
+				v-if="submitData.mainImg.length>0" :src="item.url" mode=""></image>
 				
 				<image @click="upLoadImg()" src="../../static/images/about-hetongbuchong-icon1.png" 
-				v-if="submitData.mainImg.length==0" mode=""></image>
+				 mode=""></image>
 			</view>
 		</view>
 		
@@ -72,8 +73,12 @@
 				postData.data = {};
 				postData.data = self.$Utils.cloneForm(self.submitData);
 				if(self.type==1){
+					if(uni.getStorageSync('threeInfo').identity==1){
+						postData.data.title = '工人上传资料'
+					}else if(uni.getStorageSync('threeInfo').identity==2){
+						postData.data.title = '设计师上传资料'
+					};
 					postData.tokenFuncName = 'getThreeToken';
-					postData.data.title = '工人上传资料'
 				}else{
 					postData.tokenFuncName = 'getProjectToken';
 					postData.data.title = '用户上传资料'

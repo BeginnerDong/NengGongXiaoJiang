@@ -13,8 +13,8 @@
 						<image class="deltIcon" src="../../static/images/certificate-icon2.png" mode=""></image>删除
 					</view>
 				</view>
-				<view class="item flexRowBetween" 
-				@click=" Router.navigateTo({route:{path:'/pages/designer_certificateDetail/designer_certificateDetail?id='+item.id}})">
+				<view class="item flexRowBetween" :data-id="item.id"
+				@click=" Router.navigateTo({route:{path:'/pages/designer_certificateDetail/designer_certificateDetail?id='+$event.currentTarget.dataset.id}})">
 					<view class="cont">
 						<view class="lis flex">
 							<image class="icon" src="../../static/images/certificate-icon3.png" mode=""></image>

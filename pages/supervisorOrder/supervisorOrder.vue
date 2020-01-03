@@ -32,8 +32,8 @@
 					</view>
 				</view>
 				<view class="bBtn">
-					<view class="btn" 
-					 @click="Router.navigateTo({route:{path:'/pages/supervisorOrderDetail/supervisorOrderDetail?id='+item.id}})">查看详情</view>
+					<view class="btn" :data-id="item.id"
+					 @click="Router.navigateTo({route:{path:'/pages/supervisorOrderDetail/supervisorOrderDetail?id='+$event.currentTarget.dataset.id}})">查看详情</view>
 				</view>
 			</view>
 		</view>

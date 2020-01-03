@@ -15,7 +15,7 @@
 		
 		<view class="userBox2 boxShaow">
 			<view class="flexRowBetween tit">
-				<view>我的订单</view>
+				<view>材料订单</view>
 				<view class="more" @click=" Router.navigateTo({route:{path:'/pages/myOderList/myOderList'}})">全部订单 &gt;</view>
 			</view>
 			<view class="menu flexRowBetween">

@@ -63,7 +63,7 @@
 				}else if(self.mainData.type==2){
 					var tax = uni.getStorageSync('user_info').thirdApp.custom_rule.design_tax/100
 				}
-				
+				var superRatio = uni.getStorageSync('user_info').thirdApp.custom_rule.supervisor_tax/100;
 				const postData = {};	
 				postData.wxPay = {
 					price:self.lessMoney
@@ -101,7 +101,7 @@
 						data: {
 							user_no:self.mainData.shop_no,
 							type:2,
-							count:self.workPrice - self.workPrice*tax,
+							count:self.mainData.supervisor!=''?self.workPrice - self.workPrice*tax - self.workPrice*superRatio:self.workPrice - self.workPrice*tax,
 							thirdapp_id:2,
 							trade_info:'人工费',
 							relation_user:self.mainData.user_no,
@@ -122,6 +122,23 @@
 						}
 					}
 				];
+				if(self.mainData.supervisor!=''){
+					postData.payAfter.push(
+						{
+							tableName: 'FlowLog',
+							FuncName: 'add',
+							data: {
+								user_no:self.mainData.supervisor,
+								type:2,
+								count:self.workPrice*superRatio,
+								thirdapp_id:2,
+								trade_info:'监理抽成',
+								relation_user:self.mainData.shop_no,
+								relation_id:self.id
+							}
+						},
+					)
+				};
 				if(self.distriData.length>0&&self.mainData.shopInfo[0].behavior<4){
 					postData.payAfter.push(
 						{

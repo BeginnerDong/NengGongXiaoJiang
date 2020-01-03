@@ -27,8 +27,8 @@
 				</view>
 				<view class="eidt-line">
 					<view class="ll">地址：</view>
-					<view class="rr">
-						<input type="text" placeholder="请输入详细地址" v-model="submitData.description">
+					<view class="rr" @click="chooseAddress()">
+						<input type="text" disabled="true" placeholder="请选择详细地址" v-model="submitData.description">
 					</view>
 				</view>
 				<view class="eidt-line">
@@ -135,6 +135,118 @@
 		},
 		
 		methods: {
+			
+			chooseAddress(e) {
+				const self = this;
+				uni.authorize({
+				    scope: 'scope.userLocation',
+				    success() {
+				        uni.chooseLocation({
+				        	success: (res) => {
+				        		console.log(111)
+				        		self.submitData.description = res.address
+				        	},
+				        	fail: (e) => {
+				        		uni.getSetting({
+				        			success: (res) => {
+				        				console.log(res)
+				        				let locaAuth = res.authSetting['scope.userLocation']
+				        				if (locaAuth) {/* 判断位置是否已经授权，是选择地图位置点击取消触发的fail，再选择位置 */
+				        					console.log('地图点击取消')
+				        					uni.chooseLocation({
+				        						success: (res) => {
+				        							self.submitData.description = res.address
+				        						},
+				        					});
+				        				}
+				        				if (!locaAuth) { /* 如果地理位置没授权 */
+				        					console.log(222)
+				        					uni.showModal({
+				        					    title: '提示',
+				        					    content: '需要授权位置信息',
+				        						confirmColor:'#ca1c1d',
+				        						showCancel:true,
+				        					    success: function (res) {
+				        					        if (res.confirm) {
+				        					            uni.openSetting({
+				        					            	success: (res) => {
+				        					            		console.log(res.authSetting)
+				        					            	},
+				        					            	fail: (res) => {
+				        					            		console.log(res)
+				        					            	},
+				        					            });
+				        					        } else if (res.cancel) {
+				        					           
+				        					        }
+				        					    }
+				        					});			
+				        					
+				        				
+				        				}
+				        			}
+				        		})
+				        	}
+				        });
+				    },
+					fail: (e) => {
+						uni.showModal({
+						    title: '提示',
+						    content: '需要授权位置信息',
+							confirmColor:'#ca1c1d',
+							showCancel:true,
+						    success: function (res) {
+						        if (res.confirm) {
+						            uni.openSetting({
+						            	success: (res) => {
+						            		console.log(res.authSetting)
+						            	},
+						            	fail: (res) => {
+						            		console.log(res)
+						            	},
+						            });
+						        } else if (res.cancel) {
+						           
+						        }
+						    }
+						});
+					}
+				})
+				
+			},
+			
+			
+			chooseLocation(){
+				
+				const self = this;
+				uni.chooseLocation({
+				    success: function (res) {
+				        console.log('位置名称：' + res.name);
+				        console.log('详细地址：' + res.address);
+				        console.log('纬度：' + res.latitude);
+				        console.log('经度：' + res.longitude);
+						self.submitData.description = res.address
+				    },
+					fail() {
+						uni.authorize({
+						    scope: 'scope.userLocation',
+						    success() {
+						      uni.chooseLocation({
+						          success: function (res) {
+						              console.log('位置名称：' + res.name);
+						              console.log('详细地址：' + res.address);
+						              console.log('纬度：' + res.latitude);
+						              console.log('经度：' + res.longitude);
+						      		self.submitData.description = res.address
+
+						          },
+								})
+						    }
+						})
+					}
+				});
+			},
+			
 			showMulLinkageThreePicker() {
 				this.$refs.mpvueCityPicker.show()
 			},

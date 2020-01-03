@@ -32,7 +32,7 @@
 					</view>
 					<!--  -->
 				</view>
-				<view class="label" @click="Router.navigateTo({route:{path:'/pages/interactiveDetail/interactiveDetail?id='+item.id}})">
+				<view class="label" :data-id="item.id" @click="Router.navigateTo({route:{path:'/pages/interactiveDetail/interactiveDetail?id='+$event.currentTarget.dataset.id}})">
 					<view class="lis">
 						<image src="../../static/images/home-interactive-icon3.png" mode=""></image>
 						<view>{{item.view_count}}</view>

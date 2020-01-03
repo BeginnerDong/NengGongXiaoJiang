@@ -61,8 +61,8 @@
 		</view>
 		
 		<view class="proLis flexRowBetween xqProlis">
-			<view class="item-lis" v-for="(item,index) in mainData.message" :key="index" 
-			@click=" Router.navigateTo({route:{path:'/pages/indexWorkerDetailTwo/indexWorkerDetailTwo?user_no='+item.user_no+'&id='+item.id}})">
+			<view class="item-lis" v-for="(item,index) in mainData.message" :key="index" :data-id="item.id" :data-user_no="item.user_no"
+			@click=" Router.navigateTo({route:{path:'/pages/indexWorkerDetailTwo/indexWorkerDetailTwo?user_no='+$event.currentTarget.dataset.user_no+'&id='+$event.currentTarget.dataset.id}})">
 				<image class="img" :src="item.mainImg[0].url" alt="" />
 				<view class="tit avoidOverflow2">{{item.title}}</view>
 			</view>
@@ -72,7 +72,7 @@
 		<!-- 底部菜单按钮 -->
 		<view class="xqbotomBar">
 			<view class="left">
-				<view class="ite" @click=" Router.switchTab({route:{path:'/pages/index/index'}})">
+				<view class="ite" @click=" Router.redirectTo({route:{path:'/pages/index/index'}})">
 					<image src="../../static/images/details-icon2.png" mode=""></image>
 					<view>返回首页</view>
 				</view>
@@ -80,10 +80,10 @@
 					<image :src="isCollect?'../../static/images/details-icon6.png':'../../static/images/details-icon3.png'" mode=""></image>
 					<view>收藏</view>
 				</view>
-				<view class="ite">
+				<button class="ite" open-type="contact">
 					<image src="../../static/images/details-icon4.png" mode=""></image>
 					<view>客服</view>
-				</view>
+				</button>
 			</view>
 			<view class="payBtn" @click="goBuy">立即预约</view>
 		</view>
@@ -239,7 +239,17 @@
 <style>
 	@import "../../assets/style/index.css";
 	@import "../../assets/style/xqbotomBar.css";
-	
+	button{
+		background: none;
+		line-height: 1.5;
+	}
+	button::after{
+		border: none;
+	}
+	.button-hover{
+		color: #000000;
+		background: none;
+	}
 	page{padding-bottom: 140rpx!important;}
 	.xqbotomBar .left .ite{ width: 33.3%;}
 </style>

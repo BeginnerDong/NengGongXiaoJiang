@@ -13,9 +13,10 @@
 				<view class="datt">
 					<view class="left">交易时间：{{item.create_time}}</view>
 					<view class="state" v-if="item.pay_status==0">等待支付</view>
-					<view class="state" v-if="item.pay_status==1&&item.transport_status==0">等待发货</view>
-					<view class="state" v-if="item.pay_status==1&&item.transport_status==1">等待收货</view>
+					<view class="state" v-if="item.pay_status==1&&item.transport_status==0&&item.order_step==0">等待发货</view>
+					<view class="state" v-if="item.pay_status==1&&item.transport_status==1&&item.order_step==0">等待收货</view>
 					<view class="state" v-if="item.pay_status==1&&item.order_step==3">已完成</view>
+					<view class="state" v-if="item.order_step==1">退款中</view>
 				</view>
 				
 				<view class="twoCt" v-for="c_item in item.products">
@@ -30,7 +31,7 @@
 				<view class="bBtn">
 					<view class="btn gopay" v-if="item.pay_status==0" @click="pay(item.id,item.price,index)">去支付</view>
 					<view class="btn selt" v-if="item.pay_status==0" @click="orderUpdate(index,'1')">取消订单</view>
-					<view class="btn" v-if="item.type==4&&item.pay_status==1" @click="refundAlert(index)">退款</view>
+					<view class="btn" v-if="item.type==4&&item.pay_status==1&&item.order_step==0" @click="refundAlert(index)">退款</view>
 					<view class="btn" v-if="item.order_step==1">退款中</view>
 					<view class="btn" v-if="item.pay_status==1&&item.transport_status==1" @click="orderUpdate(index,'2')">确认收货</view>
 				</view>
@@ -122,6 +123,8 @@
 						
 						self.$Utils.showToast('申请成功','none',1000);							
 						setTimeout(function() {
+							//self.refundIndex = index;
+							self.is_show = !self.is_show;
 							self.mainData = [];
 							self.paginate={
 								count: 0,

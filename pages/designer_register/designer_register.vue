@@ -18,15 +18,22 @@
 				<view class="icon"><image src="../../static/images/regietered-icon5.png" mode=""></image></view>
 				<view class="rr pr flexRowBetween">
 					<view style="width: 50%;">
-						<input type="number" placeholder="输入验证码">
+						<input type="number" placeholder="输入验证码" v-model="submitData.smsCode">
 					</view>
-					<view class="yzmBtn">获取验证码</view>
+					<view class="yzmBtn" @click="sendCode()" v-if="!hasSend">{{text}}</view>
+					<view class="yzmBtn"  v-else>{{text}}</view>
+				</view>
+			</view>
+			<view class="item">
+				<view class="icon"><image src="../../static/images/regietered-icon2.png" mode=""></image></view>
+				<view class="rr">
+					<input type="number" placeholder="输入登录密码" v-model="submitData.password">
 				</view>
 			</view>
 			<view class="item">
 				<view class="icon"><image src="../../static/images/regietered-icon4.png" mode=""></image></view>
 				<view class="rr pr flexRowBetween">
-					<view style="width: 50%;" @click="showMulLinkageThreePicker">
+					<view style="width: 80%;" @click="chooseAddress">
 						<input type="text" placeholder="请选择地址" :value="submitData.address" disabled="true">
 					</view>
 					<view class="yzmBtn">
@@ -79,6 +86,20 @@
 					</view>
 				</view>
 			</view>
+			<view class="">
+				<view class="ll" style="color: #666;">上传身份证正面</view>
+				<view @click="upLoadImgTwo('1')" v-if="submitData.id_img_front.length==0" style="margin-top: 20rpx;width: 300rpx;height:340rpx;background: #f5f5f5;line-height: 340rpx;text-align: center;font-size: 40px;">
+					+
+				</view>
+				<image v-else :src="submitData.id_img_front[0]?submitData.id_img_front[0].url:''"  style="margin-top: 20rpx;width: 300rpx;height:340rpx;"></image>
+			</view>
+			<view class="">
+				<view class="ll" style="color: #666;margin-top: 20rpx;">上传身份证反面</view>
+				<view @click="upLoadImgTwo('2')" v-if="submitData.id_img_back.length==0"  style="margin-top: 20rpx;width: 300rpx;height:340rpx;background: #f5f5f5;line-height: 340rpx;text-align: center;font-size: 40px;">
+					+
+				</view>
+				<image v-else :src="submitData.id_img_back[0]?submitData.id_img_back[0].url:''"  style="margin-top: 20rpx;width: 300rpx;height:340rpx;"></image>
+			</view>
 		</view>
 		
 		<view class="submitbtn" style="margin: 200rpx auto">
@@ -124,7 +145,13 @@
 					phone:'',
 					code:'',	
 					user_type:1,
-					thirdapp_id:2
+					thirdapp_id:2,
+					longitude:'',
+					latitude:'',
+					id_img_front:[],
+					id_img_back:[],
+					smsCode:'',
+					password:''
 				},
 				index: 0,
 				numb: 0,
@@ -146,7 +173,10 @@
 				mode: '',
 				deepLength: 1,
 				pickerValueDefault: [0],
-				pickerValueArray:[]
+				pickerValueArray:[],
+				currentTime:61,
+				text:'获取验证码',
+				hasSend:false,
 			}
 		},
 		onLoad(options) {
@@ -167,6 +197,172 @@
 		},
 		
 		methods: {
+			
+			sendCode(){
+				var self = this;
+				console.log(111)
+				if(self.hasSend){
+					return;
+				};
+				var phone = self.submitData.phone;
+				
+				if (phone.trim().length != 11 || !/^1[3|4|5|6|7|8|9]\d{9}$/.test(phone)) {
+					self.$Utils.showToast('请输入正确的手机号', 'none', 1000)
+					
+					return;
+				}
+				var postData = {
+					data:{
+						type:1,
+						phone:self.submitData.phone
+					}
+					
+				};
+				var callback = function(res){
+					if(res.solely_code==100000){
+						self.hasSend = true;
+						var interval = setInterval(function() {
+							self.currentTime--; //每执行一次让倒计时秒数减一
+						
+							self.text=self.currentTime + 's';//按钮文字变成倒计时对应秒数
+							
+							//如果当秒数小于等于0时 停止计时器 且按钮文字变成重新发送 且按钮变成可用状态 倒计时的秒数也要恢复成默认秒数 即让获取验证码的按钮恢复到初始化状态只改变按钮文字
+							if (self.currentTime <= 0) {
+								clearInterval(interval)
+								
+								self.hasSend = false;
+								self.text='重新发送';
+								self.currentTime= 61;
+								
+							}
+							
+						}, 1000);
+					}else{
+						self.$Utils.showToast('发送失败', 'none', 1000)
+					};
+				};
+				self.$apis.codeGet(postData, callback);
+			},
+			
+			upLoadImgTwo(type) {
+				const self = this;			
+				wx.showLoading({
+					mask: true,
+					title: '上传中',
+				});
+				const callback = (res) => {
+					console.log('res', res)
+					if (res.solely_code == 100000) {
+						if(type=='1'){
+							self.submitData.id_img_front.push({url:res.info.url,type:'image'})
+						}else if(type==2){
+							self.submitData.id_img_back.push({url:res.info.url,type:'image'})
+						};
+						console.log(self.submitData)
+						wx.hideLoading()
+					} else {
+						self.$Utils.showToast('网络故障', 'none')
+					}
+				};				
+				wx.chooseImage({
+					count: 1,
+					success: function(res) {
+						console.log(res);
+						var tempFilePaths = res.tempFilePaths[0];
+						console.log(callback)
+						self.$Utils.uploadFile(tempFilePaths, 'file', {
+							tokenFuncName: 'getProjectToken',
+							type:'image'
+						}, callback)
+					},
+					fail: function(err) {
+						wx.hideLoading();
+					},			
+				})			
+			},
+			
+			chooseAddress(e) {
+				const self = this;
+				uni.authorize({
+				    scope: 'scope.userLocation',
+				    success() {
+				        uni.chooseLocation({
+				        	success: (res) => {
+				        		console.log(res)
+				        		self.submitData.address = res.address;
+				        		self.submitData.longitude = res.longitude;
+				        		self.submitData.latitude  = res.latitude;
+				        	},
+				        	fail: (e) => {
+				        		uni.getSetting({
+				        			success: (res) => {
+				        				console.log(res)
+				        				let locaAuth = res.authSetting['scope.userLocation']
+				        				if (locaAuth) {/* 判断位置是否已经授权，是选择地图位置点击取消触发的fail，再选择位置 */
+				        					console.log('地图点击取消')
+				        					uni.chooseLocation({
+				        						success: (res) => {
+				        							self.submitData.address = res.address;
+				        							self.submitData.longitude = res.longitude;
+				        							self.submitData.latitude  = res.latitude;
+				        						},
+				        					});
+				        				}
+				        				if (!locaAuth) { /* 如果地理位置没授权 */
+				        					console.log(222)
+				        					uni.showModal({
+				        					    title: '提示',
+				        					    content: '需要授权位置信息',
+				        						confirmColor:'#ca1c1d',
+				        						showCancel:true,
+				        					    success: function (res) {
+				        					        if (res.confirm) {
+				        					            uni.openSetting({
+				        					            	success: (res) => {
+				        					            		console.log(res.authSetting)
+				        					            	},
+				        					            	fail: (res) => {
+				        					            		console.log(res)
+				        					            	},
+				        					            });
+				        					        } else if (res.cancel) {
+				        					           
+				        					        }
+				        					    }
+				        					});			
+				        					
+				        				
+				        				}
+				        			}
+				        		})
+				        	}
+				        });
+				    },
+					fail: (e) => {
+						uni.showModal({
+						    title: '提示',
+						    content: '需要授权位置信息',
+							confirmColor:'#ca1c1d',
+							showCancel:true,
+						    success: function (res) {
+						        if (res.confirm) {
+						            uni.openSetting({
+						            	success: (res) => {
+						            		console.log(res.authSetting)
+						            	},
+						            	fail: (res) => {
+						            		console.log(res)
+						            	},
+						            });
+						        } else if (res.cancel) {
+						           
+						        }
+						    }
+						});
+					}
+				})
+				
+			},
 			
 			showMulLinkageThreePicker() {
 				this.$refs.mpvueCityPicker.show()
@@ -225,11 +421,15 @@
 				if(postData.data.code==''){
 					delete postData.data.code
 				};
+				postData.smsAuth = {
+					phone:self.submitData.phone,						
+					code:self.submitData.smsCode
+				};
 				const callback = (data) => {				
 					if (data.solely_code == 100000) {					
 						self.$Utils.showToast('注册成功', 'none');
 						setTimeout(function() {
-							self.Router.switchTab({route:{path:'/pages/user/user'}})
+							self.Router.redirectTo({route:{path:'/pages/user/user'}})
 						}, 800);
 						
 					} else {
@@ -282,6 +482,9 @@
 						key: 'id',
 						condition: 'in',
 					},
+				};
+				if(self.type=='supervision'){
+					postData.getBefore.caseData.searchItem.title[1][0]='监理入驻规则'
 				};
 				const callback = (res) => {
 					if (res.info.data.length > 0) {

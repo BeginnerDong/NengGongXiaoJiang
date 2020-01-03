@@ -30,6 +30,7 @@
 				<image @click="chooseAll" v-show="isChooseAll" src="../../static/images/about-address-icon1.png" ></image>
 				<image @click="chooseAll" v-show="!isChooseAll" src="../../static/images/about-address-icon4.png" ></image>
 				全选
+				<view style="margin-left: 10px;" @click="deleteAll()">删除</view>
 			</view>
 			<view class="rr">
 				合计：<view class="mny">{{totalPrice}}</view>
@@ -49,7 +50,7 @@
 				<view class="nav_img">
 					<image src="../../static/images/nabar2.png" />
 				</view>
-				<view class="text">发需求</view>
+				<view class="text">需求</view>
 			</view>
 			<view class="navbar_item" @click="Router.redirectTo({route:{path:'/pages/car/car'}})" >
 				<view class="nav_img">
@@ -77,11 +78,7 @@
 				Router:this.$Router,
 				totalPrice:0,
 				mainData:[],
-				isChooseAll:false,
-				proListDate:[
-					{price:'28',integral:'860',count:'1'},
-					{price:'28',integral:'860',count:'1'}
-				],
+				isChooseAll:false
 			}
 		},
 
@@ -99,6 +96,29 @@
 		},
 
 		methods: {
+			
+			deleteAll() {
+				const self = this;
+				uni.showModal({
+					title: '提示',
+					content: '确认要删除选中商品吗？',
+					showCancel: true,
+					cancelText: '取消',
+					confirmText: '确认',
+					success: res => {
+						if (res.confirm) {
+							for (var i = 0; i < self.mainData.length; i++) {
+								if(self.mainData[i].isSelect){
+									self.$Utils.delStorageArray('cartData', self.mainData[i], 'id');
+								}
+							};
+							self.mainData = self.$Utils.getStorageArray('cartData');
+						} else if (res.cancel) {
+							console.log('用户点击取消');
+						}
+					},
+				});
+			},
 
 
 			checkChooseAll() {

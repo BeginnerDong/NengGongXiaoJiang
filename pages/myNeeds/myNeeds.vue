@@ -1,8 +1,8 @@
 <template>
 	<view>
 		<view class="myNeed_ind pdlr4">
-			<view class="item boxShaow flexRowBetween" v-for="item in mainData"
-			@click=" Router.navigateTo({route:{path:'/pages/myNeedsDetail/myNeedsDetail?id='+item.id}})">
+			<view class="item boxShaow flexRowBetween" v-for="item in mainData" :data-id="item.id"
+			@click=" Router.navigateTo({route:{path:'/pages/myNeedsDetail/myNeedsDetail?id='+$event.currentTarget.dataset.id}})">
 				<view class="cont">
 					<view class="lis flex">
 						<image class="icon" src="../../static/images/home-housing-icon1.png" mode=""></image>

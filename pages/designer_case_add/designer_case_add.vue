@@ -2,7 +2,7 @@
 	<view>
 		<view class="caseSbmit">
 			<form action="">
-				<view class="eidt-line">
+				<view class="eidt-line" v-if="isWork">
 					<view class="ll">选择工种</view>
 					<view class="rr pr" style="padding-right: 20rpx;">
 						<picker :value="index" :range="array"  @change="bindPickerChange">
@@ -69,11 +69,15 @@
 					mainImg:[],
 					behavior:'',
 					type:5
-				}
+				},
+				isWork:false
 			}
 		},
 		onLoad(options) {
 			const self = this;
+			if(uni.getStorageSync('threeInfo').identity==1){
+				self.isWork=true;
+			};
 			if(options.id){
 				self.id = options.id;
 				self.$Utils.loadAll(['getMainData'], self);
@@ -188,6 +192,11 @@
 				console.log('pass', pass);
 				console.log('self.submitData',self.submitData)
 				if (pass) {	
+					if(self.submitData.mainImg.length<4){
+						uni.setStorageSync('canClick', true);
+						self.$Utils.showToast('图片最少上传4张', 'none');
+						return
+					};
 					if(self.id){
 						self.messageUpdate()
 					}else{

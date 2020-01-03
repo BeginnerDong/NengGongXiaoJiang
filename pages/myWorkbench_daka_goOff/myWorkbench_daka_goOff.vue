@@ -41,7 +41,8 @@
 				now:'',
 				submitData:{
 					off_time:'',
-					mainImg:[]
+					mainImg:[],
+					
 				}
 			}
 		},
@@ -56,6 +57,24 @@
 		},
 		
 		methods: {
+			
+			/* getLocation() {
+				const self = this;
+				const callback = (res) => {
+					if (res) {
+						console.log('res', res)
+						if(res.authSetting){
+							console.log(232)
+							return
+						}
+						
+						self.submitData.longitude = res.location.lng;
+						self.submitData.latitude = res.location.lat
+					};
+				};
+				self.$Utils.getLocation('reverseGeocoder', callback);
+				self.$Utils.finishFunc('getLocation');
+			}, */
 			
 			processUpdate() {
 				const self = this;

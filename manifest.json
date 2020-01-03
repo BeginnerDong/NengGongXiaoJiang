@@ -63,7 +63,11 @@
             "minified" : true
         },
         "usingComponents" : false,
-        "permission" : {}
+        "permission" : {
+            "scope.userLocation" : {
+                "desc" : "调取地图选取位置"
+            }
+        }
     },
     "h5" : {
         "title" : "能工小匠",

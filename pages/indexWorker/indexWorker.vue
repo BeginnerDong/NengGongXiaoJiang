@@ -7,8 +7,8 @@
 		
 		<view class="ind-cont4">
 			<scroll-view class="list" scroll-x>
-				<view class="item" v-for="(item,index) in classLis" :key="index"  
-				@click="Router.navigateTo({route:{path:'/pages/classify/classify?id='+item.id+'&name='+item.name}})">
+				<view class="item" v-for="(item,index) in classLis" :key="index"  :data-id="item.id" :data-name="item.name"
+				@click="Router.navigateTo({route:{path:'/pages/classify/classify?id='+$event.currentTarget.dataset.id+'&name='+$event.currentTarget.dataset.name}})">
 					<image :src="item.iconUrl" mode=""></image>
 					<view>{{item.name}}</view>
 				</view>
@@ -29,10 +29,10 @@
 			<view class="tt">优秀建筑工</view>
 		</view>
 		<view class="designIndex pdlr4" v-if="workerOneData.length>0">
-			<view class="items flexRowBetween" v-for="(item,index) in workerOneData" :key="index" 
-			@click="Router.navigateTo({route:{path:'/pages/indexWorker_index/indexWorker_index?user_no='+item.user_no}})">
+			<view class="items flexRowBetween" v-for="(item,index) in workerOneData" :key="index" :data-user_no="item.user_no"
+			@click="Router.navigateTo({route:{path:'/pages/indexWorker_index/indexWorker_index?user_no='+$event.currentTarget.dataset.user_no}})">
 				<view class="pic">
-					<image :src="item.mainImg[0].url" alt="" />
+					<image :src="item.mainImg&&item.mainImg[0]?item.mainImg[0].url:''" alt="" />
 				</view>
 				<view class="infor">
 					<view class="title flex">
@@ -62,10 +62,10 @@
 			<view class="tt">优秀装修工</view>
 		</view>
 		<view class="designIndex pdlr4" v-if="workerTwoData.length>0">
-			<view class="items flexRowBetween" v-for="(item,index) in workerTwoData" :key="index" 
-			@click="Router.navigateTo({route:{path:'/pages/indexWorker_index/indexWorker_index?user_no='+item.user_no}})">
+			<view class="items flexRowBetween" v-for="(item,index) in workerTwoData" :key="index" :data-user_no="item.user_no"
+			@click="Router.navigateTo({route:{path:'/pages/indexWorker_index/indexWorker_index?user_no='+$event.currentTarget.dataset.user_no}})">
 				<view class="pic">
-					<image :src="item.mainImg[0].url" alt="" />
+					<image :src="item.mainImg&&item.mainImg[0]?item.mainImg[0].url:''" alt="" />
 				</view>
 				<view class="infor">
 					<view class="title flex">
@@ -95,10 +95,10 @@
 			<view class="tt">优秀安装工</view>
 		</view>
 		<view class="designIndex pdlr4" v-if="workerThreeData.length>0">
-			<view class="items flexRowBetween" v-for="(item,index) in workerThreeData" :key="index" 
-			@click="Router.navigateTo({route:{path:'/pages/indexWorker_index/indexWorker_index?user_no='+item.user_no}})">
+			<view class="items flexRowBetween" v-for="(item,index) in workerThreeData" :key="index" :data-user_no="item.user_no"
+			@click="Router.navigateTo({route:{path:'/pages/indexWorker_index/indexWorker_index?user_no='+$event.currentTarget.dataset.user_no}})">
 				<view class="pic">
-					<image :src="item.mainImg[0].url" alt="" />
+					<image :src="item.mainImg&&item.mainImg[0]?item.mainImg[0].url:''" alt="" />
 				</view>
 				<view class="infor">
 					<view class="title flex">

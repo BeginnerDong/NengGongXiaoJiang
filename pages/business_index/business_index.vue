@@ -8,8 +8,9 @@
 		</view>
 		<view class="busnsName palr4 flexRowBetween">
 			<view class="flexRowAround ">
+				
 				<view class="leftImg">
-					<image :src="mainData.mainImg[0].url"></image>
+					<image :src="mainData.mainImg&&mainData.mainImg[0]?mainData.mainImg[0].url:'../../static/images/qiyexinxi-icon2.png'"></image>
 				</view>
 				<view class="cont">
 					<view class="tit avoidOverflow">{{mainData.name}}</view>
@@ -39,8 +40,8 @@
 			<view class="tt">发布商品</view>
 		</view>
 		<view class="designIndex pdlr4">
-			<view class="items flexRowBetween" v-for="(item,index) in mainData.product" :key="index" 
-			@click=" Router.navigateTo({route:{path:'/pages/pageDetail/pageDetail?id='+item.id+'&type='+item.type}})">
+			<view class="items flexRowBetween" v-for="(item,index) in mainData.product" :key="index" :data-id="item.id"
+			@click=" Router.navigateTo({route:{path:'/pages/pageDetail/pageDetail?id='+$event.currentTarget.dataset.id+'&type='+item.type}})">
 				<view class="pic">
 					<image :src="item.mainImg&&item.mainImg[0]?item.mainImg[0].url:''" alt="" />
 				</view>

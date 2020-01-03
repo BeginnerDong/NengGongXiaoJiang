@@ -10,14 +10,21 @@
 				</view>
 			</view>
 			<view class="item">
+				<view class="icon"><image src="../../static/images/regietered-icon7.png" mode=""></image></view>
+				<view class="rr">
+					<input type="text" placeholder="输入密码"  v-model="password">
+				</view>
+			</view>
+			<!-- <view class="item">
 				<view class="icon"><image src="../../static/images/regietered-icon5.png" mode=""></image></view>
 				<view class="rr pr flexRowBetween">
 					<view style="width: 50%;">
-						<input type="number" placeholder="输入验证码" >
+						<input type="number" placeholder="输入验证码" v-model="code">
 					</view>
-					<view class="yzmBtn">获取验证码</view>
+					<view class="yzmBtn" @click="sendCode()" v-if="!hasSend">{{text}}</view>
+					<view class="yzmBtn"  v-else>{{text}}</view>
 				</view>
-			</view>
+			</view> -->
 		</view>
 		<view class="submitbtn" style="margin: 200rpx auto">
 			<button type="submit" style="margin-bottom: 20rpx;" 
@@ -37,7 +44,12 @@
 				Router:this.$Router,
 				type:'',
 				phone:'',
-				showPage:false
+				showPage:false,
+				//code:'',
+				currentTime:61,
+				text:'获取验证码',
+				hasSend:false,
+				password:''
 			}
 		},
 		
@@ -82,10 +94,19 @@
 					self.$Utils.showToast('请输入账号', 'none', 1000);
 					return
 				};
+				/* if(self.code==''){
+					self.$Utils.showToast('请输入验证码', 'none', 1000);
+					return
+				}; */
 				const postData = {
 					login_name:self.phone,
-					identity:self.identity
-				};				
+					identity:self.identity,
+					password:self.password
+				};			
+				/* postData.smsAuth = {
+					phone:self.phone,						
+					code:self.code					,
+				}; */
 				const callback = (res) => {				
 					if (res.solely_code == 100000) {					
 						console.log(res)
@@ -106,28 +127,49 @@
 				self.$apis.login(postData, callback);
 			},
 			
-			superLogin() {
-				const self = this;
-				if(self.phone==''){
-					self.$Utils.showToast('请输入账号', 'none', 1000);
-					return
+			sendCode(){
+				var self = this;
+				console.log(111)
+				if(self.hasSend){
+					return;
 				};
-				const postData = {
-					login_name:self.phone,
-					identity:self.identity
-				};				
-				const callback = (res) => {				
-					if (res.solely_code == 100000) {					
-						console.log(res)
-						uni.setStorageSync('threeInfo',res.info)
-						uni.setStorageSync('threeToken',res.token);
-						self.Router.redirectTo({route:{path:'/pages/supervisor_user/supervisor_user'}})
-					} else {
-						uni.setStorageSync('canClick', true);
-						self.$Utils.showToast(res.msg, 'none', 1000)
-					}	
+				var phone = self.phone;
+				
+				if (phone.trim().length != 11 || !/^1[3|4|5|6|7|8|9]\d{9}$/.test(phone)) {
+					self.$Utils.showToast('请输入正确的手机号', 'none', 1000)
+					
+					return;
+				}
+				var postData = {
+					data:{
+						phone:self.phone,
+						type:3
+					}
 				};
-				self.$apis.superLogin(postData, callback);
+				var callback = function(res){
+					if(res.solely_code==100000){
+						self.hasSend = true;
+						var interval = setInterval(function() {
+							self.currentTime--; //每执行一次让倒计时秒数减一
+						
+							self.text=self.currentTime + 's';//按钮文字变成倒计时对应秒数
+							
+							//如果当秒数小于等于0时 停止计时器 且按钮文字变成重新发送 且按钮变成可用状态 倒计时的秒数也要恢复成默认秒数 即让获取验证码的按钮恢复到初始化状态只改变按钮文字
+							if (self.currentTime <= 0) {
+								clearInterval(interval)
+								
+								self.hasSend = false;
+								self.text='重新发送';
+								self.currentTime= 61;
+								
+							}
+							
+						}, 1000);
+					}else{
+						self.$Utils.showToast('发送失败', 'none', 1000)
+					};
+				};
+				self.$apis.codeGet(postData, callback);
 			},
 			
 			

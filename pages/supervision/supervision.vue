@@ -16,8 +16,8 @@
 		<view class="f5H10"></view>
 		
 		<view class="supervst_idexLis pdlr4 flexRowBetween">
-			<view class="child boxShaow" v-for="(item,index) in mainData" :key="index" 
-			 @click=" Router.navigateTo({route:{path:'/pages/supervisionDetail/supervisionDetail?user_no='+item.user_no}})">
+			<view class="child boxShaow" v-for="(item,index) in mainData" :key="index" :data-user_no="item.user_no"
+			 @click=" Router.navigateTo({route:{path:'/pages/supervisionDetail/supervisionDetail?user_no='+$event.currentTarget.dataset.user_no}})">
 				<view class="photo">
 					<image :src="item.mainImg&&item.mainImg[0]?item.mainImg[0].url:''" mode=""></image>
 				</view>

@@ -19,6 +19,13 @@
 						<image :src="item&&item.mainImg&&item.mainImg[0]?item.mainImg[0].url:''" mode=""></image>
 					</view>
 				</view>
+				<view class="font13 line">
+					<view class="flex timebox">
+						<view class="tit">定位:{{item.content}}</view>
+						
+					</view>
+					
+				</view>
 			</view>
 		</view>
 
@@ -55,13 +62,16 @@
 				is_show: false,
 				mainData: [],
 				submitData: {
-
+					
 				},
 				daka_time: '',
 				week: ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'],
 				todayData: [],
 				type: '',
-				urlArray:[	]
+				urlArray:[	],
+				longitude:'',
+				latitude:'',
+				content:''
 			}
 		},
 
@@ -76,7 +86,7 @@
 
 		onShow() {
 			const self = this;
-			self.$Utils.loadAll(['getOrderData'], self)
+			self.$Utils.loadAll(['getOrderData','getLocation'], self)
 		},
 
 
@@ -91,6 +101,24 @@
 		},
 
 		methods: {
+			
+			getLocation() {
+				const self = this;
+				const callback = (res) => {
+					if (res) {
+						console.log('res', res)
+						if(res.authSetting){
+							console.log(232)
+							return
+						}
+						self.content = res.address;
+						self.longitude = res.location.lng;
+						self.latitude = res.location.lat
+					};
+				};
+				self.$Utils.getLocation('reverseGeocoder', callback);
+				self.$Utils.finishFunc('getLocation');
+			},
 			
 			
 			previewImage(index){
@@ -132,7 +160,6 @@
 				} else {
 					postData.tokenFuncName = 'getProjectToken';
 				}
-
 				const callback = (res) => {
 					if (res.info.data.length > 0) {
 						self.todayData.push.apply(self.todayData, res.info.data);
@@ -166,6 +193,9 @@
 					postData.data.on_time = now;
 					postData.data.description = self.week[new Date(self.$Utils.timeto(now, "ymd")).getDay()]
 					postData.data.type = 7;
+					postData.data.longitude = self.longitude;
+					postData.data.latitude = self.latitude,
+					postData.data.content = self.content
 				};
 				const callback = (data) => {
 					if (data.solely_code == 100000) {

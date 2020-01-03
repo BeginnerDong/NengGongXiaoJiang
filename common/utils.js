@@ -1,4 +1,8 @@
 import assetsConfig from "@/config/assets.config.js";
+var QQMapWX = require('@/common/qqmap-wx-jssdk.min.js');
+var wxMap = new QQMapWX({
+	key: '4BEBZ-ZM43U-U6SVY-BZ5X3-44T35-4ZFD6' // 必填
+});
 import token from '@/common/token.js';
 export default {
 	

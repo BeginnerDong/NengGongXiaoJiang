@@ -27,7 +27,8 @@
 
 		<view class="ind-cont4">
 			<scroll-view class="list" scroll-x>
-				<view class="item" v-for="(item,index) in classLis" :key="index" @click="Router.navigateTo({route:{path:'/pages/classify/classify?id='+item.id+'&name='+item.name}})">
+				<view class="item" v-for="(item,index) in classLis" :key="index"  :data-id="item.id" :data-name="item.name"
+				@click="Router.navigateTo({route:{path:'/pages/classify/classify?id='+$event.currentTarget.dataset.id+'&name='+$event.currentTarget.dataset.name}})">
 					<image :src="item.iconUrl" mode=""></image>
 					<view>{{item.name}}</view>
 				</view>
@@ -57,8 +58,8 @@
 			<view class="more">更多&gt;</view>
 		</view>
 		<view class="proLis flexRowBetween">
-			<view class="item-lis" v-for="(item,index) in mainData" :key="index" 
-			@click="Router.navigateTo({route:{path:'/pages/pageDetail/pageDetail?id='+item.id+'&type='+item.type}})">
+			<view class="item-lis" v-for="(item,index) in mainData" :key="index"  :data-id="item.id" :data-type="item.type"
+			@click="Router.navigateTo({route:{path:'/pages/pageDetail/pageDetail?id='+$event.currentTarget.dataset.id+'&type='+$event.currentTarget.dataset.type}})">
 				<image class="img" :src="item.mainImg&&item.mainImg[0]?item.mainImg[0].url:''" alt="" />
 				<view class="tit avoidOverflow">{{item.title}}</view>
 				<view class="price">{{item.price}}</view>
@@ -72,7 +73,8 @@
 		</view>
 		<view class="tejiaBox">
 			<scroll-view class="scrollX" scroll-x>
-				<view class="item-lis" v-for="(item,index) in specialData" :key="index" @click="Router.navigateTo({route:{path:'/pages/pageDetail/pageDetail'}})">
+				<view class="item-lis" v-for="(item,index) in specialData" :key="index" :data-id="item.id" :data-type="item.type"
+				@click="Router.navigateTo({route:{path:'/pages/pageDetail/pageDetail?id='+$event.currentTarget.dataset.id+'&type='+$event.currentTarget.dataset.type}})">
 					<image class="img" :src="item.mainImg&&item.mainImg[0]?item.mainImg[0].url:''" alt="" />
 					<view class="tit avoidOverflow">{{item.title}}</view>
 					<view class="price">{{item.price}}</view>
@@ -216,6 +218,9 @@
 					type: 4,
 					category_id: ['not in', [46]]
 				};
+				postData.order = {
+					listorder:'desc'
+				};
 				const callback = (res) => {
 					if (res.solely_code == 100000 && res.info.data[0]) {
 						self.mainData.push.apply(self.mainData, res.info.data);
@@ -234,6 +239,9 @@
 				postData.searchItem = {
 					type: 4,
 					category_id: ['in', [46]]
+				};
+				postData.order = {
+					listorder:'desc'
 				};
 				const callback = (res) => {
 					if (res.solely_code == 100000 && res.info.data[0]) {
