@@ -647,6 +647,13 @@
 				"navigationBarTitleText": "订单详情",
 				"onReachBottomDistance":100
 			}
+		},
+		{
+			"path": "pages/designer_password/designer_password",
+			"style": {
+				"navigationBarTitleText": "找回密码",
+				"onReachBottomDistance":100
+			}
 		}
 		
     ],

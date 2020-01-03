@@ -25,13 +25,16 @@
 					<view class="yzmBtn"  v-else>{{text}}</view>
 				</view>
 			</view> -->
+			<view class="findPswd">
+				<view class="font13" @click="Router.navigateTo({route:{path:'/pages/designer_password/designer_password'}})">找回密码</view>
+			</view>
 		</view>
-		<view class="submitbtn" style="margin: 200rpx auto">
+		<view class="submitbtn" style="margin: 200rpx auto 60rpx auto">
 			<button type="submit" style="margin-bottom: 20rpx;" 
 			@click="submit">登录</button>
 			<view class="agreeSel">
 				<view class="text color2" 
-				@click=" Router.navigateTo({route:{path:'/pages/designer_register/designer_register?type='+type}})">没有账号，去注册</view>
+				@click="Router.navigateTo({route:{path:'/pages/designer_register/designer_register?type='+type}})">没有账号，去注册</view>
 			</view>
 		</view>
 	</view>
@@ -181,5 +184,5 @@
 <style>
 	
 	@import "../../assets/style/login.css";
-	
+	.findPswd{display: flex;justify-content: flex-end;}
 </style> 
