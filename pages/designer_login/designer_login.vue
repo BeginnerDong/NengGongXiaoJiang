@@ -12,7 +12,7 @@
 			<view class="item">
 				<view class="icon"><image src="../../static/images/regietered-icon7.png" mode=""></image></view>
 				<view class="rr">
-					<input type="text" placeholder="输入密码"  v-model="password">
+					<input type="password" placeholder="输入密码"  v-model="password">
 				</view>
 			</view>
 			<!-- <view class="item">
@@ -26,7 +26,7 @@
 				</view>
 			</view> -->
 			<view class="findPswd">
-				<view class="font13" @click="Router.navigateTo({route:{path:'/pages/designer_password/designer_password'}})">找回密码</view>
+				<view class="font13" @click="Router.navigateTo({route:{path:'/pages/designer_password/designer_password?type='+type}})">找回密码</view>
 			</view>
 		</view>
 		<view class="submitbtn" style="margin: 200rpx auto 60rpx auto">

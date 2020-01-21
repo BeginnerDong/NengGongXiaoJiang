@@ -22,14 +22,14 @@
 				<view class="eidt-line">
 					<view class="ll">电话：</view>
 					<view class="rr">
-						<input type="number" v-model="submitData.phone" placeholder="请输入联系方式" maxlength="11" onkeyup="this.value=this.value.replace(/\D/g,'')" >
+						<input type="number"  v-model="submitData.phone" placeholder="请输入联系方式" maxlength="11" onkeyup="this.value=this.value.replace(/\D/g,'')" >
 					</view>
 				</view>
 				<view class="eidt-line">
 					<view class="ll">年龄：</view>
 					<view class="rr styleLis pr" style="padding-right: 30rpx;">
 						<view style="width: 100%; color: grey;font-size: 24rpx;text-align: right;">
-							<picker @change="bindPickerChange" :value="index" :range="array" style="width: 100%;">
+							<picker @change="bindPickerChange" value="12" :range="array" style="width: 100%;">
 								<view class="uni-input">{{array[index]?array[index]:'请选择'}}</view>
 							</picker>
 						</view>
@@ -65,7 +65,7 @@
 				is_show:false,
 				index: '',
 				curr:1,
-				array:['18','19','20','21','22'],
+				array:[],
 				submitData:{
 					title:'',
 					keywords:'',
@@ -79,6 +79,9 @@
 		},
 		onLoad() {
 			const self = this;
+			for(var i=18;i<71;i++){
+				self.array.push(i);
+			};
 			//self.$Utils.loadAll(['getMainData'], self);
 		},
 		
