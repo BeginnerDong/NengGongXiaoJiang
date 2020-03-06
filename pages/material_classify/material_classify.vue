@@ -169,7 +169,7 @@
 					parentid:self.id,
 					type:self.type+1
 				};
-				if(self.type==5){
+				if(self.type==4){
 					postData.searchItem.title = ['not in',['特价辅料']]
 				}
 				/* postData.getAfter ={
