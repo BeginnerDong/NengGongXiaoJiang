@@ -63,11 +63,11 @@
 				index:'',
 				array:['建筑工','装修工','维修工','园林工','市政工','安装工','其他'],
 				submitData:{
-					passage1:'',
+					//passage1:'',
 					title:'',
 					description:'',
 					mainImg:[],
-					behavior:'',
+					behavior:0,
 					type:5
 				},
 				isWork:false
@@ -122,7 +122,7 @@
 				const callback = (res) => {
 					if (res.info.data.length > 0) {
 						self.mainData = res.info.data[0];
-						self.submitData.passage1 = self.mainData.passage1;
+						//self.submitData.passage1 = self.mainData.passage1;
 						self.submitData.title = self.mainData.title;
 						self.submitData.description = self.mainData.description;
 						self.submitData.mainImg = self.mainData.mainImg;
@@ -188,7 +188,9 @@
 			submit() {
 				const self = this;
 				uni.setStorageSync('canClick', false);	
-				const pass = self.$Utils.checkComplete(self.submitData);
+				var newObject = self.$Utils.cloneForm(self.submitData);
+				delete newObject.behavior;
+				const pass = self.$Utils.checkComplete(newObject);
 				console.log('pass', pass);
 				console.log('self.submitData',self.submitData)
 				if (pass) {	
