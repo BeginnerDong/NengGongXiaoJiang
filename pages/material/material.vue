@@ -118,7 +118,7 @@
 				postData.searchItem = {
 					thirdapp_id:2,
 					type:['in',[3,4,5]],
-					category_id: ['not in', [46]]
+					//category_id: ['not in', [46]]
 				};
 				postData.order = {
 					listorder:'desc'

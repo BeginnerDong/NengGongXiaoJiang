@@ -245,7 +245,8 @@
 				postData.searchItem = {
 					thirdapp_id:2,
 					type:1,
-					category_id:self.idThree
+					category_id:self.idThree,
+					on_shelf:1
 				};
 				postData.getAfter = {
 					userInfo:{

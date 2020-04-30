@@ -223,7 +223,8 @@
 				postData.searchItem = {
 					thirdapp_id:2,
 					type:4,
-					user_type:1
+					user_type:1,
+					on_shelf:1
 				};
 				postData.order = {
 					volume:'desc'
@@ -252,7 +253,8 @@
 				postData.searchItem = {
 					thirdapp_id:2,
 					type:5,
-					user_type:1
+					user_type:1,
+					on_shelf:1
 				};
 				postData.order = {
 					volume:'desc'
@@ -281,7 +283,8 @@
 				postData.searchItem = {
 					thirdapp_id:2,
 					type:10,
-					user_type:1
+					user_type:1,
+					on_shelf:1
 				};
 				postData.order = {
 					volume:'desc'

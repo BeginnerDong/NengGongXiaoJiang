@@ -45,9 +45,10 @@
 					<view class="ll">验证码：</view>
 					<view class="rr pr flex">
 						<view class="yam" style="width: 50%;">
-							<input type="number" placeholder="请输入验证码" maxlength="11" onkeyup="this.value=this.value.replace(/\D/g,'')" >
+							<input type="number" v-model="submitData.code" placeholder="请输入验证码" maxlength="11" onkeyup="this.value=this.value.replace(/\D/g,'')" >
 						</view>
-						<view class="yzmBtn" >获取验证码</view>
+						<view class="yzmBtn" @click="sendCode()" v-if="!hasSend">获取验证码</view>
+						<view class="yzmBtn"  v-else>{{text}}</view>
 					</view>
 				</view>
 				<view class="eidt-line">
@@ -92,7 +93,10 @@
 				},		
 				index:'',
 				labelData:[],
-				Utils:this.$Utils
+				Utils:this.$Utils,
+				text:'获取验证码',
+				hasSend:false,
+				currentTime:61,
 			}
 		},
 		onLoad(options) {
@@ -105,6 +109,53 @@
 		},
 		
 		methods: {
+			
+			
+			sendCode(){
+				var self = this;
+				console.log(111)
+				if(self.hasSend){
+					return;
+				};
+				var phone = self.submitData.phone;
+				
+				if (phone.trim().length != 11 || !/^1[3|4|5|6|7|8|9]\d{9}$/.test(phone)) {
+					self.$Utils.showToast('请输入正确的手机号', 'none', 1000)
+					
+					return;
+				}
+				var postData = {
+					data:{
+						type:2,
+						phone:self.submitData.phone
+					}
+					
+				};
+				var callback = function(res){
+					if(res.solely_code==100000){
+						self.hasSend = true;
+						var interval = setInterval(function() {
+							self.currentTime--; //每执行一次让倒计时秒数减一
+						
+							self.text=self.currentTime + 's';//按钮文字变成倒计时对应秒数
+							
+							//如果当秒数小于等于0时 停止计时器 且按钮文字变成重新发送 且按钮变成可用状态 倒计时的秒数也要恢复成默认秒数 即让获取验证码的按钮恢复到初始化状态只改变按钮文字
+							if (self.currentTime <= 0) {
+								clearInterval(interval)
+								
+								self.hasSend = false;
+								self.text='重新发送';
+								self.currentTime= 61;
+								
+							}
+							
+						}, 1000);
+					}else{
+						self.$Utils.showToast('发送失败', 'none', 1000)
+					};
+				};
+				self.$apis.codeGet(postData, callback);
+			},
 			
 			bindPickerChange(e) {
 				const self=this;
@@ -187,14 +238,18 @@
 			cardUpdate() {
 				const self = this;
 				const postData = {};
-
+				var newObject = self.$Utils.cloneForm(self.submitData);
+				delete newObject.code;
 				postData.tokenFuncName = 'getThreeToken';
 
 				postData.searchItem = {};
 				postData.searchItem.id = self.id;
 				postData.data = {};
 				postData.data = self.$Utils.cloneForm(self.submitData);
-
+				postData.smsAuth = {
+					phone:self.submitData.phone,						
+					code:self.submitData.code
+				};
 				const callback = (data) => {
 					uni.setStorageSync('canClick', true);
 					if (data && data.solely_code == 100000) {
@@ -212,12 +267,17 @@
 			cardAdd() {
 				const self = this;
 				const postData = {};
-
+				var newObject = self.$Utils.cloneForm(self.submitData);
+				
+				delete newObject.code;
 				postData.tokenFuncName = 'getThreeToken';
 
 				postData.data = {};
 				postData.data = self.$Utils.cloneForm(self.submitData);
-
+				postData.smsAuth = {
+					phone:self.submitData.phone,						
+					code:self.submitData.code
+				};
 				const callback = (data) => {
 					uni.setStorageSync('canClick', true);
 					if (data && data.solely_code == 100000) {
@@ -237,7 +297,7 @@
 				
 				var phone = self.submitData.phone;
 				const pass = self.$Utils.checkComplete(self.submitData);
-
+				
 				console.log('self.data.sForm', self.submitData)
 				console.log('pass', pass)
 				if (pass) {

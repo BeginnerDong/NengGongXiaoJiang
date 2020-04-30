@@ -79,7 +79,8 @@
 				postData.tokenFuncName = 'getProjectToken';
 				postData.searchItem = {
 					user_no:self.user_no,
-					user_type:1
+					user_type:1,
+					on_shelf:1
 				};
 				postData.getAfter ={
 					message:{

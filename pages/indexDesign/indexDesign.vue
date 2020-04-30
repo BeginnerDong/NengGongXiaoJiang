@@ -195,7 +195,8 @@
 				postData.tokenFuncName = 'getProjectToken';
 				postData.searchItem = {
 					thirdapp_id:2,
-					user_type:1
+					user_type:1,
+					on_shelf:1
 				};
 				postData.order = {
 					volume:'desc'

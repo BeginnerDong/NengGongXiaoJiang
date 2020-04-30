@@ -178,6 +178,30 @@
 			const self = this;
 			self.$Utils.loadAll(['getMainData', 'getSpecialData','getLabelData'], self);
 		},
+		
+		onShareAppMessage(ops) {
+			console.log(ops)
+			const self = this;
+		
+				
+			return {
+				title: '能工小匠',
+				desc:'聚合营销获客于一身的劳工自主平台',
+				path: '/pages/index/index', //点击分享的图片进到哪一个页面
+				
+				success: function(res) {
+					// 转发成功
+					console.log("转发成功:" + JSON.stringify(res));
+				},
+				fail: function(res) {
+					// 转发失败
+					console.log("转发失败:" + JSON.stringify(res));
+				}
+			}
+			
+		},
+		
+		
 		methods: {
 			
 			getLabelData() {
