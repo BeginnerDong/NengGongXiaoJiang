@@ -24,7 +24,7 @@
 					 disabled="true">
 				</view>
 				<view class="editNum">
-					<input type="number" value="" placeholder="请输入数量" v-model="count">
+					<input type="text" value="" placeholder="请输入数量" v-model="count">
 				</view>
 				<view class="optBtn flexRowBetween" v-if="orderItem.length==0&&mainData.type==1">
 
@@ -64,7 +64,7 @@
 									<picker @change="topTypeChange" :data-index="index" 
 									:range="topTypeData" range-key="title">
 										<view class="uni-input">
-										{{orderItemTwo[index].parent!=''?orderItemTwo[index].parent:'请选择'}}
+										{{orderItemTwo&&orderItemTwo[index]&&orderItemTwo[index].parent!=''?orderItemTwo[index].parent:'请选择'}}
 										</view>
 									</picker>
 								</view>
@@ -79,7 +79,7 @@
 									<picker @change="typeChange" :data-index="index" 
 									:range="testTwo[orderItemTwo[index]['parentid']]" range-key="title">
 										<view class="uni-input">
-										{{orderItemTwo[index].category!=''?orderItemTwo[index].category:'请选择'}}
+										{{orderItemTwo[index]&&orderItemTwo[index].category!=''?orderItemTwo[index].category:'请选择'}}
 										</view>
 									</picker>
 								</view>
@@ -95,7 +95,7 @@
 									<picker @change="PickerChangeThree" :data-index="index" 
 									:range="test[orderItemTwo[index]['category_id']]" range-key="title">
 										<view class="uni-input">
-										{{orderItemTwo[index].title!=''?orderItemTwo[index].title:'请选择'}}
+										{{orderItemTwo[index]&&orderItemTwo[index].title!=''?orderItemTwo[index].title:'请选择'}}
 										</view>
 									</picker>
 								</view>
@@ -199,7 +199,10 @@
 					category:'',
 					product_id: '',
 					count: '',
-					title: ''
+					title: '',
+					category_id:'',
+					parent:'',
+					parentid:''
 				})
 			},
 

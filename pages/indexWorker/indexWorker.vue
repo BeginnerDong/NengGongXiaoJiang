@@ -87,7 +87,38 @@
 				
 			</view>
 		</view>
+		<view class="f5H10"></view>
 		
+		<view class="infor-title flexRowBetween" v-if="workerFourData.length>0">
+			<view class="xian"></view>
+			<view class="tt">优秀维修工</view>
+		</view>
+		<view class="designIndex pdlr4" v-if="workerFourData.length>0">
+			<view class="items flexRowBetween" v-for="(item,index) in workerFourData" :key="index" :data-user_no="item.user_no"
+			@click="Router.navigateTo({route:{path:'/pages/indexWorker_index/indexWorker_index?user_no='+$event.currentTarget.dataset.user_no}})">
+				<view class="pic">
+					<image :src="item.mainImg&&item.mainImg[0]?item.mainImg[0].url:''" alt="" />
+				</view>
+				<view class="infor">
+					<view class="title flex">
+						<view>{{item.name}}</view>
+						<view class="flexRowBetween starClass">
+							<view class="starBox">
+								<image v-for="c_item in stars" :src="item.level/2 > c_item ?(item.level/2-c_item == 0.5?halfSrc:selectedSrc) : normalSrc" mode="">							
+								</image>
+							</view>
+							<view>{{item.level}}分</view>
+						</view>
+					</view>
+					<view class="text2 avoidOverflow2" >{{item.introduce}}</view>
+					<view class="flexRowBetween saleB">
+						
+						<view class="color3 font12">成交量：{{item.volume}}</view>
+					</view>
+				</view>
+				
+			</view>
+		</view>
 		<view class="f5H10"></view>
 		
 		<view class="infor-title flexRowBetween" v-if="workerThreeData.length>0">
@@ -185,6 +216,7 @@
 				workerOneData:[],
 				workerTwoData:[],
 				workerThreeData:[],
+				workerFourData:[],
 				stars: [0, 1, 2, 3, 4],
 				normalSrc: '../../static/images/home-supervision-icon3.png',
 				selectedSrc: '../../static/images/home-supervision-icon1.png',
@@ -205,7 +237,7 @@
 					condition: 'in',
 				},
 			};
-			self.$Utils.loadAll(['getWorkerOneData','getWorkerTwoData','getWorkerThreeData'], self);
+			self.$Utils.loadAll(['getWorkerOneData','getWorkerTwoData','getWorkerThreeData','getWorkerFourData'], self);
 		},
 		methods: {
 			
@@ -216,7 +248,7 @@
 					count: 0,
 					currentPage: 1,
 					is_page: true,
-					pagesize: 3
+					pagesize: 8
 				};
 				postData.getBefore = self.getBefore;
 				postData.tokenFuncName = 'getProjectToken';
@@ -246,7 +278,7 @@
 					count: 0,
 					currentPage: 1,
 					is_page: true,
-					pagesize: 3
+					pagesize: 8
 				};
 				postData.getBefore = self.getBefore;
 				postData.tokenFuncName = 'getProjectToken';
@@ -276,7 +308,7 @@
 					count: 0,
 					currentPage: 1,
 					is_page: true,
-					pagesize: 3
+					pagesize: 8
 				};
 				postData.getBefore = self.getBefore;
 				postData.tokenFuncName = 'getProjectToken';
@@ -294,6 +326,35 @@
 						self.workerThreeData.push.apply(self.workerThreeData, res.info.data);
 					}
 					self.$Utils.finishFunc('getWorkerThreeData');
+				};
+				self.$apis.userInfoGet(postData, callback);
+			},
+			
+			getWorkerFourData() {
+				const self = this;
+				const postData = {};
+				postData.paginate = {
+					count: 0,
+					currentPage: 1,
+					is_page: true,
+					pagesize: 8
+				};
+				postData.getBefore = self.getBefore;
+				postData.tokenFuncName = 'getProjectToken';
+				postData.searchItem = {
+					thirdapp_id:2,
+					type:6,
+					user_type:1,
+					on_shelf:1
+				};
+				postData.order = {
+					volume:'desc'
+				};
+				const callback = (res) => {
+					if (res.info.data.length > 0) {
+						self.workerFourData.push.apply(self.workerFourData, res.info.data);
+					}
+					self.$Utils.finishFunc('getWorkerFourData');
 				};
 				self.$apis.userInfoGet(postData, callback);
 			},
