@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<meta name="renderer" content="webkit">
+		<meta name="description" content="">
+		<meta name="keywords" content="">
+		<title>能工小匠</title>
+		<script type="text/javascript" src="./js/vue.js"></script>
+		<script type="text/javascript" src="js/jquery.min.js"></script>
+		<script type="text/javascript" src="js/base.js"></script>
+		<script type="text/javascript" src="js/include.js"></script>
+		<link type="text/css" rel="stylesheet" href="css/public.css">
+		<link type="text/css" rel="stylesheet" href="css/index.css">
+	</head>
+
+<body>
+	<div id="app">
+		<div class="head">
+			<div class="w1200 clearfix">
+				<!-- logo -->
+				<div class="T-Logo fl"><img src="images/logo.icon.png"></div>
+			</div>
+		</div>
+		
+		<include src="banner.html"></include>
+		
+		<div class="w1200 pdb80">
+			<div class="pubtit center">
+				<h1 class="title">公司介绍</h1>
+			</div>
+			<div class=" xqInfor">
+				<div class="cont center">
+					<p>分公司的健康改好了人生个话费的空间和规范空间的花港饭店见客户</p>
+					<p>思达高科发个见多识广高房价的过分的话岁挂号费人多了三个和尚换个房间肯定会过分寄快递很</p>
+					<p>加工费塑料加工给欧冠荆防颗粒低功耗发动机开了个会放得开两个挂号费定了个婚翻领的花港饭店很给力</p>
+					<p>换个卡复合大师管理费和规划发快递，刚恢复健康的个刚和艰苦奋斗火锅凤凰科技馆更好都发看了个发货理发店刚恢复健康的</p>
+					<p>干部借款分类单鹄寡凫的刚和艰苦奋斗两个几个快乐发动机盖几个开放</p>
+					<img src="images/img.jpg" >
+				</div>
+			</div>
+		</div>
+		
+		<!-- 操作流程 -->
+		<div class="f5bj pdb80 ind-box2 center pdb80">
+			<div class="pubtit center">
+				<h1 class="title">操作流程</h1>
+			</div>
+			<div class="cont clearfix">
+				<div class="item" v-for="(item,index) in operateData" :key="index">
+					<img class="icon" src="images/icon1.png" >
+					<p class="avoidOverflow2">进口量过分的世界观国际饭店看看两个感觉发快递功夫就快到了就看房收到了电话给金科股份</p>
+				</div>
+			</div>
+		</div>
+		
+		<!-- 关注能工小匠公众号 -->
+		<div class="ind-box3">
+			<div class="cont clearfix">
+				<div class="left fl"><img class="phone" src="images/img2.png" ></div>
+				<div class="right fr center white">
+					<div class="tit">关注能工小匠</div>
+					<p class="text">扫描二维码关注能工小匠公众号</p>
+					<img class="ewm" src="images/img1.jpg">
+				</div>
+			</div>
+		</div>
+		
+		
+		<!-- 合伙伙伴 -->
+		<div class="indx-partner pdb80">
+			<div class="pubtit center">
+				<h1 class="title">合作伙伴</h1>
+			</div>
+			<div class="w1200 cont">
+				<ul class="clearfix">
+					<li v-for="(item,index) in partnerData" :key="index"><img src="images/img3.jpg" ></li>
+				</ul>
+			</div>
+			
+		</div>
+		
+		<!-- 页脚 -->
+		<div class="footer fs12">
+			<div class="cont">
+				<div class="footTitle center">能工小匠</div>
+				<div class="footMsg clearfix">
+					<div class="ll fl">
+						<div class="text fs16">
+							<p class="phone">电话：029-8565-5623</p>
+							<p>地址：西安市高新区锦业路38号粤汉国际D作23层</p>
+						</div>
+						
+					</div>
+					<div class="rr fr">
+						<img class="logo" src="images/logo.icon.png" >
+					</div>
+				</div>
+			</div>
+		</div>
+		
+	</div>
+</body>
+
+<script type="text/javascript">
+	var app = new Vue({
+		el: '#app',
+		data:function(){
+			return {
+				banner_index:0,
+				is_show:false,
+				wx_show:2,
+				mainData: [],
+				labelData: [],
+				operateData:4,
+				partnerData:8
+			}
+		},
+		methods: {
+			getMainData: function(id){
+				var self = this;
+				var callback = function(res){
+					console.log('getMainData', res);
+					self.mainData.push.apply(self.mainData,res.info.data);
+					for (var i = 0; i < self.mainData.length; i++) {
+						self[self.mainData[i].title] = self.mainData[i];
+					};
+					self.getNewsData()
+				};
+				console.log('self.mainData',self.mainData)
+				window.base.labelGet(postData, callback);
+			}
+			
+		}
+	});
+</script>
+
+
+</html>
